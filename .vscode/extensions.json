@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "ms-python.black-formatter",
+    "christian-kohler.path-intellisense",
+    "Gruntfuggly.todo-tree",
+    "naumovs.color-highlight",
+    "kisstkondoros.vscode-gutter-preview",
+    "yzhang.markdown-all-in-one",
+    "ms-python.black-formatter",
+    "tamasfe.even-better-toml",
+    "ms-python.python",
+    "ms-python.vscode-pylance"
+  ]
+}
