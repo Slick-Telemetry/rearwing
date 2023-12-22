@@ -12,6 +12,9 @@ Table of Contents:
 - [Development](#development)
   - [Running the project](#running-the-project)
   - [Interactive API docs](#interactive-api-docs)
+  - [Interactive Jupyter notebook](#interactive-jupyter-notebook)
+    - [Using Jupyter Lab](#using-jupyter-lab)
+    - [Running the notebook in VS Code](#running-the-notebook-in-vs-code)
   - [Contribution Guidelines](#contribution-guidelines)
 - [Deployment](#deployment)
 
@@ -39,12 +42,24 @@ poetry install --no-root
   - Your IDE should activate the virtual environment for you automatically.
   - If it doesnt, you can execute the `/Scripts/Activate` script from the virtual environment.
 - Run `uvicorn main:app --reload` to start the server.
-- Open your browser at `http://127.0.0.1/8000`
+- Open your browser at `http://127.0.0.1/8000`.
 
 ### Interactive API docs
 
 - Once the server is running, open your browser at `http://127.0.0.1:8000/docs`.
 - Alternate docs can be found at `http://127.0.0.1:8000/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
+
+### Interactive Jupyter notebook
+
+#### Using Jupyter Lab
+
+- The project has Jupyter Lab as a dev dependency for you to rummage through FastF1.
+- Run `jupyter lab` in a new terminal and open your default browser should open automatically (if it doesn't, open browser at `http://localhost:8888/lab`).
+
+#### Running the notebook in VS Code
+
+- Alternatively, you can install `https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter` and run the notebook in VS Code.
+- Ensure to use the poetry python environment as the kernel.
 
 ### Contribution Guidelines
 
