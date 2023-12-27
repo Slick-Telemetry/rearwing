@@ -6,6 +6,7 @@
     "Gruntfuggly.todo-tree",
     "naumovs.color-highlight",
     "kisstkondoros.vscode-gutter-preview",
+    "ms-python.isort",
     "yzhang.markdown-all-in-one",
     "ms-python.black-formatter",
     "tamasfe.even-better-toml",
