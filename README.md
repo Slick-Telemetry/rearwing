@@ -41,13 +41,13 @@ poetry install --no-root
 - Open up a terminal in your IDE.
   - Your IDE should activate the virtual environment for you automatically.
   - If it doesnt, you can execute the `/Scripts/Activate` script from the virtual environment.
-- Run `uvicorn app.main:app --reload` to start the server.
-- Open your browser at `http://127.0.0.1/8000`.
+- Run `python run.py` to start the server.
+- Open your browser at `http://0.0.0.0/8000`.
 
 ### Interactive API docs
 
-- Once the server is running, open your browser at `http://127.0.0.1:8000/docs`.
-- Alternate docs can be found at `http://127.0.0.1:8000/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
+- Once the server is running, open your browser at `http://0.0.0.0:8000/docs`.
+- Alternate docs can be found at `http://0.0.0.0:8000/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
 
 ### Interactive Jupyter notebook
 
