@@ -11,12 +11,13 @@ jobs:
     name: 📊 PyTest
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: ⬇️ Checkout repo
+      uses: actions/checkout@v4
 
     - name: Install poetry
       run: pipx install poetry
 
-    - name: Set up Python
+    - name: 🐍 Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: 3.12
@@ -25,5 +26,5 @@ jobs:
     - name: Install dependencies
       run: poetry install --no-root
 
-    - name: Run tests
+    - name: 📊 Run tests
       run: poetry run pytest
