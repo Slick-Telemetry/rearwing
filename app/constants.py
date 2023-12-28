@@ -6,8 +6,6 @@ Slick Telemetry backend written in python with fastf1. 🏎
 You can query Formula 1 schedule by **year**.
 """
 
-DEFAULT_TESTING_YEAR: int = 2023
-
 EVENT_SCHEDULE_DATETIME_DTYPE_LIST = [
     "EventDate",
     "Session1Date",

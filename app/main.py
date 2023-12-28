@@ -6,7 +6,8 @@ from fastapi import FastAPI, Path
 
 from app.constants import EVENT_SCHEDULE_DATETIME_DTYPE_LIST, METADATA_DESCRIPTION
 from app.models import Schedule
-from app.utils import get_default_year
+
+# fastf1.set_log_level("WARNING") # TODO use for production
 
 app = FastAPI(
     title="Slick Telemetry API",
@@ -30,13 +31,12 @@ def read_root():
 
 
 @app.get("/schedule/{year}", response_model=list[Schedule])
-def get_schedule_for_year(
+def get_schedule(
     year: Annotated[
         int,
         Path(
             title="The year for which to get the schedule",
             gt=1949,  # Supported years are 1950 to current
-            lt=get_default_year() + 1,
         ),
     ]
 ) -> list[Schedule]:
