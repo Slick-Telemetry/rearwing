@@ -1,11 +1,12 @@
 import json
+from typing import Annotated
 
 import fastf1
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 
 from app.constants import EVENT_SCHEDULE_DATETIME_DTYPE_LIST, METADATA_DESCRIPTION
 from app.models import Schedule
-from app.utils import get_default_year, range_inclusive
+from app.utils import get_default_year
 
 app = FastAPI(
     title="Slick Telemetry API",
@@ -29,22 +30,27 @@ def read_root():
 
 
 @app.get("/schedule/{year}", response_model=list[Schedule])
-def get_schedule_for_year(year: int = get_default_year()) -> list[Schedule]:
-    # Supported years are 1950 and onwards
-    if not year in range_inclusive(1950, get_default_year()):
-        return list()
-    else:
-        event_schedule = fastf1.get_event_schedule(year)
+def get_schedule_for_year(
+    year: Annotated[
+        int,
+        Path(
+            title="The year for which to get the schedule",
+            gt=1949,  # Supported years are 1950 to current
+            lt=get_default_year() + 1,
+        ),
+    ]
+) -> list[Schedule]:
+    event_schedule = fastf1.get_event_schedule(year)
 
-        # Convert timestamp(z) related columns' data into a string type
-        # https://stackoverflow.com/questions/50404559/python-error-typeerror-object-of-type-timestamp-is-not-json-serializable
-        for col in EVENT_SCHEDULE_DATETIME_DTYPE_LIST:
-            event_schedule[col] = event_schedule[col].astype(str)
+    # Convert timestamp(z) related columns' data into a string type
+    # https://stackoverflow.com/questions/50404559/python-error-typeerror-object-of-type-timestamp-is-not-json-serializable
+    for col in EVENT_SCHEDULE_DATETIME_DTYPE_LIST:
+        event_schedule[col] = event_schedule[col].astype(str)
 
-        # Convert the dataframe to a JSON string
-        event_schedule_as_json = event_schedule.to_json(orient="records")
+    # Convert the dataframe to a JSON string
+    event_schedule_as_json = event_schedule.to_json(orient="records")
 
-        # Parse the JSON string to a JSON object
-        event_schedule_as_json_obj = json.loads(event_schedule_as_json)
+    # Parse the JSON string to a JSON object
+    event_schedule_as_json_obj = json.loads(event_schedule_as_json)
 
-        return event_schedule_as_json_obj
+    return event_schedule_as_json_obj
