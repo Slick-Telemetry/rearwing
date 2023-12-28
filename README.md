@@ -2,7 +2,7 @@
 
 # backend <!-- omit from toc -->
 
-Slick Telemetry backend written in python.
+Slick Telemetry backend written in python with fastf1.
 
 Table of Contents:
 
@@ -41,7 +41,7 @@ poetry install --no-root
 - Open up a terminal in your IDE.
   - Your IDE should activate the virtual environment for you automatically.
   - If it doesnt, you can execute the `/Scripts/Activate` script from the virtual environment.
-- Run `uvicorn main:app --reload` to start the server.
+- Run `uvicorn app.main:app --reload` to start the server.
 - Open your browser at `http://127.0.0.1/8000`.
 
 ### Interactive API docs
