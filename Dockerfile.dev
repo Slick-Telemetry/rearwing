@@ -1,0 +1,26 @@
+FROM python:3.12.1-slim
+
+# Set the working directory to /code.
+WORKDIR /code
+
+# Copy the current directory to the /code directory.
+COPY . /code
+
+# Install Poetry
+RUN pip install --no-cache-dir poetry
+
+# Use Poetry to install dependencies
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-ansi
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Healthcheck
+HEALTHCHECK --interval=5m --timeout=3s \
+    CMD curl -f http://localhost/health || exit 1
+
+# Run the uvicorn command, telling it to use the app object imported from app.main.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+
+# CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80" "--reload"]
