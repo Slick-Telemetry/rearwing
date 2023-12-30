@@ -1,7 +1,15 @@
 from pydantic import BaseModel
 
 
+class ReadRoot(BaseModel):
+    """Response model to validate and return when performing a health check."""
+
+    we_are: str = "SlickTelemetry"
+
+
 class Schedule(BaseModel):
+    """Model to store schedule data for a Formula 1 calendar year."""
+
     RoundNumber: int
     Country: str
     Location: str
@@ -25,3 +33,9 @@ class Schedule(BaseModel):
     Session5Date: str
     Session5DateUtc: str
     F1ApiSupport: bool
+
+
+class HealthCheck(BaseModel):
+    """Response model to validate and return when performing a health check."""
+
+    status: str = "OK"

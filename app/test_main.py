@@ -8,7 +8,13 @@ client = TestClient(app)
 def test_read_root():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"We Are": "SlickTelemetry"}
+    assert response.json() == {"we_are": "SlickTelemetry"}
+
+
+def test_healthcheck():
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "OK"}
 
 
 def test_get_schedule():
