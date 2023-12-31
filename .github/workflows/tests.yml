@@ -2,29 +2,29 @@ name: Run Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main, staging]
   pull_request:
-    branches: [ main ]
+    branches: [main, staging]
 
 jobs:
   test:
     name: 📊 PyTest
     runs-on: ubuntu-latest
     steps:
-    - name: ⬇️ Checkout repo
-      uses: actions/checkout@v4
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Install poetry
-      run: pipx install poetry
+      - name: Install poetry
+        run: pipx install poetry
 
-    - name: 🐍 Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.12
-        cache: 'poetry'
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+          cache: "poetry"
 
-    - name: Install dependencies
-      run: poetry install --no-root
+      - name: Install dependencies
+        run: poetry install --no-root
 
-    - name: 📊 Run tests
-      run: poetry run pytest
+      - name: 📊 Run tests
+        run: poetry run pytest
