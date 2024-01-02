@@ -42,12 +42,12 @@ poetry install --no-root
   - Your IDE should activate the virtual environment for you automatically.
   - If it doesnt, you can execute the `/Scripts/Activate` script from the virtual environment.
 - Run `python run.py` to start the server.
-- Open your browser at `http://0.0.0.0/8000`.
+- Open your browser at `http://0.0.0.0/80`.
 
 ### Interactive API docs
 
-- Once the server is running, open your browser at `http://0.0.0.0:8000/docs`.
-- Alternate docs can be found at `http://0.0.0.0:8000/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
+- Once the server is running, open your browser at `http://0.0.0.0:80/docs`.
+- Alternate docs can be found at `http://0.0.0.0:80/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
 
 ### Interactive Jupyter notebook
 
@@ -67,26 +67,35 @@ poetry install --no-root
 
 - **Always pull latest changes**
 
-  - There are several developers working on this project. Always pull the latest from the line you intend to commit your changes to. Since we are using `Rebase and merge` PR merge strategy (more information below), there would be times when `git pull` will fail.
-  - If there are no local staged/unstaged changes, you can use `git pull --force`.
-  - If there are local staged/unstaged changes, please stash or discard them as appropriate and then use `git pull --force`.
+  - There are several developers working on this project. Always pull/pull-rebase the latest, as necessary, from the branch you intend to commit your changes to.
+  - If there are local staged/unstaged changes, please stash or discard them as appropriate and then use `git pull --rebase`.
   - If you don't want to use git CLI, to simplify these operations and have a visual representation of the git tree, we suggest to use a git GUI -
     - [Github Desktop](https://desktop.github.com/) (free)
     - [GitKraken](https://www.gitkraken.com/) (paid)
+    - [Fork](https://git-fork.com/) (paid)
     - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) (freemium)
     - [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph) (free)
 
 - **Branches**:
 
   - `main` is the production mainline.
-  - `dev` is the development line.
+  - `staging` is the staging line.
+  - `dev` is the development line (_**default branch**_).
 
 - **PR merge strategy on Github**
 
-  - We'll be keeping a clean commit history and so only using `Rebase and merge` and `Squash and merge` merge strategies.
-  - Opt for `Rebase and merge` as the _**default**_ one to ensure all commits from the branch to be merged are brought in individually to the target branch.
-  - `Squash and merge` can be used when the commits _**DON'T**_ need to be individually brought in to the target branch.
-  - [More information](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github).
+  - Code should flow in the following direction through branches:
+    ```
+    feature/bug fix -> dev -> staging -> main
+    ```
+  - We'll be keeping a linear commit history and so using a combination of `Rebase and merge` and `Squash and merge` merge strategies.
+  - Use `Rebase and merge` as _**default**_ to ensure all commits from the branch to be merged are brought in individually to the target branch.
+  - `Squash and merge` may be used _**ONLY**_ when bringing in changes from a feature/bug fix branch into `dev`.
+  - To maintain linear commit history, ensure to use `push force` when:
+    - Bringing `dev` on the same commit as `staging` (ie rebasing `dev` onto `staging`).
+    - Bringing `staging` on the same commit as `main` (ie rebasing `staging` onto `main`).
+  - [More information on git rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase).
+  - [More information on PR merge strategies](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github).
 
 ## Deployment
 

@@ -2,15 +2,16 @@
   "recommendations": [
     "aaron-bond.better-comments",
     "ms-python.black-formatter",
-    "christian-kohler.path-intellisense",
-    "Gruntfuggly.todo-tree",
-    "naumovs.color-highlight",
+    "ms-vscode-remote.remote-containers",
+    "ms-azuretools.vscode-docker",
+    "tamasfe.even-better-toml",
     "kisstkondoros.vscode-gutter-preview",
     "ms-python.isort",
     "yzhang.markdown-all-in-one",
-    "ms-python.black-formatter",
-    "tamasfe.even-better-toml",
+    "christian-kohler.path-intellisense",
+    "esbenp.prettier-vscode",
+    "ms-python.vscode-pylance",
     "ms-python.python",
-    "ms-python.vscode-pylance"
+    "Gruntfuggly.todo-tree"
   ]
 }
