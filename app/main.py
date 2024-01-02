@@ -58,6 +58,7 @@ def get_health() -> HealthCheck:
     return HealthCheck(status="OK")
 
 
+# TODO make {year} optional
 @app.get(
     "/schedule/{year}",
     tags=["schedule"],

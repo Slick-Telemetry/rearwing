@@ -2,7 +2,7 @@
 name = "backend"
 version = "0.1.0"
 description = "Slick Telemetry backend written in python"
-authors = ["Slick Telemetry <devs.@slicktelemetry.com>"]
+authors = ["Slick Telemetry <contact.@slicktelemetry.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
