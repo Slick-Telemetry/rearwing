@@ -38,7 +38,7 @@ jupyter lab
 ```sh
 docker build --file Dockerfile.dev --tag backend-dev .
 docker build --file Dockerfile.staging --tag backend-staging .
-docker build --file Dockerfile --tag backend-prod .
+docker build --file Dockerfile.prod --tag backend-prod .
 ```
 
 ### Starting the containers

@@ -42,12 +42,12 @@ poetry install --no-root
   - Your IDE should activate the virtual environment for you automatically.
   - If it doesnt, you can execute the `/Scripts/Activate` script from the virtual environment.
 - Run `python run.py` to start the server.
-- Open your browser at `http://0.0.0.0/8000`.
+- Open your browser at `http://0.0.0.0/80`.
 
 ### Interactive API docs
 
-- Once the server is running, open your browser at `http://0.0.0.0:8000/docs`.
-- Alternate docs can be found at `http://0.0.0.0:8000/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
+- Once the server is running, open your browser at `http://0.0.0.0:80/docs`.
+- Alternate docs can be found at `http://0.0.0.0:80/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
 
 ### Interactive Jupyter notebook
 
@@ -84,7 +84,7 @@ poetry install --no-root
 
 - **PR merge strategy on Github**
 
-  - Code should flow in the following way through branches:
+  - Code should flow in the following direction through branches:
     ```
     feature/bug fix -> dev -> staging -> main
     ```
