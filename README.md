@@ -8,9 +8,11 @@ Table of Contents:
 
 - [Setting up the project](#setting-up-the-project)
   - [What you'll need](#what-youll-need)
-  - [Installing dependencies](#installing-dependencies)
 - [Development](#development)
-  - [Running the project](#running-the-project)
+  - [Python virtual environment](#python-virtual-environment)
+    - [Installing dependencies](#installing-dependencies)
+    - [Running the project](#running-the-project)
+  - [Docker](#docker)
   - [Interactive API docs](#interactive-api-docs)
   - [Interactive Jupyter notebook](#interactive-jupyter-notebook)
     - [Using Jupyter Lab](#using-jupyter-lab)
@@ -23,10 +25,15 @@ Table of Contents:
 ### What you'll need
 
 - [VSCode](https://code.visualstudio.com/) / [Intellij Pycharm](https://www.jetbrains.com/pycharm/)
-- [Python 3.11](https://www.python.org/) (Please check `pyproject.toml` for the latest supported python version)
+- [Python 3.12](https://www.python.org/) (Please check [`pyproject.toml`](./pyproject.toml) for the latest supported python version)
 - [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) for dependency management
+- [Docker Desktop](https://docs.docker.com/desktop/) [OPTIONAL]
 
-### Installing dependencies
+## Development
+
+### Python virtual environment
+
+#### Installing dependencies
 
 ```sh
 poetry install --no-root
@@ -34,15 +41,31 @@ poetry install --no-root
 
 **Note**: Ensure that the python intepreter in your IDE is set to the newly created virtual environment by poetry. If you have not modified poetry configuration, you can find the virtual environment location as stated [here](https://python-poetry.org/docs/configuration/#cache-directory).
 
-## Development
-
-### Running the project
+#### Running the project
 
 - Open up a terminal in your IDE.
   - Your IDE should activate the virtual environment for you automatically.
-  - If it doesnt, you can execute the `/Scripts/Activate` script from the virtual environment.
+  - If it doesnt, you can follow either of these steps:
+    -  Set poetry [python interpreter path in VS Code](https://code.visualstudio.com/docs/python/environments#_working-with-python-interpreters) <u> ***OR*** </u>
+    -  Run `poetry shell` <u> ***OR*** </u>
+    -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory)
+
 - Run `python run.py` to start the server.
 - Open your browser at `http://0.0.0.0/80`.
+
+### Docker
+
+- Build image
+  ```sh
+  docker build --file Dockerfile.dev --tag backend-dev .
+  ```
+  **Note**: The first build will take about 10 minutes. Please be patient. Subsequent builds should be quicker (given that the image has not been prunes).
+- Run container
+  ```sh
+  docker run --detach --name backend-dev-container --publish 80:80 backend-dev
+  ```
+- Open your browser at http://0.0.0.0/80.
+- For other docker commands, see [useful_commands.md](./useful_commands.md)
 
 ### Interactive API docs
 
@@ -58,7 +81,7 @@ poetry install --no-root
 
 #### Running the notebook in VS Code
 
-- Alternatively, you can install `https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter` and run the notebook in VS Code.
+- Alternatively, you can install the [Jupyer extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) and run the notebook in VS Code.
 - Ensure to use the poetry python environment as the kernel.
 
 ### Contribution Guidelines

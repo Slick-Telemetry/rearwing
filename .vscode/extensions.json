@@ -2,7 +2,6 @@
   "recommendations": [
     "aaron-bond.better-comments",
     "ms-python.black-formatter",
-    "ms-vscode-remote.remote-containers",
     "ms-azuretools.vscode-docker",
     "tamasfe.even-better-toml",
     "kisstkondoros.vscode-gutter-preview",
