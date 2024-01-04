@@ -6,8 +6,11 @@
 - [Jupyter Lab](#jupyter-lab)
   - [Opening jupyter lab](#opening-jupyter-lab)
 - [Docker](#docker)
+  - [List all docker processes](#list-all-docker-processes)
   - [Building the images](#building-the-images)
   - [Starting the containers](#starting-the-containers)
+  - [Stopping the containers](#stopping-the-containers)
+  - [Restarting the containers](#restarting-the-containers)
 
 ## Poetry
 
@@ -33,6 +36,12 @@ jupyter lab
 
 ## Docker
 
+### List all docker processes
+
+```sh
+docker ps
+```
+
 ### Building the images
 
 ```sh
@@ -47,4 +56,20 @@ docker build --file Dockerfile.prod --tag backend-prod .
 docker run --detach --name backend-dev-container --publish 80:80 backend-dev
 docker run --detach --name backend-staging-container --publish 80:80 backend-staging
 docker run --detach --name backend-prod-container --publish 80:80 backend-prod
+```
+
+### Stopping the containers
+
+```sh
+docker stop backend-dev-container
+docker stop backend-staging-container
+docker stop backend-prod-container
+```
+
+### Restarting the containers
+
+```sh
+docker restart backend-dev-container
+docker restart backend-staging-container
+docker restart backend-prod-container
 ```
