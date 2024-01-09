@@ -51,7 +51,7 @@ poetry install --no-root
     -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory)
 
 - Run `python run.py` to start the server.
-- Open your browser at `http://0.0.0.0/80`.
+- Open your browser at `http://127.0.0.1/8080`.
 
 ### Docker
 
@@ -62,15 +62,15 @@ poetry install --no-root
   **Note**: The first build will take about 10 minutes. Please be patient. Subsequent builds should be quicker (given that the image has not been prunes).
 - Run container
   ```sh
-  docker run --detach --name backend-dev-container --publish 80:80 backend-dev
+  docker run --detach --name backend-dev-container --publish 8080:8080 backend-dev
   ```
-- Open your browser at http://0.0.0.0/80.
+- Open your browser at http://127.0.0.1/8080.
 - For other docker commands, see [useful_commands.md](./useful_commands.md)
 
 ### Interactive API docs
 
-- Once the server is running, open your browser at `http://0.0.0.0:80/docs`.
-- Alternate docs can be found at `http://0.0.0.0:80/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
+- Once the server is running, open your browser at `http://127.0.0.1:8080/docs`.
+- Alternate docs can be found at `http://127.0.0.1:8080/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
 
 ### Interactive Jupyter notebook
 
