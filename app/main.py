@@ -2,12 +2,13 @@ import json
 from typing import Annotated
 
 import fastf1
-from fastapi import FastAPI, Path, status
+from fastapi import FastAPI, Query, status
 
 from app.constants import EVENT_SCHEDULE_DATETIME_DTYPE_LIST, METADATA_DESCRIPTION
 from app.models import HealthCheck, Schedule
+from app.utils import get_default_year_for_schedule
 
-# fastf1.set_log_level("WARNING") # TODO use for production
+# fastf1.set_log_level("WARNING") # TODO use for production and staging
 
 app = FastAPI(
     title="Slick Telemetry API",
@@ -58,23 +59,22 @@ def get_health() -> HealthCheck:
     return HealthCheck(status="OK")
 
 
-# TODO make {year} optional
 @app.get(
-    "/schedule/{year}",
+    "/schedule",
     tags=["schedule"],
     summary="Get events schedule for a Formula 1 calendar year",
-    response_description="Return list of events schedule",
+    response_description="Return list of events schedule for a Formula 1 calendar year",
     status_code=status.HTTP_200_OK,
     response_model=list[Schedule],
 )
 def get_schedule(
     year: Annotated[
-        int,
-        Path(
+        int | None,
+        Query(
             title="The year for which to get the schedule",
             gt=1949,  # Supported years are 1950 to current
         ),
-    ]
+    ] = get_default_year_for_schedule()
 ) -> list[Schedule]:
     """
     ## Get events schedule for a Formula 1 calendar year
