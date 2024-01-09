@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from typing import Annotated
 
 import fastf1
@@ -73,8 +74,9 @@ def get_schedule(
         Query(
             title="The year for which to get the schedule",
             gt=1949,  # Supported years are 1950 to current
+            le=datetime.today().year,
         ),
-    ] = get_default_year_for_schedule()
+    ] = None
 ) -> list[Schedule]:
     """
     ## Get events schedule for a Formula 1 calendar year
@@ -82,6 +84,9 @@ def get_schedule(
     Returns:
         list[Schedule]: Returns a JSON response with the list of event schedule
     """
+    if year is None:
+        year = get_default_year_for_schedule()
+
     event_schedule = fastf1.get_event_schedule(year)
 
     # Convert timestamp(z) related columns' data into a string type
