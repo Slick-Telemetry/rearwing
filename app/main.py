@@ -4,12 +4,17 @@ from typing import Annotated
 
 import fastf1
 from fastapi import FastAPI, Query, status
+from fastapi.middleware.cors import CORSMiddleware
+
 
 from app.constants import EVENT_SCHEDULE_DATETIME_DTYPE_LIST, METADATA_DESCRIPTION
 from app.models import HealthCheck, Schedule
 from app.utils import get_default_year_for_schedule
 
 # fastf1.set_log_level("WARNING") # TODO use for production and staging
+
+
+
 
 app = FastAPI(
     title="Slick Telemetry API",
@@ -24,6 +29,18 @@ app = FastAPI(
         "name": "GNU General Public License v3.0",
         "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
     },
+)
+
+# Cors Middleware
+origins = [
+    "http://localhost:3000"
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
