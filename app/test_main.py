@@ -71,12 +71,12 @@ def test_get_schedule_bad_year_lower_limit():
     assert response.json() == {
         "detail": [
             {
-                "type": "greater_than",
+                "type": "greater_than_equal",
                 "loc": ["query", "year"],
-                "msg": "Input should be greater than 1949",
+                "msg": "Input should be greater than or equal to 1950",
                 "input": "1949",
-                "ctx": {"gt": 1949},
-                "url": "https://errors.pydantic.dev/2.5/v/greater_than",
+                "ctx": {"ge": 1950},
+                "url": "https://errors.pydantic.dev/2.5/v/greater_than_equal",
             }
         ]
     }

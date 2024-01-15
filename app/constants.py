@@ -1,3 +1,5 @@
+from datetime import datetime
+
 METADATA_DESCRIPTION = """
 Slick Telemetry backend written in python with fastf1. 🏎 
     
@@ -19,3 +21,6 @@ EVENT_SCHEDULE_DATETIME_DTYPE_LIST = [
     "Session5Date",
     "Session5DateUtc",
 ]
+
+MIN_SUPPORTED_YEAR_FOR_SCHEDULE = 1950
+MAX_SUPPORTED_YEAR_FOR_SCHEDULE = datetime.today().year

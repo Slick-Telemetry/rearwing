@@ -6,8 +6,12 @@ import fastf1
 from fastapi import FastAPI, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 
-
-from app.constants import EVENT_SCHEDULE_DATETIME_DTYPE_LIST, METADATA_DESCRIPTION
+from app.constants import (
+    EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
+    MAX_SUPPORTED_YEAR_FOR_SCHEDULE,
+    METADATA_DESCRIPTION,
+    MIN_SUPPORTED_YEAR_FOR_SCHEDULE,
+)
 from app.models import HealthCheck, Schedule
 from app.utils import get_default_year_for_schedule
 
@@ -32,7 +36,7 @@ app = FastAPI(
 )
 
 # Cors Middleware
-origins = [
+origins = ["http://localhost:3000"]
     "http://localhost:3000"
 ]
 app.add_middleware(
@@ -90,8 +94,8 @@ def get_schedule(
         int | None,
         Query(
             title="The year for which to get the schedule",
-            gt=1949,  # Supported years are 1950 to current
-            le=datetime.today().year,
+            ge=MIN_SUPPORTED_YEAR_FOR_SCHEDULE,
+            le=MAX_SUPPORTED_YEAR_FOR_SCHEDULE,
         ),
     ] = None
 ) -> list[Schedule]:
