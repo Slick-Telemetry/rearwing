@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.12"
 fastapi = "^0.109.0"
 fastf1 = "^3.2.0"
-uvicorn = { extras = ["standard"], version = "^0.25.0" }
+uvicorn = { extras = ["standard"], version = "^0.26.0" }
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.12.1"
