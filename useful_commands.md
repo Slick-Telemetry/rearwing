@@ -3,6 +3,7 @@
 - [Poetry](#poetry)
   - [Export python dependencies from poetry to requirements.txt](#export-python-dependencies-from-poetry-to-requirementstxt)
   - [Show outated packages](#show-outated-packages)
+  - [Run tests using pytest](#run-tests-using-pytest)
 - [Jupyter Lab](#jupyter-lab)
   - [Opening jupyter lab](#opening-jupyter-lab)
 - [Docker](#docker)
@@ -24,6 +25,12 @@ poetry export --without-hashes --format=requirements.txt > requirements.txt
 
 ```sh
 poetry show --outdated
+```
+
+### Run tests using pytest
+
+```sh
+poetry run pytest -rpP
 ```
 
 ## Jupyter Lab

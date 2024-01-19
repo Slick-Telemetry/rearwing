@@ -17,6 +17,7 @@ Table of Contents:
   - [Interactive Jupyter notebook](#interactive-jupyter-notebook)
     - [Using Jupyter Lab](#using-jupyter-lab)
     - [Running the notebook in VS Code](#running-the-notebook-in-vs-code)
+  - [Running tests](#running-tests)
   - [Contribution Guidelines](#contribution-guidelines)
 - [Deployment](#deployment)
 
@@ -83,6 +84,12 @@ poetry install --no-root
 
 - Alternatively, you can install the [Jupyer extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) and run the notebook in VS Code.
 - Ensure to use the poetry python environment as the kernel.
+
+### Running tests
+
+```sh
+poetry run pytest -rpP
+```
 
 ### Contribution Guidelines
 
