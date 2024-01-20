@@ -8,14 +8,14 @@ from fastf1.ergast import Ergast
 
 from app.constants import (
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
-    MAX_SUPPORTED_ROUND_FOR_STANDINGS,
-    MAX_SUPPORTED_YEAR_FOR_SCHEDULE,
+    MAX_SUPPORTED_ROUND,
+    MAX_SUPPORTED_YEAR,
     METADATA_DESCRIPTION,
-    MIN_SUPPORTED_ROUND_FOR_STANDINGS,
-    MIN_SUPPORTED_YEAR_FOR_SCHEDULE,
+    MIN_SUPPORTED_ROUND,
+    MIN_SUPPORTED_YEAR,
 )
 from app.models import HealthCheck, Schedule, Standings
-from app.utils import get_default_year_for_schedule
+from app.utils import get_default_year
 
 # fastf1.set_log_level("WARNING") # TODO use for production and staging
 
@@ -98,8 +98,8 @@ def get_schedule(
         int | None,
         Query(
             title="The year for which to get the schedule",
-            ge=MIN_SUPPORTED_YEAR_FOR_SCHEDULE,
-            le=MAX_SUPPORTED_YEAR_FOR_SCHEDULE,
+            ge=MIN_SUPPORTED_YEAR,
+            le=MAX_SUPPORTED_YEAR,
         ),
     ] = None
 ) -> list[Schedule]:
@@ -111,7 +111,7 @@ def get_schedule(
         list[Schedule]: Returns a JSON response with the list of event schedule
     """
     if year is None:
-        year = get_default_year_for_schedule()
+        year = get_default_year()
 
     event_schedule = fastf1.get_event_schedule(year)
 
@@ -142,16 +142,16 @@ def get_standings(
         int | None,
         Query(
             title="The year for which to get the driver and contructors standing. If the season hasn't ended you will get the current standings.",
-            ge=MIN_SUPPORTED_YEAR_FOR_SCHEDULE,
-            le=MAX_SUPPORTED_YEAR_FOR_SCHEDULE,
+            ge=MIN_SUPPORTED_YEAR,
+            le=MAX_SUPPORTED_YEAR,
         ),
     ] = None,
     round: Annotated[
-        Literal["last"] | int | None,
+        int | None,
         Query(
             title="The round in a year for which to get the driver and contructor standings",
-            ge=MIN_SUPPORTED_ROUND_FOR_STANDINGS,
-            le=MAX_SUPPORTED_ROUND_FOR_STANDINGS,
+            ge=MIN_SUPPORTED_ROUND,
+            le=MAX_SUPPORTED_ROUND,
         ),
     ] = None,
 ) -> Standings:
@@ -165,27 +165,46 @@ def get_standings(
 
     if year is None and round is None:
         # neither year nor round are provided; get results for the last round of the default year
-        year = get_default_year_for_schedule()
-        round = "last"
+        year = get_default_year()
     elif year is None and round is not None:
+        # only round is provided; error out
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Bad request. Must provide the "year" parameter.',
         )
-    elif year is not None and round is None:
-        # only year is provided; get results for last round of that year
-        round = "last"
+
+    # inputs are good; either one of the two remaining cases:
+    # 1. both year and round are provided
+    # 2. only year is provided
 
     driver_standings = ergast.get_driver_standings(season=year, round=round)
     constructor_standings = ergast.get_constructor_standings(season=year, round=round)
-    data: Standings = {}
 
-    if len(driver_standings) > 0 and len(constructor_standings) > 0:
-        data = {
+    driver_standings_available = True if len(driver_standings) > 0 else False
+    constructor_standings_available = True if len(constructor_standings) > 0 else False
+
+    if driver_standings_available and constructor_standings_available:
+        # both driver and constructor standings are available
+        data: Standings = {
             "season": driver_standings[0]["season"],
             "round": driver_standings[0]["round"],
             "DriverStandings": driver_standings[0]["DriverStandings"],
             "ConstructorStandings": constructor_standings[0]["ConstructorStandings"],
         }
-
-    return data
+        return data
+    elif not driver_standings_available and not constructor_standings_available:
+        # neither driver nor constructor standings are available
+        raise HTTPException(
+            status_code=404, detail="Driver and constructor standings not found."
+        )
+    elif driver_standings_available:
+        # only driver standings are available
+        raise HTTPException(status_code=404, detail="Constructor standings not found.")
+    elif constructor_standings_available:
+        # only constructor standings are available
+        raise HTTPException(status_code=404, detail="Driver standings not found.")
+    else:
+        # something went wrong, investigate
+        raise HTTPException(
+            status_code=500, detail="Something went wrong. Investigate!"
+        )
