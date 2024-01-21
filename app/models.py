@@ -8,7 +8,7 @@ class ReadRoot(BaseModel):
 
 
 class Schedule(BaseModel):
-    """Model to store schedule data for a Formula 1 calendar year."""
+    """Response model for schedule data for a Formula 1 calendar year."""
 
     RoundNumber: int
     Country: str
@@ -39,3 +39,55 @@ class HealthCheck(BaseModel):
     """Response model to validate and return when performing a health check."""
 
     status: str = "OK"
+
+
+class Driver(BaseModel):
+    """Model for storing driver data"""
+
+    driverId: str
+    permanentNumber: str
+    code: str
+    url: str
+    givenName: str
+    familyName: str
+    dateOfBirth: str
+    nationality: str
+
+
+class Contructor(BaseModel):
+    """Model for storing constructor data"""
+
+    constructorId: str
+    url: str
+    name: str
+    nationality: str
+
+
+class DriverStandings(BaseModel):
+    """Model for storing driver standings data"""
+
+    position: str
+    positionText: str
+    points: str
+    wins: str
+    Driver: Driver
+    Constructors: list[Contructor]
+
+
+class ConstructorStandings(BaseModel):
+    """Model for storing constructor standings data"""
+
+    position: str
+    positionText: str
+    points: str
+    wins: str
+    Constructor: Contructor
+
+
+class Standings(BaseModel):
+    """Response model for driver and contructor standings for a given season and round"""
+
+    season: int
+    round: int
+    DriverStandings: list[DriverStandings]
+    ConstructorStandings: list[ConstructorStandings]

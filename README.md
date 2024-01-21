@@ -17,6 +17,7 @@ Table of Contents:
   - [Interactive Jupyter notebook](#interactive-jupyter-notebook)
     - [Using Jupyter Lab](#using-jupyter-lab)
     - [Running the notebook in VS Code](#running-the-notebook-in-vs-code)
+  - [Running tests](#running-tests)
   - [Contribution Guidelines](#contribution-guidelines)
 - [Deployment](#deployment)
 
@@ -24,7 +25,7 @@ Table of Contents:
 
 ### What you'll need
 
-- [VSCode](https://code.visualstudio.com/) / [Intellij Pycharm](https://www.jetbrains.com/pycharm/)
+- [VSCode](https://code.visualstudio.com/) / [Pycharm](https://www.jetbrains.com/pycharm/)
 - [Python 3.12](https://www.python.org/) (Please check [`pyproject.toml`](./pyproject.toml) for the latest supported python version)
 - [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) for dependency management
 - [Docker Desktop](https://docs.docker.com/desktop/) [OPTIONAL]
@@ -39,13 +40,13 @@ Table of Contents:
 poetry install --no-root
 ```
 
-**Note**: Ensure that the python intepreter in your IDE is set to the newly created virtual environment by poetry. If you have not modified poetry configuration, you can find the virtual environment location as stated [here](https://python-poetry.org/docs/configuration/#cache-directory).
+**Note**: Ensure that the python interpreter in your IDE is set to the newly created virtual environment by poetry. If you have not modified poetry configuration, you can find the virtual environment location as stated [here](https://python-poetry.org/docs/configuration/#cache-directory).
 
 #### Running the project
 
 - Open up a terminal in your IDE.
   - Your IDE should activate the virtual environment for you automatically.
-  - If it doesnt, you can follow either of these steps:
+  - If it doesn't, you can follow either of these steps:
     -  Set poetry [python interpreter path in VS Code](https://code.visualstudio.com/docs/python/environments#_working-with-python-interpreters) <u> ***OR*** </u>
     -  Run `poetry shell` <u> ***OR*** </u>
     -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory)
@@ -83,6 +84,12 @@ poetry install --no-root
 
 - Alternatively, you can install the [Jupyer extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) and run the notebook in VS Code.
 - Ensure to use the poetry python environment as the kernel.
+
+### Running tests
+
+```sh
+poetry run pytest -rpP
+```
 
 ### Contribution Guidelines
 

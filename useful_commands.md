@@ -2,7 +2,8 @@
 
 - [Poetry](#poetry)
   - [Export python dependencies from poetry to requirements.txt](#export-python-dependencies-from-poetry-to-requirementstxt)
-  - [Show outated packages](#show-outated-packages)
+  - [Show outdated packages](#show-outdated-packages)
+  - [Run tests using pytest](#run-tests-using-pytest)
 - [Jupyter Lab](#jupyter-lab)
   - [Opening jupyter lab](#opening-jupyter-lab)
 - [Docker](#docker)
@@ -20,10 +21,16 @@
 poetry export --without-hashes --format=requirements.txt > requirements.txt
 ```
 
-### Show outated packages
+### Show outdated packages
 
 ```sh
 poetry show --outdated
+```
+
+### Run tests using pytest
+
+```sh
+poetry run pytest -rpP
 ```
 
 ## Jupyter Lab
@@ -53,7 +60,7 @@ docker build --file Dockerfile.prod --tag backend-prod .
 ### Starting the containers
 
 ```sh
-docker run --detach --name backend-dev-container --publish 80:80 backend-dev
+docker run --detach --name backend-dev-container --publish 8081:8081 backend-dev
 docker run --detach --name backend-staging-container --publish 80:80 backend-staging
 docker run --detach --name backend-prod-container --publish 80:80 backend-prod
 ```

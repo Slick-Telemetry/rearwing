@@ -1,19 +1,28 @@
 import json
-from datetime import datetime
-from typing import Annotated
+from typing import Annotated, Literal
 
 import fastf1
-from fastapi import FastAPI, Query, status
+from fastapi import FastAPI, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastf1.ergast import Ergast
 
-
-from app.constants import EVENT_SCHEDULE_DATETIME_DTYPE_LIST, METADATA_DESCRIPTION
-from app.models import HealthCheck, Schedule
-from app.utils import get_default_year_for_schedule
+from app.constants import (
+    EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
+    MAX_SUPPORTED_ROUND,
+    MAX_SUPPORTED_YEAR,
+    METADATA_DESCRIPTION,
+    MIN_SUPPORTED_ROUND,
+    MIN_SUPPORTED_YEAR,
+)
+from app.models import HealthCheck, Schedule, Standings
+from app.utils import get_default_year
 
 # fastf1.set_log_level("WARNING") # TODO use for production and staging
 
-
+# Cors Middleware
+origins = ["http://localhost:3000"]
+# Ergast configuration
+ergast = Ergast(result_type="raw", auto_cast=True)
 
 
 app = FastAPI(
@@ -31,16 +40,14 @@ app = FastAPI(
     },
 )
 
-# Cors Middleware
-origins = [
-    "http://localhost:3000"
-]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    # HTTPSRedirectMiddleware # TODO use for production and staging
 )
 
 
@@ -71,7 +78,8 @@ def get_health() -> HealthCheck:
     to ensure a robust container orchestration and management is in place. Other
     services which rely on proper functioning of the API service will not deploy if this
     endpoint returns any other HTTP status code except 200 (OK).
-    Returns:
+
+    **Returns**:
         HealthCheck: Returns a JSON response with the health status
     """
     return HealthCheck(status="OK")
@@ -90,23 +98,24 @@ def get_schedule(
         int | None,
         Query(
             title="The year for which to get the schedule",
-            gt=1949,  # Supported years are 1950 to current
-            le=datetime.today().year,
+            ge=MIN_SUPPORTED_YEAR,
+            le=MAX_SUPPORTED_YEAR,
         ),
     ] = None
 ) -> list[Schedule]:
     """
     ## Get events schedule for a Formula 1 calendar year
     Endpoint to get events schedule for Formula 1 calendar year.
-    Returns:
+
+    **Returns**:
         list[Schedule]: Returns a JSON response with the list of event schedule
     """
     if year is None:
-        year = get_default_year_for_schedule()
+        year = get_default_year()
 
     event_schedule = fastf1.get_event_schedule(year)
 
-    # Convert timestamp(z) related columns' data into a string type
+    # Convert timestamp(z) related columns' data into string type
     # https://stackoverflow.com/questions/50404559/python-error-typeerror-object-of-type-timestamp-is-not-json-serializable
     for col in EVENT_SCHEDULE_DATETIME_DTYPE_LIST:
         event_schedule[col] = event_schedule[col].astype(str)
@@ -118,3 +127,84 @@ def get_schedule(
     event_schedule_as_json_obj = json.loads(event_schedule_as_json)
 
     return event_schedule_as_json_obj
+
+
+@app.get(
+    "/standings",
+    tags=["standings"],
+    summary="Get drivers and contructors standings ",
+    response_description="Return a list of drivers and contructors standings at specific points of a season. If the season hasn't ended you will get the current standings.",
+    status_code=status.HTTP_200_OK,
+    response_model=Standings,
+)
+def get_standings(
+    year: Annotated[
+        int | None,
+        Query(
+            title="The year for which to get the driver and contructors standing. If the season hasn't ended you will get the current standings.",
+            ge=MIN_SUPPORTED_YEAR,
+            le=MAX_SUPPORTED_YEAR,
+        ),
+    ] = None,
+    round: Annotated[
+        int | None,
+        Query(
+            title="The round in a year for which to get the driver and contructor standings",
+            ge=MIN_SUPPORTED_ROUND,
+            le=MAX_SUPPORTED_ROUND,
+        ),
+    ] = None,
+) -> Standings:
+    """
+    ## Get driver and contructor standings
+    Endpoint to get driver and contructor standings at specific points of a season. If the season hasn't ended you will get the current standings.
+
+    **Returns**:
+        Standings: Returns a JSON response with the driver and constructor standings
+    """
+
+    if year is None and round is None:
+        # neither year nor round are provided; get results for the last round of the default year
+        year = get_default_year()
+    elif year is None and round is not None:
+        # only round is provided; error out
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail='Bad request. Must provide the "year" parameter.',
+        )
+
+    # inputs are good; either one of the two remaining cases:
+    # 1. both year and round are provided
+    # 2. only year is provided
+
+    driver_standings = ergast.get_driver_standings(season=year, round=round)
+    constructor_standings = ergast.get_constructor_standings(season=year, round=round)
+
+    driver_standings_available = True if len(driver_standings) > 0 else False
+    constructor_standings_available = True if len(constructor_standings) > 0 else False
+
+    if driver_standings_available and constructor_standings_available:
+        # both driver and constructor standings are available
+        data: Standings = {
+            "season": driver_standings[0]["season"],
+            "round": driver_standings[0]["round"],
+            "DriverStandings": driver_standings[0]["DriverStandings"],
+            "ConstructorStandings": constructor_standings[0]["ConstructorStandings"],
+        }
+        return data
+    elif not driver_standings_available and not constructor_standings_available:
+        # neither driver nor constructor standings are available
+        raise HTTPException(
+            status_code=404, detail="Driver and constructor standings not found."
+        )
+    elif driver_standings_available:
+        # only driver standings are available
+        raise HTTPException(status_code=404, detail="Constructor standings not found.")
+    elif constructor_standings_available:
+        # only constructor standings are available
+        raise HTTPException(status_code=404, detail="Driver standings not found.")
+    else:
+        # something went wrong, investigate
+        raise HTTPException(
+            status_code=500, detail="Something went wrong. Investigate!"
+        )
