@@ -3,7 +3,7 @@ from datetime import datetime
 import fastf1
 
 
-def get_default_year_for_schedule() -> int:
+def get_default_year() -> int:
     # default year is defined as the year which has data for atleast 1 race session
 
     current_year = datetime.today().year
