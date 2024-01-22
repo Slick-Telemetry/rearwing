@@ -107,6 +107,8 @@ def get_schedule(
     ## Get events schedule for a Formula 1 calendar year
     Endpoint to get events schedule for Formula 1 calendar year.
 
+    **NOTE**: If `year` is not provided; we use the default year. Default year is defined as the year which has data for at least 1 race session.
+
     **Returns**:
         list[Schedule]: Returns a JSON response with the list of event schedule
     """
@@ -132,8 +134,8 @@ def get_schedule(
 @app.get(
     "/standings",
     tags=["standings"],
-    summary="Get drivers and contructors standings ",
-    response_description="Return a list of drivers and contructors standings at specific points of a season. If the season hasn't ended you will get the current standings.",
+    summary="Get drivers and constructors standings ",
+    response_description="Return a list of drivers and constructors standings at specific points of a season. If the season hasn't ended you will get the current standings.",
     status_code=status.HTTP_200_OK,
     response_model=Standings,
 )
@@ -141,7 +143,7 @@ def get_standings(
     year: Annotated[
         int | None,
         Query(
-            title="The year for which to get the driver and contructors standing. If the season hasn't ended you will get the current standings.",
+            title="The year for which to get the driver and constructors standing. If the season hasn't ended you will get the current standings.",
             ge=MIN_SUPPORTED_YEAR,
             le=MAX_SUPPORTED_YEAR,
         ),
@@ -149,15 +151,17 @@ def get_standings(
     round: Annotated[
         int | None,
         Query(
-            title="The round in a year for which to get the driver and contructor standings",
+            title="The round in a year for which to get the driver and constructor standings",
             ge=MIN_SUPPORTED_ROUND,
             le=MAX_SUPPORTED_ROUND,
         ),
     ] = None,
 ) -> Standings:
     """
-    ## Get driver and contructor standings
-    Endpoint to get driver and contructor standings at specific points of a season. If the season hasn't ended you will get the current standings.
+    ## Get driver and constructor standings
+    Endpoint to get driver and constructor standings at specific points of a season. If the season hasn't ended you will get the current standings.
+
+    **NOTE**: If `year` is not provided; we use the default year. Default year is defined as the year which has data for at least 1 race session.
 
     **Returns**:
         Standings: Returns a JSON response with the driver and constructor standings
