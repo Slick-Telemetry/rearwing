@@ -25,7 +25,7 @@ def test_read_root():
 # endregion root
 
 
-# region healtcheck
+# region healthcheck
 
 
 def test_healthcheck():

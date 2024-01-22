@@ -54,7 +54,7 @@ class Driver(BaseModel):
     nationality: str
 
 
-class Contructor(BaseModel):
+class Constructor(BaseModel):
     """Model for storing constructor data"""
 
     constructorId: str
@@ -71,7 +71,7 @@ class DriverStandings(BaseModel):
     points: str
     wins: str
     Driver: Driver
-    Constructors: list[Contructor]
+    Constructors: list[Constructor]
 
 
 class ConstructorStandings(BaseModel):
@@ -81,11 +81,11 @@ class ConstructorStandings(BaseModel):
     positionText: str
     points: str
     wins: str
-    Constructor: Contructor
+    Constructor: Constructor
 
 
 class Standings(BaseModel):
-    """Response model for driver and contructor standings for a given season and round"""
+    """Response model for driver and constructor standings for a given season and round"""
 
     season: int
     round: int
