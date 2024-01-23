@@ -3526,3 +3526,602 @@ def test_get_standings_bad_year_upper_limit_round_lower_limit():
 # endregion standings - bad inputs
 
 # endregion standings
+
+
+# region results
+
+# region results - good inputs
+
+
+def test_get_results():
+    response = client.get("/results/2023/5/2")
+    assert response.status_code == 200
+    assert response.json() == [
+        {
+            "DriverNumber": "1",
+            "BroadcastName": "M VERSTAPPEN",
+            "Abbreviation": "VER",
+            "DriverId": "max_verstappen",
+            "TeamName": "Red Bull Racing",
+            "TeamColor": "3671C6",
+            "TeamId": "red_bull",
+            "FirstName": "Max",
+            "LastName": "Verstappen",
+            "FullName": "Max Verstappen",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/1col/image.png",
+            "CountryCode": "NED",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "10",
+            "BroadcastName": "P GASLY",
+            "Abbreviation": "GAS",
+            "DriverId": "gasly",
+            "TeamName": "Alpine",
+            "TeamColor": "2293D1",
+            "TeamId": "alpine",
+            "FirstName": "Pierre",
+            "LastName": "Gasly",
+            "FullName": "Pierre Gasly",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/P/PIEGAS01_Pierre_Gasly/piegas01.png.transform/1col/image.png",
+            "CountryCode": "FRA",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "11",
+            "BroadcastName": "S PEREZ",
+            "Abbreviation": "PER",
+            "DriverId": "perez",
+            "TeamName": "Red Bull Racing",
+            "TeamColor": "3671C6",
+            "TeamId": "red_bull",
+            "FirstName": "Sergio",
+            "LastName": "Perez",
+            "FullName": "Sergio Perez",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/S/SERPER01_Sergio_Perez/serper01.png.transform/1col/image.png",
+            "CountryCode": "MEX",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "14",
+            "BroadcastName": "F ALONSO",
+            "Abbreviation": "ALO",
+            "DriverId": "alonso",
+            "TeamName": "Aston Martin",
+            "TeamColor": "358C75",
+            "TeamId": "aston_martin",
+            "FirstName": "Fernando",
+            "LastName": "Alonso",
+            "FullName": "Fernando Alonso",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/F/FERALO01_Fernando_Alonso/feralo01.png.transform/1col/image.png",
+            "CountryCode": "ESP",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "16",
+            "BroadcastName": "C LECLERC",
+            "Abbreviation": "LEC",
+            "DriverId": "leclerc",
+            "TeamName": "Ferrari",
+            "TeamColor": "F91536",
+            "TeamId": "ferrari",
+            "FirstName": "Charles",
+            "LastName": "Leclerc",
+            "FullName": "Charles Leclerc",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/C/CHALEC01_Charles_Leclerc/chalec01.png.transform/1col/image.png",
+            "CountryCode": "MON",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "18",
+            "BroadcastName": "L STROLL",
+            "Abbreviation": "STR",
+            "DriverId": "stroll",
+            "TeamName": "Aston Martin",
+            "TeamColor": "358C75",
+            "TeamId": "aston_martin",
+            "FirstName": "Lance",
+            "LastName": "Stroll",
+            "FullName": "Lance Stroll",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/L/LANSTR01_Lance_Stroll/lanstr01.png.transform/1col/image.png",
+            "CountryCode": "CAN",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "2",
+            "BroadcastName": "L SARGEANT",
+            "Abbreviation": "SAR",
+            "DriverId": "sargeant",
+            "TeamName": "Williams",
+            "TeamColor": "37BEDD",
+            "TeamId": "williams",
+            "FirstName": "Logan",
+            "LastName": "Sargeant",
+            "FullName": "Logan Sargeant",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/L/LOGSAR01_Logan_Sargeant/logsar01.png.transform/1col/image.png",
+            "CountryCode": "USA",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "20",
+            "BroadcastName": "K MAGNUSSEN",
+            "Abbreviation": "MAG",
+            "DriverId": "kevin_magnussen",
+            "TeamName": "Haas F1 Team",
+            "TeamColor": "B6BABD",
+            "TeamId": "haas",
+            "FirstName": "Kevin",
+            "LastName": "Magnussen",
+            "FullName": "Kevin Magnussen",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/K/KEVMAG01_Kevin_Magnussen/kevmag01.png.transform/1col/image.png",
+            "CountryCode": "DEN",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "21",
+            "BroadcastName": "N DE VRIES",
+            "Abbreviation": "DEV",
+            "DriverId": "de_vries",
+            "TeamName": "AlphaTauri",
+            "TeamColor": "5E8FAA",
+            "TeamId": "alphatauri",
+            "FirstName": "Nyck",
+            "LastName": "De Vries",
+            "FullName": "Nyck De Vries",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/N/NYCDEV01_Nyck_De%20Vries/nycdev01.png.transform/1col/image.png",
+            "CountryCode": "NED",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "22",
+            "BroadcastName": "Y TSUNODA",
+            "Abbreviation": "TSU",
+            "DriverId": "tsunoda",
+            "TeamName": "AlphaTauri",
+            "TeamColor": "5E8FAA",
+            "TeamId": "alphatauri",
+            "FirstName": "Yuki",
+            "LastName": "Tsunoda",
+            "FullName": "Yuki Tsunoda",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/Y/YUKTSU01_Yuki_Tsunoda/yuktsu01.png.transform/1col/image.png",
+            "CountryCode": "JPN",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "23",
+            "BroadcastName": "A ALBON",
+            "Abbreviation": "ALB",
+            "DriverId": "albon",
+            "TeamName": "Williams",
+            "TeamColor": "37BEDD",
+            "TeamId": "williams",
+            "FirstName": "Alexander",
+            "LastName": "Albon",
+            "FullName": "Alexander Albon",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/A/ALEALB01_Alexander_Albon/alealb01.png.transform/1col/image.png",
+            "CountryCode": "THA",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "24",
+            "BroadcastName": "G ZHOU",
+            "Abbreviation": "ZHO",
+            "DriverId": "zhou",
+            "TeamName": "Alfa Romeo",
+            "TeamColor": "C92D4B",
+            "TeamId": "alfa",
+            "FirstName": "Guanyu",
+            "LastName": "Zhou",
+            "FullName": "Guanyu Zhou",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/G/GUAZHO01_Guanyu_Zhou/guazho01.png.transform/1col/image.png",
+            "CountryCode": "CHN",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "27",
+            "BroadcastName": "N HULKENBERG",
+            "Abbreviation": "HUL",
+            "DriverId": "hulkenberg",
+            "TeamName": "Haas F1 Team",
+            "TeamColor": "B6BABD",
+            "TeamId": "haas",
+            "FirstName": "Nico",
+            "LastName": "Hulkenberg",
+            "FullName": "Nico Hulkenberg",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/N/NICHUL01_Nico_Hulkenberg/nichul01.png.transform/1col/image.png",
+            "CountryCode": "GER",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "31",
+            "BroadcastName": "E OCON",
+            "Abbreviation": "OCO",
+            "DriverId": "ocon",
+            "TeamName": "Alpine",
+            "TeamColor": "2293D1",
+            "TeamId": "alpine",
+            "FirstName": "Esteban",
+            "LastName": "Ocon",
+            "FullName": "Esteban Ocon",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/E/ESTOCO01_Esteban_Ocon/estoco01.png.transform/1col/image.png",
+            "CountryCode": "FRA",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "4",
+            "BroadcastName": "L NORRIS",
+            "Abbreviation": "NOR",
+            "DriverId": "norris",
+            "TeamName": "McLaren",
+            "TeamColor": "F58020",
+            "TeamId": "mclaren",
+            "FirstName": "Lando",
+            "LastName": "Norris",
+            "FullName": "Lando Norris",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/L/LANNOR01_Lando_Norris/lannor01.png.transform/1col/image.png",
+            "CountryCode": "GBR",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "44",
+            "BroadcastName": "L HAMILTON",
+            "Abbreviation": "HAM",
+            "DriverId": "hamilton",
+            "TeamName": "Mercedes",
+            "TeamColor": "6CD3BF",
+            "TeamId": "mercedes",
+            "FirstName": "Lewis",
+            "LastName": "Hamilton",
+            "FullName": "Lewis Hamilton",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png.transform/1col/image.png",
+            "CountryCode": "GBR",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "55",
+            "BroadcastName": "C SAINZ",
+            "Abbreviation": "SAI",
+            "DriverId": "sainz",
+            "TeamName": "Ferrari",
+            "TeamColor": "F91536",
+            "TeamId": "ferrari",
+            "FirstName": "Carlos",
+            "LastName": "Sainz",
+            "FullName": "Carlos Sainz",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/C/CARSAI01_Carlos_Sainz/carsai01.png.transform/1col/image.png",
+            "CountryCode": "ESP",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "63",
+            "BroadcastName": "G RUSSELL",
+            "Abbreviation": "RUS",
+            "DriverId": "russell",
+            "TeamName": "Mercedes",
+            "TeamColor": "6CD3BF",
+            "TeamId": "mercedes",
+            "FirstName": "George",
+            "LastName": "Russell",
+            "FullName": "George Russell",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/G/GEORUS01_George_Russell/georus01.png.transform/1col/image.png",
+            "CountryCode": "GBR",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "77",
+            "BroadcastName": "V BOTTAS",
+            "Abbreviation": "BOT",
+            "DriverId": "bottas",
+            "TeamName": "Alfa Romeo",
+            "TeamColor": "C92D4B",
+            "TeamId": "alfa",
+            "FirstName": "Valtteri",
+            "LastName": "Bottas",
+            "FullName": "Valtteri Bottas",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/V/VALBOT01_Valtteri_Bottas/valbot01.png.transform/1col/image.png",
+            "CountryCode": "FIN",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+        {
+            "DriverNumber": "81",
+            "BroadcastName": "O PIASTRI",
+            "Abbreviation": "PIA",
+            "DriverId": "piastri",
+            "TeamName": "McLaren",
+            "TeamColor": "F58020",
+            "TeamId": "mclaren",
+            "FirstName": "Oscar",
+            "LastName": "Piastri",
+            "FullName": "Oscar Piastri",
+            "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/O/OSCPIA01_Oscar_Piastri/oscpia01.png.transform/1col/image.png",
+            "CountryCode": "AUS",
+            "Position": None,
+            "ClassifiedPosition": "",
+            "GridPosition": None,
+            "Q1": None,
+            "Q2": None,
+            "Q3": None,
+            "Time": None,
+            "Status": "",
+            "Points": None,
+        },
+    ]
+
+
+# endregion results - good inputs
+
+# region results - no inputs
+
+
+def test_get_results_no_input():
+    response = client.get("/results")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Not Found"}
+
+
+def test_get_results_year_no_input():
+    response = client.get("/results/8/2")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Not Found"}
+
+
+def test_get_results_round_no_input():
+    response = client.get("/results/2023/2")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Not Found"}
+
+
+def test_get_results_session_no_input():
+    response = client.get("/results/2023/8")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Not Found"}
+
+
+def test_get_results_year_and_round_no_input():
+    response = client.get("/results/2023/8")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Not Found"}
+
+
+def test_get_results_year_and_session_no_input():
+    response = client.get("/results/2023/8")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Not Found"}
+
+
+def test_get_results_round_and_session_no_input():
+    response = client.get("/results/2023/8")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Not Found"}
+
+
+# endregion results - no inputs
+
+# region results - bad inputs
+
+
+def test_get_results_bad_round_invalid():
+    response = client.get("/results/2023/25/2")
+    assert response.status_code == 400
+    assert response.json() == {"detail": "Bad Request. Invalid round: 25"}
+
+
+# year only lower
+def test_get_results_bar_year_only_lower_limit():
+    response = client.get(f"/results/{MIN_SUPPORTED_YEAR - 1}/1/1")
+    assert response.status_code == 422
+    assert response.json() == {
+        "detail": [
+            {
+                "type": "greater_than_equal",
+                "loc": ["path", "year"],
+                "msg": "Input should be greater than or equal to 1950",
+                "input": "1949",
+                "ctx": {"ge": 1950},
+                "url": "https://errors.pydantic.dev/2.5/v/greater_than_equal",
+            }
+        ]
+    }
+
+
+# year only upper
+def test_get_results_bar_year_only_upper_limit():
+    response = client.get(f"/results/{MAX_SUPPORTED_YEAR + 1}/1/1")
+    assert response.status_code == 422
+    assert response.json() == {
+        "detail": [
+            {
+                "type": "greater_than_equal",
+                "loc": ["path", "year"],
+                "msg": "Input should be greater than or equal to 1950",
+                "input": "1949",
+                "ctx": {"ge": 1950},
+                "url": "https://errors.pydantic.dev/2.5/v/greater_than_equal",
+            }
+        ]
+    }
+
+
+# round only lower
+# round only upper
+# session only lower
+# session only upper
+
+# year lower, round lower
+# year lower, round upper
+# year upper, round lower
+# year upper, round upper
+# year lower, session lower
+# year lower, session upper
+# year upper, session lower
+# year upper, session upper
+# round lower, session lower
+# round lower, session upper
+# round upper, session lower
+# round upper, session upper
+
+# year lower, round lower, session lower
+# year lower, round lower, session upper
+# year lower, round upper, session lower
+# year lower, round upper, session upper
+# year upper, round lower, session lower
+# year upper, round lower, session upper
+# year upper, round upper, session lower
+# year upper, round upper, session upper
+
+
+# endregion results - bad inputs
+
+# endregion results
