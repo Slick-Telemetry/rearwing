@@ -3338,9 +3338,9 @@ def test_get_standings_bad_round_only_upper_limit():
             {
                 "type": "less_than_equal",
                 "loc": ["query", "round"],
-                "msg": "Input should be less than or equal to 30",
-                "input": "31",
-                "ctx": {"le": 30},
+                "msg": "Input should be less than or equal to 25",
+                "input": "26",
+                "ctx": {"le": 25},
                 "url": "https://errors.pydantic.dev/2.5/v/less_than_equal",
             }
         ]
@@ -3372,9 +3372,9 @@ def test_get_standings_good_year_bad_round_upper_limit():
             {
                 "type": "less_than_equal",
                 "loc": ["query", "round"],
-                "msg": "Input should be less than or equal to 30",
-                "input": "31",
-                "ctx": {"le": 30},
+                "msg": "Input should be less than or equal to 25",
+                "input": "26",
+                "ctx": {"le": 25},
                 "url": "https://errors.pydantic.dev/2.5/v/less_than_equal",
             }
         ]
@@ -3460,9 +3460,9 @@ def test_get_standings_bad_year_and_round_upper_limit():
             {
                 "type": "less_than_equal",
                 "loc": ["query", "round"],
-                "msg": "Input should be less than or equal to 30",
-                "input": "31",
-                "ctx": {"le": 30},
+                "msg": "Input should be less than or equal to 25",
+                "input": "26",
+                "ctx": {"le": 25},
                 "url": "https://errors.pydantic.dev/2.5/v/less_than_equal",
             },
         ]
@@ -3487,9 +3487,9 @@ def test_get_standings_bad_year_lower_limit_round_upper_limit():
             {
                 "type": "less_than_equal",
                 "loc": ["query", "round"],
-                "msg": "Input should be less than or equal to 30",
-                "input": "31",
-                "ctx": {"le": 30},
+                "msg": "Input should be less than or equal to 25",
+                "input": "26",
+                "ctx": {"le": 25},
                 "url": "https://errors.pydantic.dev/2.5/v/less_than_equal",
             },
         ]
