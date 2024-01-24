@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastf1.ergast import Ergast
 
-from app.constants import (
+from .constants import (
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
     MAX_SUPPORTED_ROUND,
     MAX_SUPPORTED_SESSION,
@@ -16,8 +16,8 @@ from app.constants import (
     MIN_SUPPORTED_SESSION,
     MIN_SUPPORTED_YEAR,
 )
-from app.models import HealthCheck, Results, Schedule, Standings
-from app.utils import get_default_year
+from .models import HealthCheck, Results, Schedule, Standings
+from .utils import get_default_year
 
 # fastf1.set_log_level("WARNING") # TODO use for production and staging
 
@@ -288,5 +288,6 @@ def get_results(
         )
     except KeyError as ke:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=f". {str(ke)}"
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Likely an error when fetching results data for a session that has yet to happen. {str(ke)}",
         )
