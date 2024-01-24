@@ -2,20 +2,22 @@ import json
 from typing import Annotated, Literal
 
 import fastf1
-from fastapi import FastAPI, HTTPException, Query, status
+from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastf1.ergast import Ergast
 
-from app.constants import (
+from .constants import (
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
     MAX_SUPPORTED_ROUND,
+    MAX_SUPPORTED_SESSION,
     MAX_SUPPORTED_YEAR,
     METADATA_DESCRIPTION,
     MIN_SUPPORTED_ROUND,
+    MIN_SUPPORTED_SESSION,
     MIN_SUPPORTED_YEAR,
 )
-from app.models import HealthCheck, Schedule, Standings
-from app.utils import get_default_year
+from .models import HealthCheck, Results, Schedule, Standings
+from .utils import get_default_year
 
 # fastf1.set_log_level("WARNING") # TODO use for production and staging
 
@@ -112,6 +114,7 @@ def get_schedule(
     **Returns**:
         list[Schedule]: Returns a JSON response with the list of event schedule
     """
+
     if year is None:
         year = get_default_year()
 
@@ -199,16 +202,92 @@ def get_standings(
     elif not driver_standings_available and not constructor_standings_available:
         # neither driver nor constructor standings are available
         raise HTTPException(
-            status_code=404, detail="Driver and constructor standings not found."
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Driver and constructor standings not found.",
         )
     elif driver_standings_available:
         # only driver standings are available
-        raise HTTPException(status_code=404, detail="Constructor standings not found.")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Constructor standings not found.",
+        )
     elif constructor_standings_available:
         # only constructor standings are available
-        raise HTTPException(status_code=404, detail="Driver standings not found.")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Driver standings not found."
+        )
     else:
         # something went wrong, investigate
         raise HTTPException(
             status_code=500, detail="Something went wrong. Investigate!"
+        )
+
+
+@app.get(
+    "/results/{year}/{round}/{session}",
+    tags=["results"],
+    summary="Get session results for a given year, round and session",
+    response_description="Return session results for a given year, round and session.",
+    status_code=status.HTTP_200_OK,
+    response_model=list[Results],
+)
+def get_results(
+    year: Annotated[
+        int,
+        Path(
+            title="The year for which to get the results",
+            ge=MIN_SUPPORTED_YEAR,
+            le=MAX_SUPPORTED_YEAR,
+        ),
+    ],
+    round: Annotated[
+        int,
+        Path(
+            title="The round in a year for which to get the results",
+            ge=MIN_SUPPORTED_ROUND,
+            le=MAX_SUPPORTED_ROUND,
+        ),
+    ],
+    session: Annotated[
+        int,
+        Path(
+            title="The session in a round for which to get the results",
+            ge=MIN_SUPPORTED_SESSION,
+            le=MAX_SUPPORTED_SESSION,
+        ),
+    ],
+) -> list[Results]:
+    """
+    ## Get session results for a given year, round and session
+    Endpoint to get session results for a given year, round and session.
+
+    **Returns**:
+        list[Results]: Returns a JSON response with the list of session results
+    """
+
+    try:
+        session_obj = fastf1.get_session(year=year, gp=round, identifier=session)
+        session_obj.load(
+            laps=True,
+            telemetry=False,
+            weather=False,
+            messages=False,
+        )
+        session_results = session_obj.results
+
+        # Convert the dataframe to a JSON string
+        session_results_as_json = session_results.to_json(orient="records")
+
+        # Parse the JSON string to a JSON object
+        session_results_as_json_obj = json.loads(session_results_as_json)
+        return session_results_as_json_obj
+
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}"
+        )
+    except KeyError as ke:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Likely an error when fetching results data for a session that has yet to happen. {str(ke)}",
         )
