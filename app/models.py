@@ -91,3 +91,29 @@ class Standings(BaseModel):
     round: int
     DriverStandings: list[DriverStandings]
     ConstructorStandings: list[ConstructorStandings]
+
+
+class Results(BaseModel):
+    """Response model for session results for a given year, round and session"""
+
+    DriverNumber: str
+    BroadcastName: str
+    Abbreviation: str
+    DriverId: str
+    TeamName: str
+    TeamColor: str
+    TeamId: str
+    FirstName: str
+    LastName: str
+    FullName: str
+    HeadshotUrl: str
+    CountryCode: str
+    Position: float | None
+    ClassifiedPosition: str
+    GridPosition: float | None
+    Q1: int | None
+    Q2: int | None
+    Q3: int | None
+    Time: int | None
+    Status: str
+    Points: float | None
