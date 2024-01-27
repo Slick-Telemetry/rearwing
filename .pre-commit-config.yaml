@@ -1,0 +1,18 @@
+repos:
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.13.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 24.1.0
+    hooks:
+      - id: black
+        language_version: python3.12
+        stages: [pre-commit, pre-push]
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        language_version: python3.12
+        stages: [pre-commit, pre-push]
