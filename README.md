@@ -39,7 +39,7 @@ Table of Contents:
 #### Installing dependencies
 
 ```sh
-poetry install --no-root
+poetry install --sync --no-root
 ```
 
 **Note**: Ensure that the python interpreter in your IDE is set to the newly created virtual environment by poetry. If you have not modified poetry configuration, you can find the virtual environment location as stated [here](https://python-poetry.org/docs/configuration/#cache-directory).
