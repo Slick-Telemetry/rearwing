@@ -11,6 +11,8 @@ Table of Contents:
 - [Development](#development)
   - [Python virtual environment](#python-virtual-environment)
     - [Installing dependencies](#installing-dependencies)
+    - [Virtual environment sanity check](#virtual-environment-sanity-check)
+    - [Installing git hooks](#installing-git-hooks)
     - [Running the project](#running-the-project)
   - [Docker](#docker)
   - [Interactive API docs](#interactive-api-docs)
@@ -42,15 +44,25 @@ poetry install --no-root
 
 **Note**: Ensure that the python interpreter in your IDE is set to the newly created virtual environment by poetry. If you have not modified poetry configuration, you can find the virtual environment location as stated [here](https://python-poetry.org/docs/configuration/#cache-directory).
 
+#### Virtual environment sanity check
+
+- Your IDE should activate the virtual environment for you automatically.
+- If it doesn't, you can follow either of these steps:
+  -  Set poetry [python interpreter path in VS Code](https://code.visualstudio.com/docs/python/environments#_working-with-python-interpreters) <u> ***OR*** </u>
+  -  Run `poetry shell` <u> ***OR*** </u>
+  -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory)
+
+#### Installing git hooks
+
+Run this command in the python environment.
+
+```sh
+pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit
+```
+
 #### Running the project
 
 - Open up a terminal in your IDE.
-  - Your IDE should activate the virtual environment for you automatically.
-  - If it doesn't, you can follow either of these steps:
-    -  Set poetry [python interpreter path in VS Code](https://code.visualstudio.com/docs/python/environments#_working-with-python-interpreters) <u> ***OR*** </u>
-    -  Run `poetry shell` <u> ***OR*** </u>
-    -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory)
-
 - Run `python run.py` to start the server.
 - Open your browser at `http://127.0.0.1/8081`.
 
@@ -94,9 +106,8 @@ poetry run pytest -rpP
 ### Contribution Guidelines
 
 - <u> _**NEVER MERGE YOUR OWN CODE; ALWAYS RAISE A PR AGAINST `dev`!**_ </u>
-
+- Follow [conventional commit format](https://www.conventionalcommits.org/en/v1.0.0/) when authoring commit messages.
 - **Always pull latest changes**
-
   - There are several developers working on this project. Always pull/pull-rebase the latest, as necessary, from the branch you intend to commit your changes to.
   - If there are local staged/unstaged changes, please stash or discard them as appropriate and then use `git pull --rebase`.
   - If you don't want to use git CLI, to simplify these operations and have a visual representation of the git tree, we suggest to use a git GUI -
@@ -105,15 +116,11 @@ poetry run pytest -rpP
     - [Fork](https://git-fork.com/) (paid)
     - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) (freemium)
     - [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph) (free)
-
 - **Branches**:
-
   - `main` is the production mainline.
   - `staging` is the staging line.
   - `dev` is the development line (_**default branch**_).
-
 - **PR merge strategy on Github**
-
   - Code should flow in the following direction through branches:
     ```
     feature/bug fix -> dev -> staging -> main
