@@ -4,6 +4,9 @@
   - [Export python dependencies from poetry to requirements.txt](#export-python-dependencies-from-poetry-to-requirementstxt)
   - [Show outdated packages](#show-outdated-packages)
   - [Run tests using pytest](#run-tests-using-pytest)
+- [Git hooks](#git-hooks)
+  - [Install git hooks](#install-git-hooks)
+  - [Updating hooks automatically](#updating-hooks-automatically)
 - [Jupyter Lab](#jupyter-lab)
   - [Opening jupyter lab](#opening-jupyter-lab)
 - [Docker](#docker)
@@ -31,6 +34,20 @@ poetry show --outdated
 
 ```sh
 poetry run pytest -rpP
+```
+
+## Git hooks
+
+### Install git hooks
+
+```sh
+pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit
+```
+
+### Updating hooks automatically
+
+```sh
+pre-commit autoupdate
 ```
 
 ## Jupyter Lab
