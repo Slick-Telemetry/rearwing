@@ -36,4 +36,4 @@ version_files = [
     "VERSION",
 ]
 update_changelog_on_bump = true
-annotated_tag = true
+major_version_zero = true
