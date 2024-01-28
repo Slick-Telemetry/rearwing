@@ -94,10 +94,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  bump-version:
-    # bump the version except on PRs or having `bump:` in the head commit's commit message
-    if: ${{ ! (startsWith(github.event.head_commit.message , 'bump:') || github.event_name != 'pull_request') }}
-    name: ⬆️ Bump version and create changelog
+  release:
+    # create a release following the logic below:
+    # 1. when the branch is `main` AND
+    # 2. its a push event AND
+    # 3. the head commit's commit message does NOT starts with `bump:`
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && ! startsWith(github.event.head_commit.message , 'bump:') }}
+    name: ⬆️ Bump version and create changelog with a GitHub release
     needs: build
     runs-on: ubuntu-latest
 
