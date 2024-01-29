@@ -1,5 +1,5 @@
 import json
-from typing import Annotated, Literal
+from typing import Annotated
 
 import fastf1
 from fastapi import FastAPI, HTTPException, Path, Query, status
@@ -16,7 +16,7 @@ from .constants import (
     MIN_SUPPORTED_SESSION,
     MIN_SUPPORTED_YEAR,
 )
-from .models import HealthCheck, Results, Schedule, Standings
+from .models import EventSchedule, HealthCheck, Results, Schedule, Standings
 from .utils import get_default_year
 
 # fastf1.set_log_level("WARNING") # TODO use for production and staging
@@ -93,7 +93,7 @@ def get_health() -> HealthCheck:
     summary="Get events schedule for a Formula 1 calendar year",
     response_description="Return list of events schedule for a Formula 1 calendar year",
     status_code=status.HTTP_200_OK,
-    response_model=list[Schedule],
+    response_model=Schedule,
 )
 def get_schedule(
     year: Annotated[
@@ -104,7 +104,7 @@ def get_schedule(
             le=MAX_SUPPORTED_YEAR,
         ),
     ] = None
-) -> list[Schedule]:
+) -> Schedule:
     """
     ## Get events schedule for a Formula 1 calendar year
     Endpoint to get events schedule for Formula 1 calendar year.
@@ -129,9 +129,13 @@ def get_schedule(
     event_schedule_as_json = event_schedule.to_json(orient="records")
 
     # Parse the JSON string to a JSON object
-    event_schedule_as_json_obj = json.loads(event_schedule_as_json)
+    event_schedule_as_json_obj: list[EventSchedule] = json.loads(event_schedule_as_json)
+    schedule_as_json_obj: Schedule = {
+        "year": year,
+        "EventSchedule": event_schedule_as_json_obj,
+    }
 
-    return event_schedule_as_json_obj
+    return schedule_as_json_obj
 
 
 @app.get(

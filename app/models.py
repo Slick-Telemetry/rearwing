@@ -7,8 +7,8 @@ class ReadRoot(BaseModel):
     we_are: str = "SlickTelemetry"
 
 
-class Schedule(BaseModel):
-    """Response model for schedule data for a Formula 1 calendar year."""
+class EventSchedule(BaseModel):
+    """Response model for event schedule data for a Formula 1 calendar year."""
 
     RoundNumber: int
     Country: str
@@ -35,6 +35,13 @@ class Schedule(BaseModel):
     F1ApiSupport: bool
 
 
+class Schedule(BaseModel):
+    """Response model for event schedule data with year"""
+
+    year: int
+    EventSchedule: list[EventSchedule]
+
+
 class HealthCheck(BaseModel):
     """Response model to validate and return when performing a health check."""
 
@@ -42,7 +49,7 @@ class HealthCheck(BaseModel):
 
 
 class Driver(BaseModel):
-    """Model for storing driver data"""
+    """Model for driver data"""
 
     driverId: str
     permanentNumber: str
@@ -55,7 +62,7 @@ class Driver(BaseModel):
 
 
 class Constructor(BaseModel):
-    """Model for storing constructor data"""
+    """Model for constructor data"""
 
     constructorId: str
     url: str
@@ -64,7 +71,7 @@ class Constructor(BaseModel):
 
 
 class DriverStandings(BaseModel):
-    """Model for storing driver standings data"""
+    """Model for driver standings data"""
 
     position: str
     positionText: str
@@ -75,7 +82,7 @@ class DriverStandings(BaseModel):
 
 
 class ConstructorStandings(BaseModel):
-    """Model for storing constructor standings data"""
+    """Model for constructor standings data"""
 
     position: str
     positionText: str
