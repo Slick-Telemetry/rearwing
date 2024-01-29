@@ -105,7 +105,7 @@ poetry run pytest -rpP
 
 ### Contribution Guidelines
 
-- <u> _**NEVER MERGE YOUR OWN CODE; ALWAYS RAISE A PR AGAINST `dev`!**_ </u>
+- <u> ***NEVER MERGE YOUR OWN CODE; ALWAYS RAISE A PR AGAINST `dev`!*** </u>
 - Follow [conventional commit format](https://www.conventionalcommits.org/en/v1.0.0/) when authoring commit messages.
 - **Always pull latest changes**
   - There are several developers working on this project. Always pull/pull-rebase the latest, as necessary, from the branch you intend to commit your changes to.
@@ -119,20 +119,24 @@ poetry run pytest -rpP
 - **Branches**:
   - `main` is the production mainline.
   - `staging` is the staging line.
-  - `dev` is the development line (_**default branch**_).
+  - `dev` is the development line (***default branch***).
 - **PR merge strategy on Github**
   - Code should flow in the following direction through branches:
     ```
     feature/bug fix -> dev -> staging -> main
     ```
   - We'll be keeping a linear commit history and so using a combination of `Rebase and merge` and `Squash and merge` merge strategies.
-  - Use `Rebase and merge` as _**default**_ to ensure all commits from the branch to be merged are brought in individually to the target branch.
-  - `Squash and merge` may be used _**ONLY**_ when bringing in changes from a feature/bug fix branch into `dev`.
+  - Use `Rebase and merge` as ***default*** to ensure all commits from the branch to be merged are brought in individually to the target branch.
+  - `Squash and merge` may be used ***ONLY** when bringing in changes from a feature/bug fix branch into `dev`.
   - To maintain linear commit history, ensure to use `push force` when:
     - Bringing `dev` on the same commit as `staging` (ie rebasing `dev` onto `staging`).
     - Bringing `staging` on the same commit as `main` (ie rebasing `staging` onto `main`).
   - [More information on git rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase).
   - [More information on PR merge strategies](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github).
+- **Jira issue linking**
+  - Commits and PRs ***must*** be linked to a Jira issue.
+  - To do so, include the Jira issue key in the PR title and/or the commit message after the conventional commit type.
+  - [More information on Jira smart commits](https://support.atlassian.com/jira-software-cloud/docs/process-issues-with-smart-commits/).
 
 ## Deployment
 
