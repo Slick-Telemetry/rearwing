@@ -281,7 +281,7 @@ def get_results(
     try:
         session_obj = fastf1.get_session(year=year, gp=round, identifier=session)
         session_obj.load(
-            laps=True,
+            laps=False,
             telemetry=False,
             weather=False,
             messages=False,

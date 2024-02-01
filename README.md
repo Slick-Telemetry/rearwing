@@ -127,7 +127,7 @@ poetry run pytest -rpP
     ```
   - We'll be keeping a linear commit history and so using a combination of `Rebase and merge` and `Squash and merge` merge strategies.
   - Use `Rebase and merge` as ***default*** to ensure all commits from the branch to be merged are brought in individually to the target branch.
-  - `Squash and merge` may be used ***ONLY** when bringing in changes from a feature/bug fix branch into `dev`.
+  - `Squash and merge` may be used ***ONLY*** when bringing in changes from a feature/bug fix branch into `dev`.
   - To maintain linear commit history, ensure to use `push force` when:
     - Bringing `dev` on the same commit as `staging` (ie rebasing `dev` onto `staging`).
     - Bringing `staging` on the same commit as `main` (ie rebasing `staging` onto `main`).
