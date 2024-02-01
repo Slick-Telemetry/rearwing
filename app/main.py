@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastf1.ergast import Ergast
 
 from .constants import (
+    DEFAULT_SESSION_FOR_RESULTS,
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
     MAX_SUPPORTED_ROUND,
     MAX_SUPPORTED_SESSION,
@@ -100,6 +101,7 @@ def get_schedule(
         int | None,
         Query(
             title="The year for which to get the schedule",
+            description="The year for which to get the schedule",
             ge=MIN_SUPPORTED_YEAR,
             le=MAX_SUPPORTED_YEAR,
         ),
@@ -151,6 +153,7 @@ def get_standings(
         int | None,
         Query(
             title="The year for which to get the driver and constructors standing. If the season hasn't ended you will get the current standings.",
+            description="The year for which to get the driver and constructors standing. If the season hasn't ended you will get the current standings.",
             ge=MIN_SUPPORTED_YEAR,
             le=MAX_SUPPORTED_YEAR,
         ),
@@ -159,6 +162,7 @@ def get_standings(
         int | None,
         Query(
             title="The round in a year for which to get the driver and constructor standings",
+            description="The round in a year for which to get the driver and constructor standings",
             ge=MIN_SUPPORTED_ROUND,
             le=MAX_SUPPORTED_ROUND,
         ),
@@ -228,7 +232,7 @@ def get_standings(
 
 
 @app.get(
-    "/results/{year}/{round}/{session}",
+    "/results/{year}/{round}",
     tags=["results"],
     summary="Get session results for a given year, round and session",
     response_description="Return session results for a given year, round and session.",
@@ -240,6 +244,7 @@ def get_results(
         int,
         Path(
             title="The year for which to get the results",
+            description="The year for which to get the results",
             ge=MIN_SUPPORTED_YEAR,
             le=MAX_SUPPORTED_YEAR,
         ),
@@ -248,22 +253,26 @@ def get_results(
         int,
         Path(
             title="The round in a year for which to get the results",
+            description="The round in a year for which to get the results",
             ge=MIN_SUPPORTED_ROUND,
             le=MAX_SUPPORTED_ROUND,
         ),
     ],
     session: Annotated[
         int,
-        Path(
+        Query(
             title="The session in a round for which to get the results",
+            description="The session in a round for which to get the results. (5 = race)",
             ge=MIN_SUPPORTED_SESSION,
             le=MAX_SUPPORTED_SESSION,
         ),
-    ],
+    ] = DEFAULT_SESSION_FOR_RESULTS,
 ) -> list[Results]:
     """
     ## Get session results for a given year, round and session
     Endpoint to get session results for a given year, round and session.
+
+    **NOTE**: If `session` is not provided; we use the default session. Default session is the race session (5).
 
     **Returns**:
         list[Results]: Returns a JSON response with the list of session results
