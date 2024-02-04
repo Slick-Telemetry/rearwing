@@ -39,6 +39,7 @@ Table of Contents:
 #### Installing dependencies
 
 ```sh
+poetry config virtualenvs.in-project true # OPTIONAL
 poetry install --sync --no-root
 ```
 
@@ -48,9 +49,10 @@ poetry install --sync --no-root
 
 - Your IDE should activate the virtual environment for you automatically.
 - If it doesn't, you can follow either of these steps:
+  - Check the path of poetry env - `poetry env info`.
   -  Set poetry [python interpreter path in VS Code](https://code.visualstudio.com/docs/python/environments#_working-with-python-interpreters) <u> ***OR*** </u>
   -  Run `poetry shell` <u> ***OR*** </u>
-  -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory)
+  -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory).
 
 #### Installing git hooks
 
