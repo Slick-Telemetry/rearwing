@@ -4,6 +4,7 @@ from typing import Annotated
 import fastf1
 from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastf1.ergast import Ergast
 
 from .constants import (
@@ -26,6 +27,7 @@ from .utils import get_default_year
 origins = ["http://localhost:3000"]
 # Ergast configuration
 ergast = Ergast(result_type="raw", auto_cast=True)
+favicon_path = "favicon.ico"
 
 
 app = FastAPI(
@@ -52,6 +54,11 @@ app.add_middleware(
     allow_headers=["*"],
     # HTTPSRedirectMiddleware # TODO use for production and staging
 )
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse(favicon_path)
 
 
 @app.get(
