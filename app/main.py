@@ -127,7 +127,7 @@ def get_schedule(
     if year is None:
         year = get_default_year()
 
-    event_schedule = fastf1.get_event_schedule(year)
+    event_schedule = fastf1.get_event_schedule(year, include_testing=False)
 
     # Convert timestamp(z) related columns' data into string type
     # https://stackoverflow.com/questions/50404559/python-error-typeerror-object-of-type-timestamp-is-not-json-serializable
