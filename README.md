@@ -16,9 +16,6 @@ Table of Contents:
     - [Running the project](#running-the-project)
   - [Docker](#docker)
   - [Interactive API docs](#interactive-api-docs)
-  - [Interactive Jupyter notebook](#interactive-jupyter-notebook)
-    - [Using Jupyter Lab](#using-jupyter-lab)
-    - [Running the notebook in VS Code](#running-the-notebook-in-vs-code)
   - [Running tests](#running-tests)
   - [Contribution Guidelines](#contribution-guidelines)
 - [Deployment](#deployment)
@@ -66,7 +63,7 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
 
 - Open up a terminal in your IDE.
 - Run `python run.py` to start the server.
-- Open your browser at `http://127.0.0.1/8081`.
+- Open your browser at `http://127.0.0.1:8081`.
 
 ### Docker
 
@@ -86,18 +83,6 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
 
 - Once the server is running, open your browser at `http://127.0.0.1:8081/docs`.
 - Alternate docs can be found at `http://127.0.0.1:8081/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
-
-### Interactive Jupyter notebook
-
-#### Using Jupyter Lab
-
-- The project has Jupyter Lab as a dev dependency for you to rummage through FastF1.
-- Run `jupyter lab` in a new terminal and open your default browser should open automatically (if it doesn't, open browser at `http://localhost:8888/lab`).
-
-#### Running the notebook in VS Code
-
-- Alternatively, you can install the [Jupyer extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) and run the notebook in VS Code.
-- Ensure to use the poetry python environment as the kernel.
 
 ### Running tests
 

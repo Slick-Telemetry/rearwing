@@ -15,8 +15,6 @@ uvicorn = { extras = ["standard"], version = "^0.27.0.post1" }
 black = "^24.1.1"
 commitizen = "^3.14.1"
 isort = "^5.13.2"
-jupyterlab = "^4.1.0"
-jupyterlab-code-formatter = "^2.2.1"
 pre-commit = "^3.6.0"
 pytest = "^8.0.0"
 httpx = "^0.26.0"
