@@ -65,7 +65,7 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
 
 - Open up a terminal in your IDE.
 - Run `python run.py` to start the server.
-- Open your browser at `http://127.0.0.1:8081`.
+- Open your browser at `http://localhost:8081`.
 
 ### Docker
 
@@ -79,7 +79,7 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
   ```sh
   docker run --detach --name backend-dev --publish 8081:8081 backend-dev
   ```
-- Open your browser at `http://127.0.0.1/8081`.
+- Open your browser at `http://localhost/8081`.
 
 #### With Supabase
 
@@ -88,8 +88,8 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
   docker compose --detach --file compose.dev.yaml up
   ```
 - Open your browser at
-  - `http://127.0.0.1/8081` for app
-  - `http://127.0.0.1/8081` for supabase dashboard
+  - `http://localhost/8081` for app
+  - `http://localhost/8000` for supabase dashboard
   - Username: `supabase`
   - Password: `this_password_is_insecure_and_should_be_updated`
 
@@ -97,8 +97,8 @@ For other docker commands, see [useful_commands.md](./useful_commands.md)
 
 ### Interactive API docs
 
-- Once the server is running, open your browser at `http://127.0.0.1:8081/docs`.
-- Alternate docs can be found at `http://127.0.0.1:8081/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
+- Once the server is running, open your browser at `http://localhost/docs`.
+- Alternate docs can be found at `http://localhost/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
 
 ### Running tests
 
