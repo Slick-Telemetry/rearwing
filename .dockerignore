@@ -148,5 +148,8 @@ bazel-*
 # .dockerignore, Dockerfile and builder script themselves are not needed by
 # docker build.
 .dockerignore
+Dockerfile.dev
+Dockerfile.staging
+Dockerfile.prod
 tfx/tools/docker/Dockerfile*
 tfx/tools/docker/build_docker_image.sh

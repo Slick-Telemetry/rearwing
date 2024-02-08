@@ -7,14 +7,18 @@
 - [Git hooks](#git-hooks)
   - [Install git hooks](#install-git-hooks)
   - [Updating hooks automatically](#updating-hooks-automatically)
-- [Jupyter Lab](#jupyter-lab)
-  - [Opening jupyter lab](#opening-jupyter-lab)
 - [Docker](#docker)
-  - [List all docker processes](#list-all-docker-processes)
-  - [Building the images](#building-the-images)
-  - [Starting the containers](#starting-the-containers)
-  - [Stopping the containers](#stopping-the-containers)
-  - [Restarting the containers](#restarting-the-containers)
+  - [Dockerfile](#dockerfile)
+    - [List all docker processes](#list-all-docker-processes)
+    - [Build the images](#build-the-images)
+    - [Start the containers](#start-the-containers)
+    - [Stop the containers](#stop-the-containers)
+    - [Restart the containers](#restart-the-containers)
+  - [Compose](#compose)
+    - [List all docker processes](#list-all-docker-processes-1)
+    - [Build the services](#build-the-services)
+    - [Bring up the services](#bring-up-the-services)
+    - [Build and bring up the services](#build-and-bring-up-the-services)
 
 ## Poetry
 
@@ -50,23 +54,17 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
 pre-commit autoupdate
 ```
 
-## Jupyter Lab
-
-### Opening jupyter lab
-
-```sh
-jupyter lab
-```
-
 ## Docker
 
-### List all docker processes
+### Dockerfile
+
+#### List all docker processes
 
 ```sh
 docker ps
 ```
 
-### Building the images
+#### Build the images
 
 ```sh
 docker build --file Dockerfile.dev --tag backend-dev .
@@ -74,26 +72,53 @@ docker build --file Dockerfile.staging --tag backend-staging .
 docker build --file Dockerfile.prod --tag backend-prod .
 ```
 
-### Starting the containers
+#### Start the containers
 
 ```sh
-docker run --detach --name backend-dev-container --publish 8081:8081 backend-dev
-docker run --detach --name backend-staging-container --publish 80:80 backend-staging
-docker run --detach --name backend-prod-container --publish 80:80 backend-prod
+docker run --detach --name backend-dev --publish 8081:8081 backend-dev
+docker run --detach --name backend-staging --publish 80:80 backend-staging
+docker run --detach --name backend-prod --publish 80:80 backend-prod
 ```
 
-### Stopping the containers
+#### Stop the containers
 
 ```sh
-docker stop backend-dev-container
-docker stop backend-staging-container
-docker stop backend-prod-container
+docker stop backend-dev
+docker stop backend-staging
+docker stop backend-prod
 ```
 
-### Restarting the containers
+#### Restart the containers
 
 ```sh
-docker restart backend-dev-container
-docker restart backend-staging-container
-docker restart backend-prod-container
+docker restart backend-dev
+docker restart backend-staging
+docker restart backend-prod
+```
+
+### Compose
+
+#### List all docker processes
+
+```sh
+docker compose --file compose.dev.yaml ps
+```
+
+#### Build the services
+
+```sh
+docker compose --file compose.dev.yaml build
+```
+
+#### Bring up the services
+
+```sh
+docker compose --detach --file compose.dev.yaml up
+```
+
+
+#### Build and bring up the services
+
+```sh
+docker compose --detach --file compose.dev.yaml up --build
 ```
