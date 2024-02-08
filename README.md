@@ -15,6 +15,8 @@ Table of Contents:
     - [Installing git hooks](#installing-git-hooks)
     - [Running the project](#running-the-project)
   - [Docker](#docker)
+    - [App only](#app-only)
+    - [With Supabase](#with-supabase)
   - [Interactive API docs](#interactive-api-docs)
   - [Running tests](#running-tests)
   - [Contribution Guidelines](#contribution-guidelines)
@@ -67,17 +69,31 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
 
 ### Docker
 
+#### App only
+
 - Build image
   ```sh
   docker build --file Dockerfile.dev --tag backend-dev .
   ```
-  **Note**: The first build will take about 10 minutes. Please be patient. Subsequent builds should be quicker (given that the image has not been prunes).
 - Run container
   ```sh
-  docker run --detach --name backend-dev-container --publish 8081:8081 backend-dev
+  docker run --detach --name backend-dev --publish 8081:8081 backend-dev
   ```
-- Open your browser at http://127.0.0.1/8081.
-- For other docker commands, see [useful_commands.md](./useful_commands.md)
+- Open your browser at `http://127.0.0.1/8081`.
+
+#### With Supabase
+
+- Bring up the services
+  ```sh
+  docker compose --detach --file compose.dev.yaml up
+  ```
+- Open your browser at
+  - `http://127.0.0.1/8081` for app
+  - `http://127.0.0.1/8081` for supabase dashboard
+  - Username: `supabase`
+  - Password: `this_password_is_insecure_and_should_be_updated`
+
+For other docker commands, see [useful_commands.md](./useful_commands.md)
 
 ### Interactive API docs
 
