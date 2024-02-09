@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from fastapi import status
 from fastapi.testclient import TestClient
 
 from .constants import (
@@ -18,7 +19,7 @@ client = TestClient(app)
 
 def test_read_root():
     response = client.get("/")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"we_are": "SlickTelemetry"}
 
 
@@ -30,7 +31,7 @@ def test_read_root():
 
 def test_healthcheck():
     response = client.get("/health")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"status": "OK"}
 
 
@@ -44,7 +45,7 @@ def test_healthcheck():
 
 def test_get_schedule():
     response = client.get("/schedule")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {
         "year": 2023,
         "EventSchedule": [
@@ -604,7 +605,7 @@ def test_get_schedule():
 
 def test_get_schedule_good_year():
     response = client.get("/schedule?year=2023")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {
         "year": 2023,
         "EventSchedule": [
@@ -1174,7 +1175,7 @@ def test_get_schedule_good_year():
 
 def test_get_standings():
     response = client.get("/standings")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {
         "season": 2023,
         "round": 22,
@@ -1835,7 +1836,7 @@ def test_get_standings():
 
 def test_get_standings_good_year_only():
     response = client.get("/standings?year=2023")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {
         "season": 2023,
         "round": 22,
@@ -2496,7 +2497,7 @@ def test_get_standings_good_year_only():
 
 def test_get_standings_good_year_and_round():
     response = client.get("/standings?year=2023&round=5")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {
         "season": 2023,
         "round": 5,
@@ -3114,7 +3115,7 @@ def test_get_standings_good_year_and_round():
 
 def test_get_standings_good_round_bad_year_no_input():
     response = client.get("/standings?round=3")
-    assert response.status_code == 400
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert response.json() == {
         "detail": 'Bad request. Must provide the "year" parameter.'
     }
@@ -3132,7 +3133,7 @@ def test_get_standings_good_round_bad_year_no_input():
 
 def test_get_results():
     response = client.get("/results/2023/5")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == [
         {
             "DriverNumber": "1",
@@ -3599,7 +3600,7 @@ def test_get_results():
 
 def test_get_results_with_session():
     response = client.get("/results/2023/5?session=4")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == [
         {
             "DriverNumber": "11",
@@ -4071,7 +4072,7 @@ def test_get_results_with_session():
 
 def test_get_results_bad_round_invalid():
     response = client.get("/results/2023/25?session=2")
-    assert response.status_code == 400
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert response.json() == {"detail": "Bad Request. Invalid round: 25"}
 
 
