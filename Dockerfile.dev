@@ -22,8 +22,8 @@ RUN poetry config virtualenvs.create false \
 EXPOSE 8081
 
 # Healthcheck
-HEALTHCHECK --interval=5m --timeout=3s \
-    CMD curl -f http://localhost/health || exit 1
+HEALTHCHECK --interval=5s --timeout=5s --retries=3 \
+    CMD curl -f http://localhost:8081/health || exit 1
 
 # Run the uvicorn command, telling it to use the app object imported from app.main.
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8081", "--reload", "--reload-exclude", "app/test_main.py"]
