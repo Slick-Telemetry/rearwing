@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from typing import Annotated
 
 import fastf1
@@ -6,6 +7,7 @@ from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastf1.ergast import Ergast
+from pandas import Timestamp
 
 from .constants import (
     DEFAULT_SESSION_FOR_RESULTS,
@@ -148,9 +150,55 @@ def get_schedule(
 
 
 @app.get(
+    "/next-event",
+    tags=["schedule"],
+    summary="Get upcoming event",
+    response_description="Returns upcoming event",
+    status_code=status.HTTP_200_OK,
+    response_model=EventSchedule,
+)
+def get_next_event() -> EventSchedule:
+    """
+    ## Get upcoming event
+    Endpoint to get upcoming event.
+
+    **Returns**:
+        EventSchedule: Returns upcoming event
+    """
+
+    remaining_events = fastf1.get_events_remaining(
+        dt=datetime.now(), include_testing=False
+    )
+
+    if len(remaining_events) == 0:
+        # EITHER current season has ended OR new season's schedule has not yet been released
+
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Next event not found."
+        )
+    else:
+        # Current season EITHER has not yet started OR is in progress
+
+        next_event: fastf1.events.Event = remaining_events.iloc[0]
+
+        # Convert timestamp(z) related columns' data into string type
+        next_event = next_event.apply(
+            lambda x: str(x) if isinstance(x, Timestamp) else x,
+        )
+
+        # Convert the dataframe to a JSON string
+        next_event_as_json = next_event.to_json()
+
+        # Parse the JSON string to a JSON object
+        next_event_as_json_obj: EventSchedule = json.loads(next_event_as_json)
+
+        return next_event_as_json_obj
+
+
+@app.get(
     "/standings",
     tags=["standings"],
-    summary="Get drivers and constructors standings ",
+    summary="Get drivers and constructors standings",
     response_description="Return a list of drivers and constructors standings at specific points of a season. If the season hasn't ended you will get the current standings.",
     status_code=status.HTTP_200_OK,
     response_model=Standings,
