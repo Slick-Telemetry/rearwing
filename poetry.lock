@@ -422,13 +422,13 @@ all = ["email-validator (>=2.0.0)", "httpx (>=0.23.0)", "itsdangerous (>=1.1.0)"
 
 [[package]]
 name = "fastf1"
-version = "3.2.1"
+version = "3.2.2"
 description = "Python package for accessing and analyzing Formula 1 results, schedules, timing data and telemetry."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "fastf1-3.2.1-py3-none-any.whl", hash = "sha256:e79232576ee56420d67e3ccb5fa5a47ddacf306a9ee022ddc3da4a0062943078"},
-    {file = "fastf1-3.2.1.tar.gz", hash = "sha256:3a18b9d7e3981ee3255d80720c5184530db26be0e8125ffb4c7ede9fee85963b"},
+    {file = "fastf1-3.2.2-py3-none-any.whl", hash = "sha256:1dbafb83b66ccaaa5dce869238046b20719b307a9dccad5c692d15ad87282bdd"},
+    {file = "fastf1-3.2.2.tar.gz", hash = "sha256:49f2304d155822bd01f824a36283553e128fcd536ae48c56b74e7293176d04a7"},
 ]
 
 [package.dependencies]
@@ -1866,13 +1866,13 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "uvicorn"
-version = "0.27.0.post1"
+version = "0.27.1"
 description = "The lightning-fast ASGI server."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "uvicorn-0.27.0.post1-py3-none-any.whl", hash = "sha256:4b85ba02b8a20429b9b205d015cbeb788a12da527f731811b643fd739ef90d5f"},
-    {file = "uvicorn-0.27.0.post1.tar.gz", hash = "sha256:54898fcd80c13ff1cd28bf77b04ec9dbd8ff60c5259b499b4b12bb0917f22907"},
+    {file = "uvicorn-0.27.1-py3-none-any.whl", hash = "sha256:5c89da2f3895767472a35556e539fd59f7edbe9b1e9c0e1c99eebeadc61838e4"},
+    {file = "uvicorn-0.27.1.tar.gz", hash = "sha256:3d9a267296243532db80c83a959a3400502165ade2c1338dea4e67915fd4745a"},
 ]
 
 [package.dependencies]
@@ -2150,4 +2150,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "548fa7e62713fd7282d22e9b1b7b8e262bb13a9892c2021d3a18a4aefb00a80e"
+content-hash = "43e664d5074c500adf714786b85baa9daa294164a94d746db4de5f99c3a9e436"
