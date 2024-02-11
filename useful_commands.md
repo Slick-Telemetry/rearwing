@@ -75,9 +75,9 @@ docker build --file Dockerfile.prod --tag backend-prod .
 #### Start the containers
 
 ```sh
-docker run --detach --name backend-dev --publish 8081:8081 backend-dev
-docker run --detach --name backend-staging --publish 80:80 backend-staging
-docker run --detach --name backend-prod --publish 80:80 backend-prod
+docker run --name backend-dev --publish 8081:8081 backend-dev --detach
+docker run --name backend-staging --publish 80:80 backend-staging --detach
+docker run --name backend-prod --publish 80:80 backend-prod --detach
 ```
 
 #### Stop the containers
@@ -113,12 +113,12 @@ docker compose --file compose.dev.yaml build
 #### Bring up the services
 
 ```sh
-docker compose --detach --file compose.dev.yaml up
+docker compose --file compose.dev.yaml up --detach
 ```
 
 
 #### Build and bring up the services
 
 ```sh
-docker compose --detach --file compose.dev.yaml up --build
+docker compose --file compose.dev.yaml up --build --detach
 ```
