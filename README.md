@@ -9,6 +9,7 @@ Table of Contents:
 - [Setting up the project](#setting-up-the-project)
   - [What you'll need](#what-youll-need)
 - [Development](#development)
+  - [Environment variables](#environment-variables)
   - [Python virtual environment](#python-virtual-environment)
     - [Installing dependencies](#installing-dependencies)
     - [Virtual environment sanity check](#virtual-environment-sanity-check)
@@ -32,6 +33,10 @@ Table of Contents:
 - [Docker Desktop](https://docs.docker.com/desktop/) [OPTIONAL]
 
 ## Development
+
+### Environment variables
+
+In `/docker`, create a copy of `.env.example` as `.env`.
 
 ### Python virtual environment
 
@@ -77,7 +82,7 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
   ```
 - Run container
   ```sh
-  docker run --detach --name backend-dev --publish 8081:8081 backend-dev
+  docker run --name backend-dev --publish 8081:8081 backend-dev --detach
   ```
 - Open your browser at `http://localhost/8081`.
 
@@ -85,7 +90,8 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
 
 - Bring up the services
   ```sh
-  docker compose --detach --file compose.dev.yaml up
+  cd docker
+  docker compose --file compose.dev.yaml up --detach
   ```
 - Open your browser at
   - `http://localhost/8081` for app
