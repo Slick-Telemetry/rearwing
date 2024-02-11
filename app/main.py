@@ -1,4 +1,5 @@
 import json
+import logging
 from datetime import datetime
 from typing import Annotated
 
@@ -6,6 +7,7 @@ import fastf1
 from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from fastapi_utils.timing import add_timing_middleware
 from fastf1.ergast import Ergast
 from pandas import Timestamp
 
@@ -31,6 +33,9 @@ origins = ["http://localhost:3000"]
 ergast = Ergast(result_type="raw", auto_cast=True)
 favicon_path = "favicon.ico"
 
+# Logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Slick Telemetry API",
@@ -56,6 +61,7 @@ app.add_middleware(
     allow_headers=["*"],
     # HTTPSRedirectMiddleware # TODO use for production and staging
 )
+add_timing_middleware(app, record=logger.info, prefix="app")
 
 
 @app.get("/favicon.ico", include_in_schema=False)
