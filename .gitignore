@@ -160,5 +160,5 @@ cython_debug/
 #.idea/
 
 # Supabase self-host
-volumes/db/data
-volumes/storage
+docker/volumes/db/data
+docker/volumes/storage
