@@ -1,5 +1,7 @@
+# Built-in
 from datetime import datetime
 
+# External
 import fastf1
 
 
@@ -18,9 +20,7 @@ def get_default_year() -> int:
         # per current (2023-01-22) fastf1/ergast implementation, the value is 1.
         race_event_round_number = event_schedule.iloc[0]["RoundNumber"]
         # create a fastf1.core.Session object
-        first_race_event_session_obj = fastf1.get_session(
-            current_year, race_event_round_number, "Race"
-        )
+        first_race_event_session_obj = fastf1.get_session(current_year, race_event_round_number, "Race")
         # load session data
         first_race_event_session_obj.load()
     except (ValueError, KeyError):

@@ -37,7 +37,8 @@ poetry show --outdated
 ### Run tests using pytest
 
 ```sh
-poetry run pytest -rpP
+ # pytest -rpP
+ poetry poe tests
 ```
 
 ## Git hooks
@@ -45,13 +46,15 @@ poetry run pytest -rpP
 ### Install git hooks
 
 ```sh
-pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit
+# pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit
+poetry poe git-hooks-setup
 ```
 
 ### Updating hooks automatically
 
 ```sh
-pre-commit autoupdate
+# pre-commit autoupdate
+poetry poe git-hooks-update
 ```
 
 ## Docker

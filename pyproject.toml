@@ -1,3 +1,9 @@
+#-->> System <<--------------------------------------------
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+#-->> Metadata <<------------------------------------------
 [tool.poetry]
 name = "backend"
 version = "0.2.0"
@@ -5,28 +11,36 @@ description = "Slick Telemetry backend written in python"
 authors = ["Slick Telemetry <contact.@slicktelemetry.com>"]
 readme = "README.md"
 
+#-->> Dependencies <<--------------------------------------
+# Main dependencies (required by application)
 [tool.poetry.dependencies]
 python = "^3.12"
 fastapi = "^0.109.2"
 fastf1 = "^3.2.2"
-fastapi-utils = "^0.2.1"
 uvicorn = { extras = ["standard"], version = "^0.27.1" }
 
+# Development (common)
 [tool.poetry.group.dev.dependencies]
 black = "^24.1.1"
 commitizen = "^3.14.1"
+httpx = "^0.26.0"
 isort = "^5.13.2"
+mypy = "^1.8.0"
 pre-commit = "^3.6.0"
 pytest = "^8.0.0"
-httpx = "^0.26.0"
+toml = "^0.10.2"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+#-->> Scripts <<-------------------------------------------
+[tool.poe.tasks]
+black = "black ."
+isort = "isort ."
+formatters = ["black", "isort"]
+git-hooks-setup = "pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit"
+tests = "pytest -rpP"
+typings = "mypy"
+git-hooks-upate = "pre-commit autoupdate"
 
-[tool.isort]
-profile = "black"
-
+#-->> Configuration <<-------------------------------------
 [tool.commitizen]
 version = "0.2.0"
 version_files = [
@@ -36,3 +50,28 @@ version_files = [
 ]
 update_changelog_on_bump = true
 major_version_zero = true
+
+[tool.black]
+line-length = 120
+target-version = ["py312"]
+preview = true
+
+[tool.isort]
+profile = "black"
+line_length = 120
+lines_after_imports = 2
+multi_line_output = 3
+import_heading_stdlib = "Built-in"
+import_heading_thirdparty = "External"
+import_heading_firstparty = "Project"
+import_heading_localfolder = "App"
+
+[tool.mypy]
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+files = ["app/*.py"]
+ignore_missing_imports = true
+pretty = true
+show_error_codes = true
+show_error_context = true
+warn_unreachable = true
+warn_return_any = true
