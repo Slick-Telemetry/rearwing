@@ -1,16 +1,18 @@
+# Built-in
 import json
 import logging
 from datetime import datetime
 from typing import Annotated
 
+# External
 import fastf1
 from fastapi import FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from fastapi_utils.timing import add_timing_middleware
 from fastf1.ergast import Ergast
 from pandas import Timestamp
 
+# App
 from .constants import (
     DEFAULT_SESSION_FOR_RESULTS,
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
@@ -24,6 +26,7 @@ from .constants import (
 )
 from .models import EventSchedule, HealthCheck, Results, Schedule, Standings
 from .utils import get_default_year
+
 
 # fastf1.set_log_level("WARNING") # TODO use for production and staging
 
@@ -61,7 +64,6 @@ app.add_middleware(
     allow_headers=["*"],
     # HTTPSRedirectMiddleware # TODO use for production and staging
 )
-add_timing_middleware(app, record=logger.info, prefix="app")
 
 
 @app.get("/favicon.ico", include_in_schema=False)
@@ -120,7 +122,7 @@ def get_schedule(
             ge=MIN_SUPPORTED_YEAR,
             le=MAX_SUPPORTED_YEAR,
         ),
-    ] = None
+    ] = None,
 ) -> Schedule:
     """
     ## Get events schedule for a given year
@@ -172,16 +174,12 @@ def get_next_event() -> EventSchedule:
         EventSchedule: Returns upcoming event
     """
 
-    remaining_events = fastf1.get_events_remaining(
-        dt=datetime.now(), include_testing=False
-    )
+    remaining_events = fastf1.get_events_remaining(dt=datetime.now(), include_testing=False)
 
     if len(remaining_events) == 0:
         # EITHER current season has ended OR new season's schedule has not yet been released
 
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Next event not found."
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Next event not found.")
     else:
         # Current season EITHER has not yet started OR is in progress
 
@@ -282,14 +280,10 @@ def get_standings(
         )
     elif constructor_standings_available:
         # only constructor standings are available
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Driver standings not found."
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Driver standings not found.")
     else:
         # something went wrong, investigate
-        raise HTTPException(
-            status_code=500, detail="Something went wrong. Investigate!"
-        )
+        raise HTTPException(status_code=500, detail="Something went wrong. Investigate!")
 
 
 @app.get(
@@ -353,13 +347,11 @@ def get_results(
         session_results_as_json = session_results.to_json(orient="records")
 
         # Parse the JSON string to a JSON object
-        session_results_as_json_obj = json.loads(session_results_as_json)
+        session_results_as_json_obj: list[Results] = json.loads(session_results_as_json)
         return session_results_as_json_obj
 
     except ValueError as ve:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}"
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}")
     except KeyError as ke:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
