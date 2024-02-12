@@ -13,13 +13,14 @@ Table of Contents:
   - [Python virtual environment](#python-virtual-environment)
     - [Installing dependencies](#installing-dependencies)
     - [Virtual environment sanity check](#virtual-environment-sanity-check)
+    - [Poe the Poet poetry plugin](#poe-the-poet-poetry-plugin)
     - [Installing git hooks](#installing-git-hooks)
-    - [Running the project](#running-the-project)
+  - [Running the project](#running-the-project)
+  - [Running tests](#running-tests)
   - [Docker](#docker)
     - [App only](#app-only)
     - [With Supabase](#with-supabase)
   - [Interactive API docs](#interactive-api-docs)
-  - [Running tests](#running-tests)
   - [Contribution Guidelines](#contribution-guidelines)
 - [Deployment](#deployment)
 
@@ -37,6 +38,7 @@ Table of Contents:
 ### Environment variables
 
 In `/docker`, create a copy of `.env.example` as `.env`.
+
 
 ### Python virtual environment
 
@@ -58,19 +60,43 @@ poetry install --sync --no-root
   -  Run `poetry shell` <u> ***OR*** </u>
   -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory).
 
-#### Installing git hooks
 
-Run this command in the python environment.
+#### Poe the Poet poetry plugin
 
 ```sh
-pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit
+poetry self add 'poethepoet[poetry_plugin]'
 ```
 
-#### Running the project
+1. Check available tasks:
+   ```sh
+   poetry poe
+   ```
+2. Execute a task:
+   ```sh
+   poetry poe <task-name>
+   ```
+    For example, running the project formatters:
+    ```sh
+    poetry poe formatters
+    ```
+
+#### Installing git hooks
+
+```sh
+poetry poe git-hooks-setup
+```
+
+### Running the project
 
 - Open up a terminal in your IDE.
 - Run `python run.py` to start the server.
-- Open your browser at `http://localhost:8081`.
+- Open your browser at [`http://localhost:8081`](http://localhost:8081).
+
+### Running tests
+
+```sh
+poetry poe tests
+```
 
 ### Docker
 
@@ -84,7 +110,7 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
   ```sh
   docker run --name backend-dev --publish 8081:8081 backend-dev --detach
   ```
-- Open your browser at `http://localhost/8081`.
+- Open your browser at [`http://localhost:8081`](http://localhost:8081).
 
 #### With Supabase
 
@@ -94,8 +120,8 @@ pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-c
   docker compose --file compose.dev.yaml up --detach
   ```
 - Open your browser at
-  - `http://localhost/8081` for app
-  - `http://localhost/8000` for supabase dashboard
+  - [`http://localhost:8081`](http://localhost:8081) for app
+  - [`http://localhost:8000`](http://localhost:8000) for supabase dashboard
   - Username: `supabase`
   - Password: `this_password_is_insecure_and_should_be_updated`
 
@@ -103,14 +129,8 @@ For other docker commands, see [useful_commands.md](./useful_commands.md)
 
 ### Interactive API docs
 
-- Once the server is running, open your browser at `http://localhost/docs`.
-- Alternate docs can be found at `http://localhost/redoc`, provided by [redoc](https://github.com/Redocly/redoc).
-
-### Running tests
-
-```sh
-poetry run pytest -rpP
-```
+- Once the server is running, open your browser at [`http://localhost/docs`](http://localhost/docs).
+- Alternate docs can be found at [`http://localhost/redoc`](http://localhost/redoc), provided by [redoc](https://github.com/Redocly/redoc).
 
 ### Contribution Guidelines
 

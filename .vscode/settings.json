@@ -2,9 +2,10 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
+      "source.organizeImports": "explicit",
     }
   },
   "editor.formatOnSave": true,
-  "isort.args": ["--profile", "black"]
+  "black-formatter.args" : ["--config", "pyproject.toml"],
+  "isort.args" : ["--settings-file", "pyproject.toml"]
 }

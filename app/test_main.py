@@ -1,15 +1,10 @@
-from datetime import datetime
-
+# External
 from fastapi import status
 from fastapi.testclient import TestClient
 
-from .constants import (
-    MAX_SUPPORTED_ROUND,
-    MAX_SUPPORTED_YEAR,
-    MIN_SUPPORTED_ROUND,
-    MIN_SUPPORTED_YEAR,
-)
+# App
 from .main import app
+
 
 client = TestClient(app)
 
@@ -1195,14 +1190,12 @@ def test_get_standings():
                     "dateOfBirth": "1997-09-30",
                     "nationality": "Dutch",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "red_bull",
-                        "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                        "name": "Red Bull",
-                        "nationality": "Austrian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "red_bull",
+                    "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+                    "name": "Red Bull",
+                    "nationality": "Austrian",
+                }],
             },
             {
                 "position": "2",
@@ -1219,14 +1212,12 @@ def test_get_standings():
                     "dateOfBirth": "1990-01-26",
                     "nationality": "Mexican",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "red_bull",
-                        "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                        "name": "Red Bull",
-                        "nationality": "Austrian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "red_bull",
+                    "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+                    "name": "Red Bull",
+                    "nationality": "Austrian",
+                }],
             },
             {
                 "position": "3",
@@ -1243,14 +1234,12 @@ def test_get_standings():
                     "dateOfBirth": "1985-01-07",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mercedes",
-                        "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
-                        "name": "Mercedes",
-                        "nationality": "German",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mercedes",
+                    "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+                    "name": "Mercedes",
+                    "nationality": "German",
+                }],
             },
             {
                 "position": "4",
@@ -1267,14 +1256,12 @@ def test_get_standings():
                     "dateOfBirth": "1981-07-29",
                     "nationality": "Spanish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "aston_martin",
-                        "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
-                        "name": "Aston Martin",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "aston_martin",
+                    "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
+                    "name": "Aston Martin",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "5",
@@ -1291,14 +1278,12 @@ def test_get_standings():
                     "dateOfBirth": "1997-10-16",
                     "nationality": "Monegasque",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "ferrari",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
-                        "name": "Ferrari",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "ferrari",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                    "name": "Ferrari",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "6",
@@ -1315,14 +1300,12 @@ def test_get_standings():
                     "dateOfBirth": "1999-11-13",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mclaren",
-                        "url": "http://en.wikipedia.org/wiki/McLaren",
-                        "name": "McLaren",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mclaren",
+                    "url": "http://en.wikipedia.org/wiki/McLaren",
+                    "name": "McLaren",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "7",
@@ -1339,14 +1322,12 @@ def test_get_standings():
                     "dateOfBirth": "1994-09-01",
                     "nationality": "Spanish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "ferrari",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
-                        "name": "Ferrari",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "ferrari",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                    "name": "Ferrari",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "8",
@@ -1363,14 +1344,12 @@ def test_get_standings():
                     "dateOfBirth": "1998-02-15",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mercedes",
-                        "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
-                        "name": "Mercedes",
-                        "nationality": "German",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mercedes",
+                    "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+                    "name": "Mercedes",
+                    "nationality": "German",
+                }],
             },
             {
                 "position": "9",
@@ -1387,14 +1366,12 @@ def test_get_standings():
                     "dateOfBirth": "2001-04-06",
                     "nationality": "Australian",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mclaren",
-                        "url": "http://en.wikipedia.org/wiki/McLaren",
-                        "name": "McLaren",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mclaren",
+                    "url": "http://en.wikipedia.org/wiki/McLaren",
+                    "name": "McLaren",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "10",
@@ -1411,14 +1388,12 @@ def test_get_standings():
                     "dateOfBirth": "1998-10-29",
                     "nationality": "Canadian",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "aston_martin",
-                        "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
-                        "name": "Aston Martin",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "aston_martin",
+                    "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
+                    "name": "Aston Martin",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "11",
@@ -1435,14 +1410,12 @@ def test_get_standings():
                     "dateOfBirth": "1996-02-07",
                     "nationality": "French",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alpine",
-                        "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
-                        "name": "Alpine F1 Team",
-                        "nationality": "French",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alpine",
+                    "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
+                    "name": "Alpine F1 Team",
+                    "nationality": "French",
+                }],
             },
             {
                 "position": "12",
@@ -1459,14 +1432,12 @@ def test_get_standings():
                     "dateOfBirth": "1996-09-17",
                     "nationality": "French",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alpine",
-                        "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
-                        "name": "Alpine F1 Team",
-                        "nationality": "French",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alpine",
+                    "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
+                    "name": "Alpine F1 Team",
+                    "nationality": "French",
+                }],
             },
             {
                 "position": "13",
@@ -1483,14 +1454,12 @@ def test_get_standings():
                     "dateOfBirth": "1996-03-23",
                     "nationality": "Thai",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "williams",
-                        "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
-                        "name": "Williams",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "williams",
+                    "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
+                    "name": "Williams",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "14",
@@ -1507,14 +1476,12 @@ def test_get_standings():
                     "dateOfBirth": "2000-05-11",
                     "nationality": "Japanese",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "15",
@@ -1531,14 +1498,12 @@ def test_get_standings():
                     "dateOfBirth": "1989-08-28",
                     "nationality": "Finnish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alfa",
-                        "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
-                        "name": "Alfa Romeo",
-                        "nationality": "Swiss",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alfa",
+                    "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
+                    "name": "Alfa Romeo",
+                    "nationality": "Swiss",
+                }],
             },
             {
                 "position": "16",
@@ -1555,14 +1520,12 @@ def test_get_standings():
                     "dateOfBirth": "1987-08-19",
                     "nationality": "German",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "haas",
-                        "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
-                        "name": "Haas F1 Team",
-                        "nationality": "American",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "haas",
+                    "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
+                    "name": "Haas F1 Team",
+                    "nationality": "American",
+                }],
             },
             {
                 "position": "17",
@@ -1579,14 +1542,12 @@ def test_get_standings():
                     "dateOfBirth": "1989-07-01",
                     "nationality": "Australian",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "18",
@@ -1603,14 +1564,12 @@ def test_get_standings():
                     "dateOfBirth": "1999-05-30",
                     "nationality": "Chinese",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alfa",
-                        "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
-                        "name": "Alfa Romeo",
-                        "nationality": "Swiss",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alfa",
+                    "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
+                    "name": "Alfa Romeo",
+                    "nationality": "Swiss",
+                }],
             },
             {
                 "position": "19",
@@ -1627,14 +1586,12 @@ def test_get_standings():
                     "dateOfBirth": "1992-10-05",
                     "nationality": "Danish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "haas",
-                        "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
-                        "name": "Haas F1 Team",
-                        "nationality": "American",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "haas",
+                    "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
+                    "name": "Haas F1 Team",
+                    "nationality": "American",
+                }],
             },
             {
                 "position": "20",
@@ -1651,14 +1608,12 @@ def test_get_standings():
                     "dateOfBirth": "2002-02-11",
                     "nationality": "New Zealander",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "21",
@@ -1675,14 +1630,12 @@ def test_get_standings():
                     "dateOfBirth": "2000-12-31",
                     "nationality": "American",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "williams",
-                        "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
-                        "name": "Williams",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "williams",
+                    "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
+                    "name": "Williams",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "22",
@@ -1699,14 +1652,12 @@ def test_get_standings():
                     "dateOfBirth": "1995-02-06",
                     "nationality": "Dutch",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
         ],
         "ConstructorStandings": [
@@ -1856,14 +1807,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1997-09-30",
                     "nationality": "Dutch",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "red_bull",
-                        "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                        "name": "Red Bull",
-                        "nationality": "Austrian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "red_bull",
+                    "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+                    "name": "Red Bull",
+                    "nationality": "Austrian",
+                }],
             },
             {
                 "position": "2",
@@ -1880,14 +1829,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1990-01-26",
                     "nationality": "Mexican",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "red_bull",
-                        "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                        "name": "Red Bull",
-                        "nationality": "Austrian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "red_bull",
+                    "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+                    "name": "Red Bull",
+                    "nationality": "Austrian",
+                }],
             },
             {
                 "position": "3",
@@ -1904,14 +1851,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1985-01-07",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mercedes",
-                        "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
-                        "name": "Mercedes",
-                        "nationality": "German",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mercedes",
+                    "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+                    "name": "Mercedes",
+                    "nationality": "German",
+                }],
             },
             {
                 "position": "4",
@@ -1928,14 +1873,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1981-07-29",
                     "nationality": "Spanish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "aston_martin",
-                        "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
-                        "name": "Aston Martin",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "aston_martin",
+                    "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
+                    "name": "Aston Martin",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "5",
@@ -1952,14 +1895,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1997-10-16",
                     "nationality": "Monegasque",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "ferrari",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
-                        "name": "Ferrari",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "ferrari",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                    "name": "Ferrari",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "6",
@@ -1976,14 +1917,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1999-11-13",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mclaren",
-                        "url": "http://en.wikipedia.org/wiki/McLaren",
-                        "name": "McLaren",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mclaren",
+                    "url": "http://en.wikipedia.org/wiki/McLaren",
+                    "name": "McLaren",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "7",
@@ -2000,14 +1939,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1994-09-01",
                     "nationality": "Spanish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "ferrari",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
-                        "name": "Ferrari",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "ferrari",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                    "name": "Ferrari",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "8",
@@ -2024,14 +1961,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1998-02-15",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mercedes",
-                        "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
-                        "name": "Mercedes",
-                        "nationality": "German",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mercedes",
+                    "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+                    "name": "Mercedes",
+                    "nationality": "German",
+                }],
             },
             {
                 "position": "9",
@@ -2048,14 +1983,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "2001-04-06",
                     "nationality": "Australian",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mclaren",
-                        "url": "http://en.wikipedia.org/wiki/McLaren",
-                        "name": "McLaren",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mclaren",
+                    "url": "http://en.wikipedia.org/wiki/McLaren",
+                    "name": "McLaren",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "10",
@@ -2072,14 +2005,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1998-10-29",
                     "nationality": "Canadian",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "aston_martin",
-                        "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
-                        "name": "Aston Martin",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "aston_martin",
+                    "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
+                    "name": "Aston Martin",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "11",
@@ -2096,14 +2027,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1996-02-07",
                     "nationality": "French",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alpine",
-                        "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
-                        "name": "Alpine F1 Team",
-                        "nationality": "French",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alpine",
+                    "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
+                    "name": "Alpine F1 Team",
+                    "nationality": "French",
+                }],
             },
             {
                 "position": "12",
@@ -2120,14 +2049,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1996-09-17",
                     "nationality": "French",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alpine",
-                        "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
-                        "name": "Alpine F1 Team",
-                        "nationality": "French",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alpine",
+                    "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
+                    "name": "Alpine F1 Team",
+                    "nationality": "French",
+                }],
             },
             {
                 "position": "13",
@@ -2144,14 +2071,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1996-03-23",
                     "nationality": "Thai",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "williams",
-                        "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
-                        "name": "Williams",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "williams",
+                    "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
+                    "name": "Williams",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "14",
@@ -2168,14 +2093,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "2000-05-11",
                     "nationality": "Japanese",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "15",
@@ -2192,14 +2115,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1989-08-28",
                     "nationality": "Finnish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alfa",
-                        "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
-                        "name": "Alfa Romeo",
-                        "nationality": "Swiss",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alfa",
+                    "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
+                    "name": "Alfa Romeo",
+                    "nationality": "Swiss",
+                }],
             },
             {
                 "position": "16",
@@ -2216,14 +2137,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1987-08-19",
                     "nationality": "German",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "haas",
-                        "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
-                        "name": "Haas F1 Team",
-                        "nationality": "American",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "haas",
+                    "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
+                    "name": "Haas F1 Team",
+                    "nationality": "American",
+                }],
             },
             {
                 "position": "17",
@@ -2240,14 +2159,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1989-07-01",
                     "nationality": "Australian",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "18",
@@ -2264,14 +2181,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1999-05-30",
                     "nationality": "Chinese",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alfa",
-                        "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
-                        "name": "Alfa Romeo",
-                        "nationality": "Swiss",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alfa",
+                    "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
+                    "name": "Alfa Romeo",
+                    "nationality": "Swiss",
+                }],
             },
             {
                 "position": "19",
@@ -2288,14 +2203,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1992-10-05",
                     "nationality": "Danish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "haas",
-                        "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
-                        "name": "Haas F1 Team",
-                        "nationality": "American",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "haas",
+                    "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
+                    "name": "Haas F1 Team",
+                    "nationality": "American",
+                }],
             },
             {
                 "position": "20",
@@ -2312,14 +2225,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "2002-02-11",
                     "nationality": "New Zealander",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "21",
@@ -2336,14 +2247,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "2000-12-31",
                     "nationality": "American",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "williams",
-                        "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
-                        "name": "Williams",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "williams",
+                    "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
+                    "name": "Williams",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "22",
@@ -2360,14 +2269,12 @@ def test_get_standings_good_year_only():
                     "dateOfBirth": "1995-02-06",
                     "nationality": "Dutch",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
         ],
         "ConstructorStandings": [
@@ -2517,14 +2424,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1997-09-30",
                     "nationality": "Dutch",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "red_bull",
-                        "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                        "name": "Red Bull",
-                        "nationality": "Austrian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "red_bull",
+                    "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+                    "name": "Red Bull",
+                    "nationality": "Austrian",
+                }],
             },
             {
                 "position": "2",
@@ -2541,14 +2446,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1990-01-26",
                     "nationality": "Mexican",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "red_bull",
-                        "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                        "name": "Red Bull",
-                        "nationality": "Austrian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "red_bull",
+                    "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+                    "name": "Red Bull",
+                    "nationality": "Austrian",
+                }],
             },
             {
                 "position": "3",
@@ -2565,14 +2468,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1981-07-29",
                     "nationality": "Spanish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "aston_martin",
-                        "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
-                        "name": "Aston Martin",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "aston_martin",
+                    "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
+                    "name": "Aston Martin",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "4",
@@ -2589,14 +2490,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1985-01-07",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mercedes",
-                        "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
-                        "name": "Mercedes",
-                        "nationality": "German",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mercedes",
+                    "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+                    "name": "Mercedes",
+                    "nationality": "German",
+                }],
             },
             {
                 "position": "5",
@@ -2613,14 +2512,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1994-09-01",
                     "nationality": "Spanish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "ferrari",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
-                        "name": "Ferrari",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "ferrari",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                    "name": "Ferrari",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "6",
@@ -2637,14 +2534,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1998-02-15",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mercedes",
-                        "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
-                        "name": "Mercedes",
-                        "nationality": "German",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mercedes",
+                    "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+                    "name": "Mercedes",
+                    "nationality": "German",
+                }],
             },
             {
                 "position": "7",
@@ -2661,14 +2556,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1997-10-16",
                     "nationality": "Monegasque",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "ferrari",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
-                        "name": "Ferrari",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "ferrari",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                    "name": "Ferrari",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "8",
@@ -2685,14 +2578,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1998-10-29",
                     "nationality": "Canadian",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "aston_martin",
-                        "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
-                        "name": "Aston Martin",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "aston_martin",
+                    "url": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
+                    "name": "Aston Martin",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "9",
@@ -2709,14 +2600,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1999-11-13",
                     "nationality": "British",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mclaren",
-                        "url": "http://en.wikipedia.org/wiki/McLaren",
-                        "name": "McLaren",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mclaren",
+                    "url": "http://en.wikipedia.org/wiki/McLaren",
+                    "name": "McLaren",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "10",
@@ -2733,14 +2622,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1996-02-07",
                     "nationality": "French",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alpine",
-                        "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
-                        "name": "Alpine F1 Team",
-                        "nationality": "French",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alpine",
+                    "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
+                    "name": "Alpine F1 Team",
+                    "nationality": "French",
+                }],
             },
             {
                 "position": "11",
@@ -2757,14 +2644,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1987-08-19",
                     "nationality": "German",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "haas",
-                        "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
-                        "name": "Haas F1 Team",
-                        "nationality": "American",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "haas",
+                    "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
+                    "name": "Haas F1 Team",
+                    "nationality": "American",
+                }],
             },
             {
                 "position": "12",
@@ -2781,14 +2666,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1996-09-17",
                     "nationality": "French",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alpine",
-                        "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
-                        "name": "Alpine F1 Team",
-                        "nationality": "French",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alpine",
+                    "url": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
+                    "name": "Alpine F1 Team",
+                    "nationality": "French",
+                }],
             },
             {
                 "position": "13",
@@ -2805,14 +2688,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1989-08-28",
                     "nationality": "Finnish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alfa",
-                        "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
-                        "name": "Alfa Romeo",
-                        "nationality": "Swiss",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alfa",
+                    "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
+                    "name": "Alfa Romeo",
+                    "nationality": "Swiss",
+                }],
             },
             {
                 "position": "14",
@@ -2829,14 +2710,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "2001-04-06",
                     "nationality": "Australian",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "mclaren",
-                        "url": "http://en.wikipedia.org/wiki/McLaren",
-                        "name": "McLaren",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "mclaren",
+                    "url": "http://en.wikipedia.org/wiki/McLaren",
+                    "name": "McLaren",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "15",
@@ -2853,14 +2732,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1999-05-30",
                     "nationality": "Chinese",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alfa",
-                        "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
-                        "name": "Alfa Romeo",
-                        "nationality": "Swiss",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alfa",
+                    "url": "http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One",
+                    "name": "Alfa Romeo",
+                    "nationality": "Swiss",
+                }],
             },
             {
                 "position": "16",
@@ -2877,14 +2754,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "2000-05-11",
                     "nationality": "Japanese",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
             {
                 "position": "17",
@@ -2901,14 +2776,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1992-10-05",
                     "nationality": "Danish",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "haas",
-                        "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
-                        "name": "Haas F1 Team",
-                        "nationality": "American",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "haas",
+                    "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
+                    "name": "Haas F1 Team",
+                    "nationality": "American",
+                }],
             },
             {
                 "position": "18",
@@ -2925,14 +2798,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1996-03-23",
                     "nationality": "Thai",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "williams",
-                        "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
-                        "name": "Williams",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "williams",
+                    "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
+                    "name": "Williams",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "19",
@@ -2949,14 +2820,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "2000-12-31",
                     "nationality": "American",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "williams",
-                        "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
-                        "name": "Williams",
-                        "nationality": "British",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "williams",
+                    "url": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
+                    "name": "Williams",
+                    "nationality": "British",
+                }],
             },
             {
                 "position": "20",
@@ -2973,14 +2842,12 @@ def test_get_standings_good_year_and_round():
                     "dateOfBirth": "1995-02-06",
                     "nationality": "Dutch",
                 },
-                "Constructors": [
-                    {
-                        "constructorId": "alphatauri",
-                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
-                        "name": "AlphaTauri",
-                        "nationality": "Italian",
-                    }
-                ],
+                "Constructors": [{
+                    "constructorId": "alphatauri",
+                    "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                    "name": "AlphaTauri",
+                    "nationality": "Italian",
+                }],
             },
         ],
         "ConstructorStandings": [
@@ -3116,9 +2983,7 @@ def test_get_standings_good_year_and_round():
 def test_get_standings_good_round_bad_year_no_input():
     response = client.get("/standings?round=3")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert response.json() == {
-        "detail": 'Bad request. Must provide the "year" parameter.'
-    }
+    assert response.json() == {"detail": 'Bad request. Must provide the "year" parameter.'}
 
 
 # endregion standings - no inputs
