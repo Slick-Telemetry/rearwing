@@ -35,16 +35,17 @@ jobs:
           python-version: 3.12
           cache: "poetry"
 
+      - name: Add Poe the Poet plugin
+        run: poetry self add 'poethepoet[poetry_plugin]'
+
       - name: Install dependencies
         run: poetry install --no-root
 
       - name: Python Lint (isort/black)
-        run: |
-          isort --check-only --quiet .
-          black --check .
+        run: poetry poe formatters
 
       - name: Run tests
-        run: poetry run pytest -rpP
+        run: poetry poe tests
 
   build:
     name: 🐳 Build and publish docker images
