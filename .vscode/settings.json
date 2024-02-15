@@ -2,10 +2,11 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit",
+      "source.organizeImports": "explicit"
     }
   },
   "editor.formatOnSave": true,
-  "black-formatter.args" : ["--config", "pyproject.toml"],
-  "isort.args" : ["--settings-file", "pyproject.toml"]
+  "black-formatter.args": ["--line-length", "120", "--target-version", "py312"],
+  "isort.args": ["--settings-file", "${workspaceFolder}/pyproject.toml"],
+  "pylint.args": ["--rcfile", "${workspaceFolder}/.pylintrc"]
 }

@@ -72,7 +72,6 @@ recursive = true
 
 [tool.black]
 line-length = 120
-preview = true
 target-version = ["py312"]
 
 [tool.commitizen]
