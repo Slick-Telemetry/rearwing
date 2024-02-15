@@ -1,7 +1,7 @@
 # https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
 
 # First stage
-FROM python:3.12.1-slim as requirements-stage
+FROM python:3.12.2-slim as requirements-stage
 
 # Set /tmp as the current working directory.
 WORKDIR /tmp
@@ -16,7 +16,7 @@ COPY ./pyproject.toml ./poetry.lock* /tmp/
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 # This is the final stage, anything here will be preserved in the final container image.
-FROM python:3.12.1-slim
+FROM python:3.12.2-slim
 
 # Install gcc and other dependencies
 RUN apt-get update && apt-get install -y \
