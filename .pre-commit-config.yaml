@@ -1,18 +1,29 @@
+# Pre-commit hooks
 repos:
+  # Execute external scripts
   - repo: https://github.com/commitizen-tools/commitizen
     rev: v3.13.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
-  - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 24.1.0
+  # Execute local scripts
+  - repo: local
     hooks:
-      - id: black
-        language_version: python3.12
+      - id: run-formatter
+        name: Run formatter
+        entry: poetry poe formatters
+        language: system
+        pass_filenames: false
         stages: [pre-commit, pre-push]
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        language_version: python3.12
+      - id: run-linter
+        name: Run linter
+        entry: poetry poe pylint
+        language: system
+        pass_filenames: false
+        stages: [pre-commit, pre-push]
+      - id: run-typings
+        name: Run typings
+        entry: poetry poe typings
+        language: system
+        pass_filenames: false
         stages: [pre-commit, pre-push]

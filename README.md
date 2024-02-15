@@ -46,7 +46,7 @@ In `/docker`, create a copy of `.env.example` as `.env`.
 
 ```sh
 poetry config virtualenvs.in-project true # OPTIONAL
-poetry install --sync --no-root
+poetry install --sync --no-root --with dev,lint,test
 ```
 
 **Note**: Ensure that the python interpreter in your IDE is set to the newly created virtual environment by poetry. If you have not modified poetry configuration, you can find the virtual environment location as stated [here](https://python-poetry.org/docs/configuration/#cache-directory).
