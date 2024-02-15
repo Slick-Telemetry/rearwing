@@ -10,6 +10,7 @@
     "christian-kohler.path-intellisense",
     "esbenp.prettier-vscode",
     "ms-python.vscode-pylance",
+    "ms-python.pylint",
     "ms-python.python",
     "Gruntfuggly.todo-tree"
   ]
