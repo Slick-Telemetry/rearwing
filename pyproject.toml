@@ -21,26 +21,60 @@ uvicorn = { extras = ["standard"], version = "^0.27.1" }
 
 # Development (common)
 [tool.poetry.group.dev.dependencies]
-black = "^24.1.1"
-commitizen = "^3.14.1"
-httpx = "^0.26.0"
-isort = "^5.13.2"
-mypy = "^1.8.0"
-pre-commit = "^3.6.0"
-pytest = "^8.0.0"
-toml = "^0.10.2"
+commitizen = "*"
+pre-commit = "*"
+
+# Formatting
+[tool.poetry.group.lint]
+optional = true
+
+[tool.poetry.group.lint.dependencies]
+black = "*"
+isort = "*"
+mypy = "*"
+pylint = "*"
+pyproject-autoflake = "*"
+
+# Testing dependencies
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+httpx = "*"
+pytest = "*"
 
 #-->> Scripts <<-------------------------------------------
 [tool.poe.tasks]
-black = "black ."
-isort = "isort ."
-formatters = ["black", "isort"]
+autoflake = "pautoflake run.py app"
+black = "black run.py app"
+isort = "isort run.py app"
+formatters = ["autoflake", "isort", "black"]
 git-hooks-setup = "pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit"
-tests = "pytest -rpP"
-typings = "mypy"
 git-hooks-upate = "pre-commit autoupdate"
+pylint = "pylint run.py app"
+tests = "pytest -rpP"
+typings = "mypy run.py app"
 
 #-->> Configuration <<-------------------------------------
+[tool.autoflake]
+# return error code if changes are needed
+check = false
+# make changes to files instead of printing diffs
+in-place = true
+# exclude __init__.py when removing unused imports
+ignore-init-module-imports = true
+# remove all unused imports (not just those from the standard library)
+remove-all-unused-imports = true
+# remove unused variables
+remove-unused-variables = true
+# drill down directories recursively
+recursive = true
+
+[tool.black]
+line-length = 120
+preview = true
+target-version = ["py312"]
+
 [tool.commitizen]
 version = "0.2.0"
 version_files = [
@@ -51,15 +85,10 @@ version_files = [
 update_changelog_on_bump = true
 major_version_zero = true
 
-[tool.black]
-line-length = 120
-target-version = ["py312"]
-preview = true
-
 [tool.isort]
 profile = "black"
-line_length = 120
 lines_after_imports = 2
+line_length = 120
 multi_line_output = 3
 import_heading_stdlib = "Built-in"
 import_heading_thirdparty = "External"
