@@ -149,10 +149,12 @@ def get_schedule(
 
     # Parse the JSON string to a JSON object
     event_schedule_as_json_obj: list[EventSchedule] = json.loads(event_schedule_as_json)
-    schedule_as_json_obj: Schedule = {
-        "year": year,
-        "EventSchedule": event_schedule_as_json_obj,
-    }
+    schedule_as_json_obj: Schedule = Schedule.model_validate(
+        {
+            "year": year,
+            "EventSchedule": event_schedule_as_json_obj,
+        }
+    )
 
     return schedule_as_json_obj
 
@@ -259,12 +261,14 @@ def get_standings(
 
     if driver_standings_available and constructor_standings_available:
         # both driver and constructor standings are available
-        data: Standings = {
-            "season": driver_standings[0]["season"],
-            "round": driver_standings[0]["round"],
-            "DriverStandings": driver_standings[0]["DriverStandings"],
-            "ConstructorStandings": constructor_standings[0]["ConstructorStandings"],
-        }
+        data: Standings = Standings.model_validate(
+            {
+                "season": driver_standings[0]["season"],
+                "round": driver_standings[0]["round"],
+                "DriverStandings": driver_standings[0]["DriverStandings"],
+                "ConstructorStandings": constructor_standings[0]["ConstructorStandings"],
+            }
+        )
         return data
     elif not driver_standings_available and not constructor_standings_available:
         # neither driver nor constructor standings are available

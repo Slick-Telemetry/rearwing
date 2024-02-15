@@ -20,14 +20,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Install poetry, isort, black
-        run: pipx install poetry isort black
+      - name: Install poetry
+        run: pipx install poetry
 
-      - name: View poetry, isort, black versions
-        run: |
-          poetry --version
-          isort --version-number
-          black --version
+      - name: View poetry
+        run: poetry --version
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c
@@ -39,10 +36,16 @@ jobs:
         run: poetry self add 'poethepoet[poetry_plugin]'
 
       - name: Install dependencies
-        run: poetry install --no-root
+        run: poetry install --no-root --with dev,lint,test
 
-      - name: Python Lint (isort/black)
+      - name: Python Format (autoflake/isort/black)
         run: poetry poe formatters
+
+      - name: Python Lint (pylint)
+        run: poetry poe pylint
+
+      - name: Python Typecheck (mypy)
+        run: poetry poe typings
 
       - name: Run tests
         run: poetry poe tests
