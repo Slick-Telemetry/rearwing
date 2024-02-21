@@ -2,7 +2,7 @@
 import json
 import logging
 from datetime import datetime
-from typing import Annotated
+from typing import Annotated, List
 
 # External
 import fastf1
@@ -14,7 +14,7 @@ from pandas import Timestamp
 
 # App
 from .constants import (
-    DEFAULT_SESSION_FOR_RESULTS,
+    DEFAULT_SESSION,
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
     MAX_SUPPORTED_ROUND,
     MAX_SUPPORTED_SESSION,
@@ -24,7 +24,7 @@ from .constants import (
     MIN_SUPPORTED_SESSION,
     MIN_SUPPORTED_YEAR,
 )
-from .models import EventSchedule, HealthCheck, Results, Schedule, Standings
+from .models import EventSchedule, HealthCheck, Laps, Results, Schedule, Standings
 from .utils import get_default_year
 
 
@@ -34,6 +34,7 @@ from .utils import get_default_year
 origins = ["http://localhost:3000"]
 # Ergast configuration
 ergast = Ergast(result_type="raw", auto_cast=True)
+# Others
 favicon_path = "favicon.ico"
 
 # Logging
@@ -131,7 +132,7 @@ def get_schedule(
     **NOTE**: If `year` is not provided; we use the default year. Default year is defined as the year which has data for at least 1 race session.
 
     **Returns**:
-        list[Schedule]: Returns a JSON response with the list of event schedule
+        Schedule: Returns a JSON response with the list of event schedule
     """
 
     if year is None:
@@ -148,7 +149,7 @@ def get_schedule(
     event_schedule_as_json = event_schedule.to_json(orient="records")
 
     # Parse the JSON string to a JSON object
-    event_schedule_as_json_obj: list[EventSchedule] = json.loads(event_schedule_as_json)
+    event_schedule_as_json_obj: List[EventSchedule] = json.loads(event_schedule_as_json)
     schedule_as_json_obj: Schedule = Schedule.model_validate(
         {
             "year": year,
@@ -205,7 +206,7 @@ def get_next_event() -> EventSchedule:
     "/standings",
     tags=["standings"],
     summary="Get drivers and constructors standing for a given year and round",
-    response_description="Return a list of drivers and constructors standings at specific points of a season for a given year and round. If the season hasn't ended you will get the current standings.",
+    response_description="Return a list of drivers and constructors standings at specific points of a season for a given year and round. If the season hasn't ended you get the current standings.",
     status_code=status.HTTP_200_OK,
     response_model=Standings,
 )
@@ -213,8 +214,8 @@ def get_standings(
     year: Annotated[
         int | None,
         Query(
-            title="The year for which to get the driver and constructors standing. If the season hasn't ended you will get the current standings.",
-            description="The year for which to get the driver and constructors standing. If the season hasn't ended you will get the current standings.",
+            title="The year for which to get the driver and constructors standing. If the season hasn't ended you get the current standings.",
+            description="The year for which to get the driver and constructors standing. If the season hasn't ended you get the current standings.",
             ge=MIN_SUPPORTED_YEAR,
             le=MAX_SUPPORTED_YEAR,
         ),
@@ -231,7 +232,7 @@ def get_standings(
 ) -> Standings:
     """
     ## Get driver and constructor standings for a given year and round
-    Endpoint to get driver and constructor standings at specific points of a season for a given year and round. If the season hasn't ended you will get the current standings.
+    Endpoint to get driver and constructor standings at specific points of a season for a given year and round. If the season hasn't ended you get the current standings.
 
     **NOTE**: If `year` is not provided; we use the default year. Default year is defined as the year which has data for at least 1 race session.
 
@@ -296,7 +297,7 @@ def get_standings(
     summary="Get session results for a given year, round and session",
     response_description="Return session results for a given year, round and session.",
     status_code=status.HTTP_200_OK,
-    response_model=list[Results],
+    response_model=List[Results],
 )
 def get_results(
     year: Annotated[
@@ -321,20 +322,20 @@ def get_results(
         int,
         Query(
             title="The session in a round for which to get the results",
-            description="The session in a round for which to get the results. (5 = race)",
+            description="The session in a round for which to get the results. (Default = 5; ie race)",
             ge=MIN_SUPPORTED_SESSION,
             le=MAX_SUPPORTED_SESSION,
         ),
-    ] = DEFAULT_SESSION_FOR_RESULTS,
-) -> list[Results]:
+    ] = DEFAULT_SESSION,
+) -> List[Results]:
     """
     ## Get session results for a given year, round and session
     Endpoint to get session results for a given year, round and session.
 
-    **NOTE**: If `session` is not provided; we use the default session. Default session is the race session (5).
+    **NOTE**: If `session` is not provided; we use the default session. Default = 5; ie race.
 
     **Returns**:
-        list[Results]: Returns a JSON response with the list of session results
+        List[Results]: Returns a JSON response with the list of session results
     """
 
     try:
@@ -351,7 +352,7 @@ def get_results(
         session_results_as_json = session_results.to_json(orient="records")
 
         # Parse the JSON string to a JSON object
-        session_results_as_json_obj: list[Results] = json.loads(session_results_as_json)
+        session_results_as_json_obj: List[Results] = json.loads(session_results_as_json)
         return session_results_as_json_obj
 
     except ValueError as ve:
@@ -360,4 +361,89 @@ def get_results(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Likely an error when fetching results data for a session that has yet to happen. {str(ke)}",
+        )
+
+
+@app.get(
+    "/laps/{year}/{round}",
+    tags=["laps"],
+    summary="Get laps of one or more drivers for a given year, round and session",
+    response_description="Return laps of one or more drivers for a given year, round and session.",
+    status_code=status.HTTP_200_OK,
+    response_model=List[Laps],
+)
+def get_laps(
+    year: Annotated[
+        int,
+        Path(
+            title="The year for which to get the laps",
+            description="The year for which to get the laps",
+            ge=MIN_SUPPORTED_YEAR,
+            le=MAX_SUPPORTED_YEAR,
+        ),
+    ],
+    round: Annotated[
+        int,
+        Path(
+            title="The round in a year for which to get the laps",
+            description="The round in a year for which to get the laps",
+            ge=MIN_SUPPORTED_ROUND,
+            le=MAX_SUPPORTED_ROUND,
+        ),
+    ],
+    session: Annotated[
+        int,
+        Query(
+            title="The session in a round for which to get the laps",
+            description="The session in a round for which to get the laps. (Default = 5; ie race)",
+            ge=MIN_SUPPORTED_SESSION,
+            le=MAX_SUPPORTED_SESSION,
+        ),
+    ] = DEFAULT_SESSION,
+    driver_numbers: Annotated[
+        List[int],
+        Query(
+            title="List of drivers for whom to get the laps",
+            description="List of drivers for whom to get the laps",
+        ),
+    ] = [],
+) -> List[Laps]:
+    """
+    ## Get laps of one or more drivers for a given year, round and session
+    Endpoint to get laps of one or more drivers for a given year, round and session.
+
+    **NOTE**:
+    - If `session` is not provided; we use the default session. Default = 5; ie race.
+    - If no `driver_numbers` are provided; you get laps for all drivers.
+
+    **Returns**:
+        List[Laps]: Returns a JSON response with the list of session results
+    """
+
+    session_obj = fastf1.get_session(year=year, gp=round, identifier=session)
+    session_obj.load(
+        laps=True,
+        telemetry=False,
+        weather=False,
+        messages=True,  # required for `Deleted` and `DeletedReason`
+    )
+    session_laps = session_obj.laps
+
+    try:
+        if len(driver_numbers) > 0:
+            session_laps = session_laps.pick_drivers(driver_numbers)
+
+        # Convert the dataframe to a JSON string
+        session_laps_as_json = session_laps.to_json(orient="records")
+
+        # Parse the JSON string to a JSON object
+        session_laps_as_json_obj: List[Laps] = json.loads(session_laps_as_json)
+
+        return session_laps_as_json_obj
+    except ValueError as ve:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}")
+    except KeyError as ke:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Likely an error when fetching laps data for a session that has yet to happen. {str(ke)}",
         )

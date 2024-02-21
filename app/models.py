@@ -1,3 +1,6 @@
+# Built-in
+from typing import List
+
 # External
 from pydantic import BaseModel
 
@@ -40,7 +43,7 @@ class Schedule(BaseModel):
     """Response model for event schedule data with year"""
 
     year: int
-    EventSchedule: list[EventSchedule]
+    EventSchedule: List[EventSchedule]
 
 
 class HealthCheck(BaseModel):
@@ -79,7 +82,7 @@ class DriverStandings(BaseModel):
     points: str
     wins: str
     Driver: Driver
-    Constructors: list[Constructor]
+    Constructors: List[Constructor]
 
 
 class ConstructorStandings(BaseModel):
@@ -97,8 +100,8 @@ class Standings(BaseModel):
 
     season: int
     round: int
-    DriverStandings: list[DriverStandings]
-    ConstructorStandings: list[ConstructorStandings]
+    DriverStandings: List[DriverStandings]
+    ConstructorStandings: List[ConstructorStandings]
 
 
 class Results(BaseModel):
@@ -125,3 +128,37 @@ class Results(BaseModel):
     Time: int | None
     Status: str
     Points: float | None
+
+
+class Laps(BaseModel):
+    Time: int
+    Driver: str
+    DriverNumber: str
+    LapTime: int | None
+    LapNumber: float
+    Stint: float
+    PitOutTime: int | None
+    PitInTime: int | None
+    Sector1Time: int | None
+    Sector2Time: int | None
+    Sector3Time: int | None
+    Sector1SessionTime: int | None
+    Sector2SessionTime: int | None
+    Sector3SessionTime: int | None
+    SpeedI1: float | None
+    SpeedI2: float | None
+    SpeedFL: float | None
+    SpeedST: float | None
+    IsPersonalBest: bool
+    Compound: str
+    TyreLife: float
+    FreshTyre: bool
+    Team: str
+    LapStartTime: int | None
+    LapStartDate: str | None
+    TrackStatus: str
+    Position: float | None
+    Deleted: bool | None
+    DeletedReason: str
+    FastF1Generated: bool
+    IsAccurate: bool
