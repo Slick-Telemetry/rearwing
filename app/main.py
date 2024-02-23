@@ -1,6 +1,5 @@
 # Built-in
 import json
-import logging
 from datetime import datetime
 from typing import Annotated, List
 
@@ -28,7 +27,7 @@ from .models import EventSchedule, HealthCheck, Laps, Results, Schedule, Standin
 from .utils import get_default_year
 
 
-# fastf1.set_log_level("WARNING") # TODO use for production and staging
+fastf1.set_log_level("WARNING")
 
 # Cors Middleware
 origins = ["http://localhost:3000"]
@@ -36,10 +35,6 @@ origins = ["http://localhost:3000"]
 ergast = Ergast(result_type="raw", auto_cast=True)
 # Others
 favicon_path = "favicon.ico"
-
-# Logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Slick Telemetry API",
