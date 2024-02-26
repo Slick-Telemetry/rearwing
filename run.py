@@ -9,7 +9,7 @@ def start_server():
         port=8081,
         reload=True,
         log_level="info",
-        reload_excludes=["app/test_main.py"],
+        reload_excludes=["tests/*.py"],
     )
 
 
