@@ -6,7 +6,10 @@ import fastf1
 
 
 def get_default_year() -> int:
-    # default year is defined as the year which has data for at least 1 race session
+    """Get the default year for the app.
+
+    NOTE - The default year is defined as the year which has data for at least 1 race session.
+    """
 
     current_year = datetime.today().year
     event_schedule = fastf1.get_event_schedule(current_year, include_testing=False)
