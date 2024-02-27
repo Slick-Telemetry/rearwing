@@ -1,3 +1,20 @@
+## 0.3.0 (2024-02-27)
+
+### Feat
+
+- BACK-39 added /laps path
+- BACK-31 upgraded to python 3.12.2
+- BACK-38 added linter and typecheck
+- BACK-36 added poethepoet poetry plugin
+
+### Fix
+
+- **logging**: less noise during development
+
+### Refactor
+
+- **tests**: BACK-44 moved tests to a separate folder
+
 ## 0.2.0 (2024-02-12)
 
 ### Feat

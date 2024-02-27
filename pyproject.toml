@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 #-->> Metadata <<------------------------------------------
 [tool.poetry]
 name = "backend"
-version = "0.2.0"
+version = "0.3.0"
 description = "Slick Telemetry backend written in python"
 authors = ["Slick Telemetry <contact.@slicktelemetry.com>"]
 readme = "README.md"
@@ -75,7 +75,7 @@ line-length = 120
 target-version = ["py312"]
 
 [tool.commitizen]
-version = "0.2.0"
+version = "0.3.0"
 version_files = [
     "app/__init__.py:__version__",
     "pyproject.toml:version",
