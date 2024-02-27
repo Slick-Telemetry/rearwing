@@ -23,7 +23,7 @@ from .constants import (
     MIN_SUPPORTED_SESSION,
     MIN_SUPPORTED_YEAR,
 )
-from .models import EventSchedule, HealthCheck, Laps, Results, Schedule, Standings
+from .models import EventSchedule, HealthCheck, Laps, Results, Root, Schedule, Standings
 from .utils import get_default_year
 
 
@@ -73,6 +73,7 @@ async def favicon():
     summary="Read root",
     response_description="Return root info",
     status_code=status.HTTP_200_OK,
+    response_model=Root,
 )
 def read_root():
     return {"we_are": "SlickTelemetry"}
@@ -395,7 +396,7 @@ def get_laps(
             le=MAX_SUPPORTED_SESSION,
         ),
     ] = DEFAULT_SESSION,
-    driver_numbers: Annotated[
+    driver_number: Annotated[
         List[int],
         Query(
             title="List of drivers for whom to get the laps",
@@ -425,8 +426,9 @@ def get_laps(
     session_laps = session_obj.laps
 
     try:
-        if len(driver_numbers) > 0:
-            session_laps = session_laps.pick_drivers(driver_numbers)
+        if len(driver_number) > 0:
+            print(driver_number)
+            session_laps = session_laps.pick_drivers(driver_number)
 
         # Convert the dataframe to a JSON string
         session_laps_as_json = session_laps.to_json(orient="records")
