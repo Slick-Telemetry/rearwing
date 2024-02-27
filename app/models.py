@@ -6,13 +6,13 @@ from pydantic import BaseModel
 
 
 class Root(BaseModel):
-    """Response model for root."""
+    """Response model for root"""
 
     we_are: str = "SlickTelemetry"
 
 
 class EventSchedule(BaseModel):
-    """Response model for event schedule data for a Formula 1 calendar year."""
+    """Response model for event schedule data for a Formula 1 calendar year"""
 
     RoundNumber: int
     Country: str
@@ -47,7 +47,7 @@ class Schedule(BaseModel):
 
 
 class HealthCheck(BaseModel):
-    """Response model to validate and return when performing a health check."""
+    """Response model to validate and return when performing a health check"""
 
     status: str = "OK"
 
