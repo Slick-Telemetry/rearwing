@@ -27,3 +27,9 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-commit, pre-push]
+      - id: run-tests
+        name: Run tests
+        entry: poetry poe tests
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
