@@ -5,8 +5,8 @@ from typing import List
 from pydantic import BaseModel
 
 
-class ReadRoot(BaseModel):
-    """Response model to validate and return when performing a health check."""
+class Root(BaseModel):
+    """Response model for root."""
 
     we_are: str = "SlickTelemetry"
 
@@ -131,6 +131,8 @@ class Results(BaseModel):
 
 
 class Laps(BaseModel):
+    """Response model for session laps for a given year, round, session and drivers"""
+
     Time: int
     Driver: str
     DriverNumber: str

@@ -9,9 +9,6 @@ from app.main import app
 client = TestClient(app)
 
 
-# region next-event
-
-
 def test_get_next_event():
     response = client.get("/next-event")
     assert response.status_code == status.HTTP_200_OK
@@ -40,6 +37,3 @@ def test_get_next_event():
         "Session5DateUtc": "2024-03-02 15:00:00",
         "F1ApiSupport": True,
     }
-
-
-# endregion next-event
