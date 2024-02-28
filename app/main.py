@@ -193,7 +193,7 @@ def get_next_event() -> EventSchedule:
         next_event_as_json = next_event.to_json()
 
         # Parse the JSON string to a JSON object
-        next_event_as_json_obj: EventSchedule = json.loads(next_event_as_json)
+        next_event_as_json_obj: EventSchedule = EventSchedule.model_validate_json(next_event_as_json)
 
         return next_event_as_json_obj
 
