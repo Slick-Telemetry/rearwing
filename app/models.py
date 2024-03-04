@@ -107,38 +107,38 @@ class Standings(BaseModel):
 class Results(BaseModel):
     """Response model for session results for a given year, round and session"""
 
-    DriverNumber: str
-    BroadcastName: str
-    Abbreviation: str
-    DriverId: str
-    TeamName: str
-    TeamColor: str
-    TeamId: str
-    FirstName: str
-    LastName: str
-    FullName: str
-    HeadshotUrl: str
-    CountryCode: str
+    DriverNumber: str | None
+    BroadcastName: str | None
+    Abbreviation: str | None
+    DriverId: str | None
+    TeamName: str | None
+    TeamColor: str | None
+    TeamId: str | None
+    FirstName: str | None
+    LastName: str | None
+    FullName: str | None
+    HeadshotUrl: str | None
+    CountryCode: str | None
     Position: float | None
-    ClassifiedPosition: str
+    ClassifiedPosition: str | None
     GridPosition: float | None
     Q1: int | None
     Q2: int | None
     Q3: int | None
     Time: int | None
-    Status: str
+    Status: str | None
     Points: float | None
 
 
 class Laps(BaseModel):
     """Response model for session laps for a given year, round, session and drivers"""
 
-    Time: int
-    Driver: str
-    DriverNumber: str
+    Time: int | None
+    Driver: str | None
+    DriverNumber: str | None
     LapTime: int | None
-    LapNumber: float
-    Stint: float
+    LapNumber: float | None
+    Stint: float | None
     PitOutTime: int | None
     PitInTime: int | None
     Sector1Time: int | None
@@ -151,16 +151,51 @@ class Laps(BaseModel):
     SpeedI2: float | None
     SpeedFL: float | None
     SpeedST: float | None
-    IsPersonalBest: bool
-    Compound: str
-    TyreLife: float
-    FreshTyre: bool
-    Team: str
+    IsPersonalBest: bool | None
+    Compound: str | None
+    TyreLife: float | None
+    FreshTyre: bool | None
+    Team: str | None
     LapStartTime: int | None
     LapStartDate: str | None
-    TrackStatus: str
+    TrackStatus: str | None
     Position: float | None
     Deleted: bool | None
-    DeletedReason: str
-    FastF1Generated: bool
-    IsAccurate: bool
+    DeletedReason: str | None
+    FastF1Generated: bool | None
+    IsAccurate: bool | None
+
+
+class Telemetry(BaseModel):
+    """Response model for session telemetry for a given year, round, session, driver and laps"""
+
+    Time: int
+    RPM: int
+    Speed: float
+    nGear: int
+    Throttle: float
+    Brake: bool
+    DRS: int
+    Distance: float
+    X: float
+    Y: float
+
+
+class Weather(BaseModel):
+    """Response model for session weather for a given year, round, session and laps"""
+
+    Time: int
+    AirTemp: float
+    Humidity: float
+    Pressure: float
+    Rainfall: bool
+    TrackTemp: float
+    WindDirection: int
+    WindSpeed: float
+
+
+class ExtendedTelemetry(BaseModel):
+    """Response model for telemetry with weather"""
+
+    Telemetry: List[Telemetry]
+    Weather: Weather | None
