@@ -9,19 +9,19 @@ from app.main import app
 client = TestClient(app)
 
 
-# region standings - good inputs
+# region good inputs
 
 
 def test_get_standings():
     response = client.get("/standings")
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()["season"] == 2023
-    assert response.json()["round"] == 22
+    assert response.json()["season"] == 2024
+    assert response.json()["round"] == 1
     assert response.json()["DriverStandings"][0] == {
         "position": "1",
         "positionText": "1",
-        "points": "575",
-        "wins": "19",
+        "points": "26",
+        "wins": "1",
         "Driver": {
             "driverId": "max_verstappen",
             "permanentNumber": "33",
@@ -44,8 +44,8 @@ def test_get_standings():
     assert response.json()["ConstructorStandings"][0] == {
         "position": "1",
         "positionText": "1",
-        "points": "860",
-        "wins": "21",
+        "points": "44",
+        "wins": "1",
         "Constructor": {
             "constructorId": "red_bull",
             "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
@@ -141,9 +141,9 @@ def test_get_standings_good_year_and_round():
     }
 
 
-# endregion standings - good inputs
+# endregion good inputs
 
-# region standings - no inputs
+# region no inputs
 
 
 def test_get_standings_good_round_bad_year_no_input():
@@ -152,4 +152,4 @@ def test_get_standings_good_round_bad_year_no_input():
     assert response.json() == {"detail": 'Bad request. Must provide the "year" parameter.'}
 
 
-# endregion standings - no inputs
+# endregion no inputs

@@ -9,7 +9,7 @@ from app.main import app
 client = TestClient(app)
 
 
-# region laps - good inputs
+# region good inputs
 
 
 def test_get_laps():
@@ -164,9 +164,9 @@ def test_get_laps_with_session_and_driver_numbers():
     }
 
 
-# endregion laps - good inputs
+# endregion good inputs
 
-# region laps - bad inputs
+# region bad inputs
 
 
 def test_get_laps_mixed_driver_numbers():
@@ -217,4 +217,4 @@ def test_get_laps_bad_driver_numbers():
     assert response.json() == []
 
 
-# endregion laps - bad inputs
+# endregion bad inputs
