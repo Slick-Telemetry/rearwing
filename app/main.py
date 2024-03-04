@@ -15,24 +15,38 @@ from pandas import Timestamp
 from .constants import (
     DEFAULT_SESSION,
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
+    MAX_SUPPORTED_DRIVER_NUMBER,
     MAX_SUPPORTED_ROUND,
     MAX_SUPPORTED_SESSION,
     MAX_SUPPORTED_YEAR,
     METADATA_DESCRIPTION,
+    MIN_SUPPORTED_DRIVER_NUMBER,
+    MIN_SUPPORTED_LAP_COUNT,
     MIN_SUPPORTED_ROUND,
     MIN_SUPPORTED_SESSION,
     MIN_SUPPORTED_YEAR,
 )
-from .models import EventSchedule, HealthCheck, Laps, Results, Root, Schedule, Standings
+from .models import (
+    EventSchedule,
+    ExtendedTelemetry,
+    HealthCheck,
+    Laps,
+    Results,
+    Root,
+    Schedule,
+    Standings,
+    Telemetry,
+    Weather,
+)
 from .utils import get_default_year
 
 
+# FastF1 configuration
 fastf1.set_log_level("WARNING")
-
-# Cors Middleware
-origins = ["http://localhost:3000"]
 # Ergast configuration
 ergast = Ergast(result_type="raw", auto_cast=True)
+# Cors Middleware
+origins = ["http://localhost:3000"]
 # Others
 favicon_path = "favicon.ico"
 
@@ -284,7 +298,9 @@ def get_standings(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Driver standings not found.")
     else:
         # something went wrong, investigate
-        raise HTTPException(status_code=500, detail="Something went wrong. Investigate!")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Something went wrong. Investigate!"
+        )
 
 
 @app.get(
@@ -416,18 +432,17 @@ def get_laps(
         List[Laps]: Returns a JSON response with the list of session results
     """
 
-    session_obj = fastf1.get_session(year=year, gp=round, identifier=session)
-    session_obj.load(
-        laps=True,
-        telemetry=False,
-        weather=False,
-        messages=True,  # required for `Deleted` and `DeletedReason`
-    )
-    session_laps = session_obj.laps
-
     try:
+        session_obj = fastf1.get_session(year=year, gp=round, identifier=session)
+        session_obj.load(
+            laps=True,
+            telemetry=False,
+            weather=False,
+            messages=True,  # required for `Deleted` and `DeletedReason`
+        )
+        session_laps = session_obj.laps
+
         if len(driver_number) > 0:
-            print(driver_number)
             session_laps = session_laps.pick_drivers(driver_number)
 
         # Convert the dataframe to a JSON string
@@ -444,3 +459,150 @@ def get_laps(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Likely an error when fetching laps data for a session that has yet to happen. {str(ke)}",
         )
+
+
+@app.get(
+    "/telemetry/{year}/{round}/{driver_number}/{lap}",
+    tags=["telemetry"],
+    summary="Get telemetry of a driver for a given year, round and session for one or multiple laps optionally with weather data",
+    response_description="telemetry of a driver for a given year, round and session for one or multiple laps optionally with weather data.",
+    status_code=status.HTTP_200_OK,
+    response_model=ExtendedTelemetry,
+)
+def get_telemetry(
+    year: Annotated[
+        int,
+        Path(
+            title="The year for which to get the telemetry",
+            description="The year for which to get the telemetry",
+            ge=MIN_SUPPORTED_YEAR,
+            le=MAX_SUPPORTED_YEAR,
+        ),
+    ],
+    round: Annotated[
+        int,
+        Path(
+            title="The round in a year for which to get the telemetry",
+            description="The round in a year for which to get the telemetry",
+            ge=MIN_SUPPORTED_ROUND,
+            le=MAX_SUPPORTED_ROUND,
+        ),
+    ],
+    driver_number: Annotated[
+        int,
+        Path(
+            title="Driver number for whom to get the telemetry",
+            description="Driver number for whom to get the telemetry",
+            ge=MIN_SUPPORTED_DRIVER_NUMBER,
+            le=MAX_SUPPORTED_DRIVER_NUMBER,
+        ),
+    ],
+    lap: Annotated[
+        int,
+        Path(
+            title="List of laps of the driver for which to get the telemetry",
+            description="List of laps of the driver for which to get the telemetry",
+            ge=MIN_SUPPORTED_LAP_COUNT,
+        ),
+    ],
+    session: Annotated[
+        int,
+        Query(
+            title="The session in a round for which to get the telemetry",
+            description="The session in a round for which to get the telemetry. (Default = 5; ie race)",
+            ge=MIN_SUPPORTED_SESSION,
+            le=MAX_SUPPORTED_SESSION,
+        ),
+    ] = DEFAULT_SESSION,
+    weather: Annotated[
+        bool,
+        Query(
+            title="Flag to fetch weather data along with telemetry",
+            description="Flag to fetch weather data along with telemetry",
+        ),
+    ] = False,
+) -> ExtendedTelemetry:
+    """
+    ## Get telemetry of a driver for a given year, round and session for one or multiple laps optionally with weather data
+    Endpoint to get telemetry of a driver for a given year, round and session for one or multiple laps optionally with weather data.
+
+    **NOTE**:
+    - If `session` is not provided; we use the default session. Default = 5; ie race.
+
+    **Returns**:
+        ExtendedTelemetry: Returns a JSON response with the list of telemetry optionally with weather data
+    """
+
+    try:
+        session_obj = fastf1.get_session(year=year, gp=round, identifier=session)
+        session_obj.load(
+            laps=True,
+            telemetry=True,
+            weather=weather,
+            messages=True,  # required for `Deleted` and `DeletedReason`
+        )
+        session_laps_for_driver = session_obj.laps.pick_drivers(driver_number)
+    except ValueError as ve:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}")
+    except KeyError as ke:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Likely an error when fetching laps data for a session that has yet to happen. {str(ke)}",
+        )
+
+    # Error out if no laps are found for the driver
+    if len(session_laps_for_driver) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Laps for driver {driver_number} not found.",
+        )
+
+    # filter laps based on the `lap` path parameter
+    filtered_lap_for_driver = session_laps_for_driver.pick_laps(lap)
+
+    # Error out if the requested lap is not found for the driver
+    if len(filtered_lap_for_driver) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Requested lap for driver {driver_number} not found.",
+        )
+
+    try:
+        session_telemetry = filtered_lap_for_driver.get_telemetry()
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Telemetry not found for driver {driver_number} for the requested laps. {str(ve)}",
+        )
+
+    # keep only the required data in session_telemetry
+    session_telemetry = session_telemetry[
+        ["Time", "RPM", "Speed", "nGear", "Throttle", "Brake", "DRS", "Distance", "X", "Y"]
+    ]
+
+    # Convert the dataframe to a JSON string
+    session_telemetry_as_json = session_telemetry.to_json(orient="records")
+
+    # Parse the JSON string to a JSON object
+    session_telemetry_as_json_obj: List[Telemetry] = json.loads(session_telemetry_as_json)
+
+    session_weather_as_json_obj: Weather | None = None
+    if weather:
+        session_weather = filtered_lap_for_driver.get_weather_data()
+
+        # Convert the dataframe to a JSON string
+        session_weather_as_json = session_weather.to_json(orient="records")
+
+        # Parse the JSON string to a JSON object
+        session_weather_as_json_list_obj: List[Weather] = json.loads(session_weather_as_json)
+
+        # Grab the first row of the weather data
+        # https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data
+        session_weather_as_json_obj = session_weather_as_json_list_obj[0]
+
+    return ExtendedTelemetry.model_validate(
+        {
+            "Telemetry": session_telemetry_as_json_obj,
+            "Weather": session_weather_as_json_obj,
+        }
+    )
