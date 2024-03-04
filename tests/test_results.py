@@ -9,7 +9,7 @@ from app.main import app
 client = TestClient(app)
 
 
-# region results - good inputs
+# region good inputs
 
 
 def test_get_results():
@@ -68,9 +68,9 @@ def test_get_results_with_session():
     }
 
 
-# endregion results - good inputs
+# endregion good inputs
 
-# region results - bad inputs
+# region bad inputs
 
 
 def test_get_results_bad_round_invalid():
@@ -79,4 +79,4 @@ def test_get_results_bad_round_invalid():
     assert response.json() == {"detail": "Bad Request. Invalid round: 25"}
 
 
-# endregion results - bad inputs
+# endregion bad inputs
