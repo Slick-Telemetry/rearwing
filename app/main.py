@@ -15,16 +15,17 @@ from pandas import Timestamp
 from .constants import (
     DEFAULT_SESSION,
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
-    MAX_SUPPORTED_DRIVER_NUMBER,
-    MAX_SUPPORTED_ROUND,
-    MAX_SUPPORTED_SESSION,
-    MAX_SUPPORTED_YEAR,
+    MAX_DRIVER_NUMBER_SUPPORTED,
+    MAX_LAP_COUNT_SUPPORTED,
+    MAX_ROUND_SUPPORTED,
+    MAX_SESSION_SUPPORTED,
+    MAX_YEAR_SUPPORTED,
     METADATA_DESCRIPTION,
-    MIN_SUPPORTED_DRIVER_NUMBER,
-    MIN_SUPPORTED_LAP_COUNT,
-    MIN_SUPPORTED_ROUND,
-    MIN_SUPPORTED_SESSION,
-    MIN_SUPPORTED_YEAR,
+    MIN_DRIVER_NUMBER_SUPPORTED,
+    MIN_LAP_COUNT_SUPPORTED,
+    MIN_ROUND_SUPPORTED,
+    MIN_SESSION_SUPPORTED,
+    MIN_YEAR_SUPPORTED,
 )
 from .models import (
     EventSchedule,
@@ -130,8 +131,8 @@ def get_schedule(
         Query(
             title="The year for which to get the schedule",
             description="The year for which to get the schedule",
-            ge=MIN_SUPPORTED_YEAR,
-            le=MAX_SUPPORTED_YEAR,
+            ge=MIN_YEAR_SUPPORTED,
+            le=MAX_YEAR_SUPPORTED,
         ),
     ] = None,
 ) -> Schedule:
@@ -226,8 +227,8 @@ def get_standings(
         Query(
             title="The year for which to get the driver and constructors standing. If the season hasn't ended you get the current standings.",
             description="The year for which to get the driver and constructors standing. If the season hasn't ended you get the current standings.",
-            ge=MIN_SUPPORTED_YEAR,
-            le=MAX_SUPPORTED_YEAR,
+            ge=MIN_YEAR_SUPPORTED,
+            le=MAX_YEAR_SUPPORTED,
         ),
     ] = None,
     round: Annotated[
@@ -235,8 +236,8 @@ def get_standings(
         Query(
             title="The round in a year for which to get the driver and constructor standings",
             description="The round in a year for which to get the driver and constructor standings",
-            ge=MIN_SUPPORTED_ROUND,
-            le=MAX_SUPPORTED_ROUND,
+            ge=MIN_ROUND_SUPPORTED,
+            le=MAX_ROUND_SUPPORTED,
         ),
     ] = None,
 ) -> Standings:
@@ -317,8 +318,8 @@ def get_results(
         Path(
             title="The year for which to get the results",
             description="The year for which to get the results",
-            ge=MIN_SUPPORTED_YEAR,
-            le=MAX_SUPPORTED_YEAR,
+            ge=MIN_YEAR_SUPPORTED,
+            le=MAX_YEAR_SUPPORTED,
         ),
     ],
     round: Annotated[
@@ -326,8 +327,8 @@ def get_results(
         Path(
             title="The round in a year for which to get the results",
             description="The round in a year for which to get the results",
-            ge=MIN_SUPPORTED_ROUND,
-            le=MAX_SUPPORTED_ROUND,
+            ge=MIN_ROUND_SUPPORTED,
+            le=MAX_ROUND_SUPPORTED,
         ),
     ],
     session: Annotated[
@@ -335,8 +336,8 @@ def get_results(
         Query(
             title="The session in a round for which to get the results",
             description="The session in a round for which to get the results. (Default = 5; ie race)",
-            ge=MIN_SUPPORTED_SESSION,
-            le=MAX_SUPPORTED_SESSION,
+            ge=MIN_SESSION_SUPPORTED,
+            le=MAX_SESSION_SUPPORTED,
         ),
     ] = DEFAULT_SESSION,
 ) -> List[Results]:
@@ -390,8 +391,8 @@ def get_laps(
         Path(
             title="The year for which to get the laps",
             description="The year for which to get the laps",
-            ge=MIN_SUPPORTED_YEAR,
-            le=MAX_SUPPORTED_YEAR,
+            ge=MIN_YEAR_SUPPORTED,
+            le=MAX_YEAR_SUPPORTED,
         ),
     ],
     round: Annotated[
@@ -399,8 +400,8 @@ def get_laps(
         Path(
             title="The round in a year for which to get the laps",
             description="The round in a year for which to get the laps",
-            ge=MIN_SUPPORTED_ROUND,
-            le=MAX_SUPPORTED_ROUND,
+            ge=MIN_ROUND_SUPPORTED,
+            le=MAX_ROUND_SUPPORTED,
         ),
     ],
     session: Annotated[
@@ -408,8 +409,8 @@ def get_laps(
         Query(
             title="The session in a round for which to get the laps",
             description="The session in a round for which to get the laps. (Default = 5; ie race)",
-            ge=MIN_SUPPORTED_SESSION,
-            le=MAX_SUPPORTED_SESSION,
+            ge=MIN_SESSION_SUPPORTED,
+            le=MAX_SESSION_SUPPORTED,
         ),
     ] = DEFAULT_SESSION,
     driver_number: Annotated[
@@ -475,8 +476,8 @@ def get_telemetry(
         Path(
             title="The year for which to get the telemetry",
             description="The year for which to get the telemetry",
-            ge=MIN_SUPPORTED_YEAR,
-            le=MAX_SUPPORTED_YEAR,
+            ge=MIN_YEAR_SUPPORTED,
+            le=MAX_YEAR_SUPPORTED,
         ),
     ],
     round: Annotated[
@@ -484,8 +485,8 @@ def get_telemetry(
         Path(
             title="The round in a year for which to get the telemetry",
             description="The round in a year for which to get the telemetry",
-            ge=MIN_SUPPORTED_ROUND,
-            le=MAX_SUPPORTED_ROUND,
+            ge=MIN_ROUND_SUPPORTED,
+            le=MAX_ROUND_SUPPORTED,
         ),
     ],
     driver_number: Annotated[
@@ -493,8 +494,8 @@ def get_telemetry(
         Path(
             title="Driver number for whom to get the telemetry",
             description="Driver number for whom to get the telemetry",
-            ge=MIN_SUPPORTED_DRIVER_NUMBER,
-            le=MAX_SUPPORTED_DRIVER_NUMBER,
+            ge=MIN_DRIVER_NUMBER_SUPPORTED,
+            le=MAX_DRIVER_NUMBER_SUPPORTED,
         ),
     ],
     lap: Annotated[
@@ -502,7 +503,8 @@ def get_telemetry(
         Path(
             title="List of laps of the driver for which to get the telemetry",
             description="List of laps of the driver for which to get the telemetry",
-            ge=MIN_SUPPORTED_LAP_COUNT,
+            ge=MIN_LAP_COUNT_SUPPORTED,
+            le=MAX_LAP_COUNT_SUPPORTED,
         ),
     ],
     session: Annotated[
@@ -510,8 +512,8 @@ def get_telemetry(
         Query(
             title="The session in a round for which to get the telemetry",
             description="The session in a round for which to get the telemetry. (Default = 5; ie race)",
-            ge=MIN_SUPPORTED_SESSION,
-            le=MAX_SUPPORTED_SESSION,
+            ge=MIN_SESSION_SUPPORTED,
+            le=MAX_SESSION_SUPPORTED,
         ),
     ] = DEFAULT_SESSION,
     weather: Annotated[
