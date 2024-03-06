@@ -75,7 +75,7 @@ def test_get_telemetry_bad_driver_number():
 
 
 def test_get_telemetry_bad_lap():
-    response = client.get("/telemetry/2023/4/1/99?session=5&weather=false")
+    response = client.get("/telemetry/2023/4/1/80?session=5&weather=false")
     assert response.status_code == status.HTTP_404_NOT_FOUND
     assert response.json() == {"detail": "Requested lap for driver 1 not found."}
 
