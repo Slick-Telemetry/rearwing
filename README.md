@@ -147,19 +147,17 @@ For other docker commands, see [useful_commands.md](./useful_commands.md)
     - [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph) (free)
 - **Branches**:
   - `main` is the production mainline.
-  - `staging` is the staging line.
   - `dev` is the development line (***default branch***).
 - **PR merge strategy on Github**
   - Code should flow in the following direction through branches:
     ```
-    feature/bug fix -> dev -> staging -> main
+    feature/bug fix -> dev -> main
     ```
   - We'll be keeping a linear commit history and so using a combination of `Rebase and merge` and `Squash and merge` merge strategies.
   - Use `Rebase and merge` as ***default*** to ensure all commits from the branch to be merged are brought in individually to the target branch.
   - `Squash and merge` may be used ***ONLY*** when bringing in changes from a feature/bug fix branch into `dev`.
   - To maintain linear commit history, ensure to use `push force` when:
-    - Bringing `dev` on the same commit as `staging` (ie rebasing `dev` onto `staging`).
-    - Bringing `staging` on the same commit as `main` (ie rebasing `staging` onto `main`).
+    - Bringing `dev` on the same commit as `main` (ie rebasing `dev` onto `main`).
   - [More information on git rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase).
   - [More information on PR merge strategies](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github).
 - **Jira issue linking**

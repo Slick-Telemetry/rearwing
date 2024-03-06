@@ -2,15 +2,15 @@ name: Test, Build, Publish, Release
 
 on:
   push:
-    branches: [main, staging, dev]
+    branches: [main, dev]
   pull_request:
-    branches: [main, staging, dev]
+    branches: [main, dev]
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  # if branch is main, use prod, else staging or dev as necessary
-  BUILD_NAME: ${{ github.ref == 'refs/heads/main' && 'prod' || github.ref == 'refs/heads/staging' && 'staging' || 'dev' }}
+  # if branch is main, use prod, else dev
+  BUILD_NAME: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
 
 jobs:
   test:
