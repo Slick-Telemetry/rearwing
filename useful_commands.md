@@ -71,7 +71,6 @@ docker ps
 
 ```sh
 docker build --file Dockerfile.dev --tag backend-dev .
-docker build --file Dockerfile.staging --tag backend-staging .
 docker build --file Dockerfile.prod --tag backend-prod .
 ```
 
@@ -79,7 +78,6 @@ docker build --file Dockerfile.prod --tag backend-prod .
 
 ```sh
 docker run --name backend-dev --publish 8081:8081 backend-dev --detach
-docker run --name backend-staging --publish 80:80 backend-staging --detach
 docker run --name backend-prod --publish 80:80 backend-prod --detach
 ```
 
@@ -87,7 +85,6 @@ docker run --name backend-prod --publish 80:80 backend-prod --detach
 
 ```sh
 docker stop backend-dev
-docker stop backend-staging
 docker stop backend-prod
 ```
 
@@ -95,7 +92,6 @@ docker stop backend-prod
 
 ```sh
 docker restart backend-dev
-docker restart backend-staging
 docker restart backend-prod
 ```
 
