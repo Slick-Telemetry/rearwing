@@ -52,7 +52,7 @@ formatters = ["autoflake", "isort", "black"]
 git-hooks-setup = "pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit"
 git-hooks-upate = "pre-commit autoupdate"
 pylint = "pylint run.py app"
-tests = "pytest -rpP"
+tests = "pytest -rpPfE tests"
 typings = "mypy run.py app"
 
 #-->> Configuration <<-------------------------------------
