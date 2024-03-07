@@ -8,6 +8,10 @@
   "editor.formatOnSave": true,
   "black-formatter.args": ["--line-length", "120", "--target-version", "py312"],
   "isort.args": ["--settings-file", "${workspaceFolder}/pyproject.toml"],
+  "mypy-type-checker.args": [
+    "--config-file",
+    "${workspaceFolder}/pyproject.toml"
+  ],
   "pylint.args": ["--rcfile", "${workspaceFolder}/.pylintrc"],
   "python.testing.pytestArgs": ["tests"],
   "python.testing.unittestEnabled": false,
