@@ -1,3 +1,17 @@
+## 0.4.0 (2024-03-07)
+
+### Feat
+
+- BACK-40 added /telemetry path
+
+### Fix
+
+- **next-event**: use pydantic.model_validate_json
+
+### Refactor
+
+- updated constants
+
 ## 0.3.0 (2024-02-27)
 
 ### Feat
