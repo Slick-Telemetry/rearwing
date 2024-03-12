@@ -16,12 +16,12 @@ def test_get_standings():
     response = client.get("/standings")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["season"] == 2024
-    assert response.json()["round"] == 1
+    assert response.json()["round"] == 2
     assert response.json()["DriverStandings"][0] == {
         "position": "1",
         "positionText": "1",
-        "points": "26",
-        "wins": "1",
+        "points": "51",
+        "wins": "2",
         "Driver": {
             "driverId": "max_verstappen",
             "permanentNumber": "33",
@@ -44,8 +44,8 @@ def test_get_standings():
     assert response.json()["ConstructorStandings"][0] == {
         "position": "1",
         "positionText": "1",
-        "points": "44",
-        "wins": "1",
+        "points": "87",
+        "wins": "2",
         "Constructor": {
             "constructorId": "red_bull",
             "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
