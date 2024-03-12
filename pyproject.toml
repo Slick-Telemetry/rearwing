@@ -16,8 +16,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 fastapi = "^0.110.0"
-fastf1 = "3.3.0"
-uvicorn = { extras = ["standard"], version = "^0.27.1" }
+fastf1 = "3.3.1"
+uvicorn = { extras = ["standard"], version = "^0.28.0" }
 
 # Development (common) dependencies
 [tool.poetry.group.dev.dependencies]
