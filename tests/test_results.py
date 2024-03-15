@@ -2,11 +2,8 @@
 from fastapi import status
 from fastapi.testclient import TestClient
 
-# Project
-from app.main import app
-
-
-client = TestClient(app)
+# App
+from . import client
 
 
 # region good inputs

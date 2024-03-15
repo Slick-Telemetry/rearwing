@@ -20,6 +20,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
+      - name: Set up .env
+        run: cp .env.example .env
+
       - name: Install poetry
         run: pipx install poetry
 
@@ -42,7 +45,7 @@ jobs:
         run: poetry poe formatters
 
       - name: Python Lint (pylint)
-        run: poetry poe pylint
+        run: poetry poe linters
 
       - name: Python Typecheck (mypy)
         run: poetry poe typings

@@ -2,11 +2,8 @@
 from fastapi import status
 from fastapi.testclient import TestClient
 
-# Project
-from app.main import app
-
-
-client = TestClient(app)
+# App
+from . import client
 
 
 def test_get_next_event():
