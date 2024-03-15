@@ -5,9 +5,11 @@ from typing import Annotated, List
 
 # External
 import fastf1
-from fastapi import FastAPI, HTTPException, Path, Query, status
+from dotenv import dotenv_values
+from fastapi import Depends, FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastf1.ergast import Ergast
 from pandas import Timestamp
 
@@ -42,6 +44,8 @@ from .models import (
 from .utils import get_default_year
 
 
+# Load environment variables from .env file
+config = dotenv_values(".env")
 # FastF1 configuration
 fastf1.set_log_level("WARNING")
 # Ergast configuration
@@ -50,6 +54,8 @@ ergast = Ergast(result_type="raw", auto_cast=True)
 origins = ["http://localhost:3000"]
 # Others
 favicon_path = "favicon.ico"
+# Security
+security = HTTPBearer()
 
 app = FastAPI(
     title="Slick Telemetry API",
@@ -65,8 +71,6 @@ app = FastAPI(
         "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
     },
 )
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -75,6 +79,20 @@ app.add_middleware(
     allow_headers=["*"],
     # HTTPSRedirectMiddleware # TODO use for production and staging
 )
+
+
+def validate_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """
+    Validates the token provided in the HTTP Authorization header.
+
+    Parameters:
+    - credentials: The HTTPAuthorizationCredentials object containing the token.
+
+    Raises:
+    - HTTPException: If the token is invalid.
+    """
+    if credentials.credentials != config["SECRET_TOKEN"]:
+        raise HTTPException(status_code=403, detail="Invalid token")
 
 
 @app.get("/favicon.ico", include_in_schema=False)
@@ -124,6 +142,7 @@ def get_health() -> HealthCheck:
     response_description="Return list of events schedule for a given year",
     status_code=status.HTTP_200_OK,
     response_model=Schedule,
+    dependencies=[Depends(validate_token)],
 )
 def get_schedule(
     year: Annotated[
@@ -178,6 +197,7 @@ def get_schedule(
     response_description="Returns upcoming event",
     status_code=status.HTTP_200_OK,
     response_model=EventSchedule,
+    dependencies=[Depends(validate_token)],
 )
 def get_next_event() -> EventSchedule:
     """
@@ -220,6 +240,7 @@ def get_next_event() -> EventSchedule:
     response_description="Return a list of drivers and constructors standings at specific points of a season for a given year and round. If the season hasn't ended you get the current standings.",
     status_code=status.HTTP_200_OK,
     response_model=Standings,
+    dependencies=[Depends(validate_token)],
 )
 def get_standings(
     year: Annotated[
@@ -311,6 +332,7 @@ def get_standings(
     response_description="Return session results for a given year, round and session.",
     status_code=status.HTTP_200_OK,
     response_model=List[Results],
+    dependencies=[Depends(validate_token)],
 )
 def get_results(
     year: Annotated[
@@ -384,6 +406,7 @@ def get_results(
     response_description="Return laps of one or more drivers for a given year, round and session.",
     status_code=status.HTTP_200_OK,
     response_model=List[Laps],
+    dependencies=[Depends(validate_token)],
 )
 def get_laps(
     year: Annotated[
@@ -469,6 +492,7 @@ def get_laps(
     response_description="telemetry of a driver for a given year, round and session for one or multiple laps optionally with weather data.",
     status_code=status.HTTP_200_OK,
     response_model=ExtendedTelemetry,
+    dependencies=[Depends(validate_token)],
 )
 def get_telemetry(
     year: Annotated[
