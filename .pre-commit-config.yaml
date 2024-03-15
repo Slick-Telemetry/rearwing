@@ -9,15 +9,15 @@ repos:
   # Execute local scripts
   - repo: local
     hooks:
-      - id: run-formatter
-        name: Run formatter
+      - id: run-formatters
+        name: Run formatters
         entry: poetry poe formatters
         language: system
         pass_filenames: false
         stages: [pre-commit, pre-push]
-      - id: run-linter
-        name: Run linter
-        entry: poetry poe pylint
+      - id: run-linters
+        name: Run linters
+        entry: poetry poe linters
         language: system
         pass_filenames: false
         stages: [pre-commit, pre-push]

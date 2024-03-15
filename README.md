@@ -37,8 +37,7 @@ Table of Contents:
 
 ### Environment variables
 
-In `/docker`, create a copy of `.env.example` as `.env`.
-
+- In project root, create a copy of `.env.example` as `.env`.
 
 ### Python virtual environment
 
@@ -99,6 +98,8 @@ poetry poe tests
 ```
 
 ### Docker
+
+In `/docker`, create a copy of `.env.example` as `.env`.
 
 #### App only
 

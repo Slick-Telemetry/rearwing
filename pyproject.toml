@@ -7,16 +7,17 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "backend"
 version = "0.4.0"
-description = "Slick Telemetry backend written in python"
+description = "Slick Telemetry backend written in python with fastapi"
 authors = ["Slick Telemetry <contact.@slicktelemetry.com>"]
 readme = "README.md"
 
 #-->> Dependencies <<--------------------------------------
 # Main dependencies (required by application)
 [tool.poetry.dependencies]
-python = "^3.12"
 fastapi = "^0.110.0"
 fastf1 = "3.3.1"
+python = "^3.12"
+python-dotenv = "^1.0.1"
 uvicorn = { extras = ["standard"], version = "^0.28.0" }
 
 # Development (common) dependencies
@@ -51,6 +52,7 @@ isort = "isort run.py app"
 formatters = ["autoflake", "isort", "black"]
 git-hooks-setup = "pre-commit install --hook-type commit-msg --hook-type pre-push --hook-type pre-commit"
 git-hooks-upate = "pre-commit autoupdate"
+linters = ["pylint"]
 pylint = "pylint run.py app"
 tests = "pytest -rpPfE tests"
 typings = "mypy run.py app"
