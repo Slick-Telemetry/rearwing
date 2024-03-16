@@ -6,16 +6,11 @@ on:
   pull_request:
     branches: [main, dev]
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-  # if branch is main, use prod, else dev
-  BUILD_NAME: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
-
 jobs:
   test:
     name: 🔬 Linting, 📊 PyTest
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
@@ -55,6 +50,15 @@ jobs:
 
   build:
     name: 🐳 Build and publish docker images
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ${{ github.repository }}
+      # if branch is main, use prod else dev
+      BUILD_NAME: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+      # if the event is push and the branch is main and the commit message starts with `bump:`, then get the latest tag
+      GET_LATEST_TAG: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message , 'bump:') }}
+      # if the event is push and (the branch is dev or the commit message starts with `bump:`), then upload the image
+      UPLOAD_IMAGE: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.event.head_commit.message , 'bump:')) }}
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -65,46 +69,78 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
+      # Get the latest tag
+      - name: Get latest tag
+        id: latest_tag
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        if: ${{ env.GET_LATEST_TAG }}
+        with:
+          script: |
+            const repo = context.repo;
+            const tags = await github.rest.repos.listTags(repo);
+            if (tags.data.length > 0) {
+              const latestTag = tags.data[0].name;
+              return latestTag;
+            } else {
+              console.log('No tags found; using default version 0.0.1');
+              return '0.0.1';
+            }
+
+      # Set the version from the latest tag or from the build name
+      # If the build is triggered by a push event and the commit message starts with `bump:`
+      # then the version is set to the latest tag
+      # Otherwise, the version is set to the build name
+      # This is used to tag the Docker image
+      - name: Set version
+        run: echo "VERSION=${{ steps.latest_tag.outputs.result || env.BUILD_NAME }}" >> $GITHUB_ENV
+
       - name: Echo GITHUB_ENV
         run: |
           echo $GITHUB_ENV
 
-      # Log into a Docker registry except on PR
-      # https://github.com/docker/login-action
+      # Log into a Docker registry
+      # The login is performed only if the event is push and (the branch is dev or the commit message starts with `bump:`)
       - name: Login into registry ${{ env.REGISTRY }}
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
+        if: ${{ env.UPLOAD_IMAGE }}
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
-      # https://github.com/docker/metadata-action
+      # Metadata is extracted only if the event is push and (the branch is dev or the commit message starts with `bump:`)
       - name: Extract Docker metadata
+        if: ${{ env.UPLOAD_IMAGE }}
         id: meta
-        uses: docker/metadata-action@9dc751fe249ad99385a2583ee0d084c400eee04e
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81
         with:
+          tags: |
+            type=edge,branch=${{ github.ref }}
+            type=raw,value=${{ env.BUILD_NAME }}
+            type=ref,event=branch
+            type=semver,pattern={{version}},value=${{ github.ref == 'refs/heads/main' && env.VERSION || format('{0}-{1}', env.VERSION, github.ref_name) }}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
-            org.opencontainers.image.description=Slick Telemetry backend ${{ env.BUILD_NAME }} image
+            org.opencontainers.image.description=Test app ${{ env.BUILD_NAME }} image
+            org.opencontainers.image.version=${{ env.VERSION }}
 
-      # Build and push Docker image with Buildx (don't push on PR)
-      # https://github.com/docker/build-push-action
+      # Build and upload Docker image to GHCR with Buildx
+      # The image is uploaded only if the event is push and (the branch is dev or the commit message starts with `bump:`)
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0
         with:
           context: .
           file: ./Dockerfile.${{ env.BUILD_NAME }}
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ env.UPLOAD_IMAGE }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
   release:
     # create a release following the logic below:
-    # 1. when the branch is `main` AND
-    # 2. its a push event AND
+    # 1. branch is `main` AND
+    # 2. workflow is triggered by a push event AND
     # 3. the head commit's commit message does NOT starts with `bump:`
     if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && ! startsWith(github.event.head_commit.message , 'bump:') }}
     name: ⬆️ Bump version and create changelog with a GitHub release
@@ -117,15 +153,17 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.SVC_PAT }}
+
       - name: Create bump and changelog
-        uses: commitizen-tools/commitizen-action@bc2616fec6b3effc9ad20380f19550a8b18cdbdf
+        uses: commitizen-tools/commitizen-action@1f11eb222996406681d2bfa1eb3d997eca46557c
         with:
           github_token: ${{ secrets.SVC_PAT }}
           changelog_increment_filename: body.md
+
       - name: Release
-        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        uses: softprops/action-gh-release@d99959edae48b5ffffd7b00da66dcdb0a33a52ee
         with:
           body_path: "body.md"
-          tag_name: ${{ env.REVISION }}
+          tag_name: ${{ env.REVISION }} # this is the version set in the previous step
           token: ${{ secrets.SVC_PAT }}
           generate_release_notes: true
