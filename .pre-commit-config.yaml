@@ -2,7 +2,7 @@
 repos:
   # Execute external scripts
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.13.0
+    rev: v3.18.4
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -15,21 +15,25 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-commit, pre-push]
+        files: ^(app/|poetry.lock|run.py/)$
       - id: run-linters
         name: Run linters
         entry: poetry poe linters
         language: system
         pass_filenames: false
         stages: [pre-commit, pre-push]
+        files: ^(app/|poetry.lock|run.py/)$
       - id: run-typings
         name: Run typings
         entry: poetry poe typings
         language: system
         pass_filenames: false
         stages: [pre-commit, pre-push]
+        files: ^(app/|poetry.lock|run.py/)$
       - id: run-tests
         name: Run tests
         entry: poetry poe tests
         language: system
         pass_filenames: false
         stages: [pre-push]
+        files: ^(app/|poetry.lock|run.py|tests/)$
