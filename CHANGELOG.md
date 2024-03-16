@@ -1,3 +1,13 @@
+## 0.5.0 (2024-03-16)
+
+### Feat
+
+- **security**: BACK-48 security token for accessing endpoints
+
+### Fix
+
+- **tests**: fixed failing tests
+
 ## 0.4.0 (2024-03-07)
 
 ### Feat
