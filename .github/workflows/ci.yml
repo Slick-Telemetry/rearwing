@@ -55,8 +55,6 @@ jobs:
       IMAGE_NAME: ${{ github.repository }}
       # if branch is main, use prod else dev
       BUILD_NAME: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
-      # if the event is push and the branch is main and the commit message starts with `bump:`, then get the latest tag
-      GET_LATEST_TAG: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message , 'bump:') }}
       # if the event is push and (the branch is dev or the commit message starts with `bump:`), then upload the image
       UPLOAD_IMAGE: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.event.head_commit.message , 'bump:')) }}
     needs: test
@@ -73,13 +71,13 @@ jobs:
       - name: Get latest tag
         id: latest_tag
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
-        if: ${{ env.GET_LATEST_TAG }}
         with:
           script: |
             const repo = context.repo;
             const tags = await github.rest.repos.listTags(repo);
             if (tags.data.length > 0) {
               const latestTag = tags.data[0].name;
+              console.log(`Latest tag: ${latestTag}`);
               return latestTag;
             } else {
               console.log('No tags found; using default version 0.0.1');
@@ -101,7 +99,7 @@ jobs:
       # Log into a Docker registry
       # The login is performed only if the event is push and (the branch is dev or the commit message starts with `bump:`)
       - name: Login into registry ${{ env.REGISTRY }}
-        if: ${{ env.UPLOAD_IMAGE }}
+        if: ${{ env.UPLOAD_IMAGE != 'false' }}
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20
         with:
           registry: ${{ env.REGISTRY }}
@@ -111,7 +109,7 @@ jobs:
       # Extract metadata (tags, labels) for Docker
       # Metadata is extracted only if the event is push and (the branch is dev or the commit message starts with `bump:`)
       - name: Extract Docker metadata
-        if: ${{ env.UPLOAD_IMAGE }}
+        if: ${{ env.UPLOAD_IMAGE != 'false' }}
         id: meta
         uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81
         with:
@@ -122,7 +120,7 @@ jobs:
             type=semver,pattern={{version}},value=${{ github.ref == 'refs/heads/main' && env.VERSION || format('{0}-{1}', env.VERSION, github.ref_name) }}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
-            org.opencontainers.image.description=Test app ${{ env.BUILD_NAME }} image
+            org.opencontainers.image.description=Slick Telemetry backend ${{ env.BUILD_NAME }} image
             org.opencontainers.image.version=${{ env.VERSION }}
 
       # Build and upload Docker image to GHCR with Buildx
