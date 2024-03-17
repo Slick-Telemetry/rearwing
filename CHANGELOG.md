@@ -1,3 +1,9 @@
+## 0.5.1 (2024-03-17)
+
+### Fix
+
+- **ci**: updated conditions for steps
+
 ## 0.5.0 (2024-03-16)
 
 ### Feat
