@@ -51,7 +51,7 @@ fastf1.set_log_level("WARNING")
 # Ergast configuration
 ergast = Ergast(result_type="raw", auto_cast=True)
 # Cors Middleware
-origins = ["http://localhost:3000"]
+origins = [config["FRONTEND_URL"]]
 # Others
 favicon_path = "favicon.ico"
 # Security
