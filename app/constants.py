@@ -2,10 +2,6 @@
 from datetime import datetime
 
 
-METADATA_DESCRIPTION = """
-Slick Telemetry backend written in python with fastf1. 🏎 
-"""
-
 EVENT_SCHEDULE_DATETIME_DTYPE_LIST = [
     "EventDate",
     "Session1Date",

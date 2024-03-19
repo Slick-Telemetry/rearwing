@@ -14,6 +14,7 @@ from fastf1.ergast import Ergast
 from pandas import Timestamp
 
 # App
+from . import __version__
 from .constants import (
     DEFAULT_SESSION,
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
@@ -22,7 +23,6 @@ from .constants import (
     MAX_ROUND_SUPPORTED,
     MAX_SESSION_SUPPORTED,
     MAX_YEAR_SUPPORTED,
-    METADATA_DESCRIPTION,
     MIN_DRIVER_NUMBER_SUPPORTED,
     MIN_LAP_COUNT_SUPPORTED,
     MIN_ROUND_SUPPORTED,
@@ -59,8 +59,8 @@ security = HTTPBearer()
 
 app = FastAPI(
     title="Slick Telemetry API",
-    description=METADATA_DESCRIPTION,
-    version="0.1.0",
+    description="Slick Telemetry backend written in python with fastf1. 🏎",
+    version=__version__,
     contact={
         "name": "Slick Telemetry",
         "url": "https://github.com/Slick-Telemetry",
