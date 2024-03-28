@@ -13,7 +13,7 @@ def test_get_standings():
     response = client.get("/standings")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["season"] == 2024
-    assert response.json()["round"] == 2
+    assert response.json()["round"] == 3
     assert response.json()["DriverStandings"][0] == {
         "position": "1",
         "positionText": "1",
@@ -41,7 +41,7 @@ def test_get_standings():
     assert response.json()["ConstructorStandings"][0] == {
         "position": "1",
         "positionText": "1",
-        "points": "87",
+        "points": "97",
         "wins": "2",
         "Constructor": {
             "constructorId": "red_bull",
