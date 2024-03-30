@@ -3,8 +3,10 @@ from datetime import datetime
 
 # External
 import fastf1
+import newrelic.agent
 
 
+@newrelic.agent.background_task()
 def get_default_year() -> int:
     """Get the default year for the app.
 

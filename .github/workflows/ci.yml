@@ -46,6 +46,8 @@ jobs:
         run: poetry poe typings
 
       - name: Run tests
+        env:
+          ENVIRONMENT: test # This disables New Relic initialization
         run: poetry poe tests
 
   build:
