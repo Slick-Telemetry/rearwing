@@ -1,3 +1,12 @@
+import newrelic.agent  # isort:skip
+
+# Built-in
+import os
+
+
+if os.getenv("ENVIRONMENT") != "test":
+    newrelic.agent.initialize("newrelic.ini")
+
 # Built-in
 import json
 from datetime import datetime
@@ -103,6 +112,7 @@ async def favicon():
     return FileResponse(favicon_path)
 
 
+@newrelic.agent.web_transaction()
 @app.get(
     "/",
     tags=["root"],
@@ -115,6 +125,7 @@ def read_root():
     return {"we_are": "SlickTelemetry"}
 
 
+@newrelic.agent.web_transaction()
 # https://gist.github.com/Jarmos-san/0b655a3f75b698833188922b714562e5
 @app.get(
     "/health",
@@ -138,6 +149,7 @@ def get_health() -> HealthCheck:
     return HealthCheck(status="OK")
 
 
+@newrelic.agent.web_transaction()
 @app.get(
     "/schedule",
     tags=["schedule"],
@@ -193,6 +205,7 @@ def get_schedule(
     return schedule_as_json_obj
 
 
+@newrelic.agent.web_transaction()
 @app.get(
     "/next-event",
     tags=["schedule"],
@@ -236,6 +249,7 @@ def get_next_event() -> EventSchedule:
         return next_event_as_json_obj
 
 
+@newrelic.agent.web_transaction()
 @app.get(
     "/standings",
     tags=["standings"],
@@ -328,6 +342,7 @@ def get_standings(
         )
 
 
+@newrelic.agent.web_transaction()
 @app.get(
     "/results/{year}/{round}",
     tags=["results"],
@@ -402,6 +417,7 @@ def get_results(
         )
 
 
+@newrelic.agent.web_transaction()
 @app.get(
     "/laps/{year}/{round}",
     tags=["laps"],
@@ -488,6 +504,7 @@ def get_laps(
         )
 
 
+@newrelic.agent.web_transaction()
 @app.get(
     "/split-qualifying-laps/{year}/{round}",
     tags=["laps"],
