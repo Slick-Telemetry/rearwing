@@ -15,6 +15,7 @@ Table of Contents:
     - [Virtual environment sanity check](#virtual-environment-sanity-check)
     - [Poe the Poet poetry plugin](#poe-the-poet-poetry-plugin)
     - [Installing git hooks](#installing-git-hooks)
+  - [New Relic integration](#new-relic-integration)
   - [Running the project](#running-the-project)
   - [Running tests](#running-tests)
   - [Docker](#docker)
@@ -84,6 +85,11 @@ poetry self add 'poethepoet[poetry_plugin]'
 ```sh
 poetry poe git-hooks-setup
 ```
+
+### New Relic integration
+
+ - Create a `newrelic.ini` file at the root of the project.
+ - Copy contents supplied by Pratik Borole into it.
 
 ### Running the project
 
