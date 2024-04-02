@@ -1,13 +1,12 @@
 # External
 from fastapi import status
-from fastapi.testclient import TestClient
 
 # App
-from . import client
+from . import client_with_auth
 
 
 def test_get_schedule():
-    response = client.get("/schedule")
+    response = client_with_auth.get("/schedule")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["year"] == 2024
     assert response.json()["EventSchedule"][0] == {
@@ -38,7 +37,7 @@ def test_get_schedule():
 
 
 def test_get_schedule_good_year():
-    response = client.get("/schedule?year=2023")
+    response = client_with_auth.get("/schedule?year=2023")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["year"] == 2023
     assert response.json()["EventSchedule"][0] == {

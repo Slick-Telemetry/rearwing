@@ -9,4 +9,4 @@ from app.main import app
 # Load environment variables from .env file
 config = dotenv_values(".env")
 
-client = TestClient(app, headers={"Authorization": f"Bearer {config["SECRET_TOKEN"]}"})
+client_with_auth = TestClient(app, headers={"Authorization": f"Bearer {config["SECRET_TOKEN"]}"})
