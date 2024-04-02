@@ -70,6 +70,7 @@ app = FastAPI(
         "name": "GNU General Public License v3.0",
         "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
     },
+    redoc_url=None,
 )
 app.add_middleware(
     CORSMiddleware,
