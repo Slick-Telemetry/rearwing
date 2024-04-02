@@ -1,16 +1,15 @@
 # External
 from fastapi import status
-from fastapi.testclient import TestClient
 
 # App
-from . import client
+from . import client_with_auth
 
 
 # region good inputs
 
 
 def test_get_laps():
-    response = client.get("/laps/2023/5")
+    response = client_with_auth.get("/laps/2023/5")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()[0] == {
         "Time": 3868310,
@@ -48,7 +47,7 @@ def test_get_laps():
 
 
 def test_get_laps_with_session_only():
-    response = client.get("/laps/2023/5?session=4")
+    response = client_with_auth.get("/laps/2023/5?session=4")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()[0] == {
         "Time": 1098400,
@@ -86,7 +85,7 @@ def test_get_laps_with_session_only():
 
 
 def test_get_laps_with_driver_numbers_only():
-    response = client.get("/laps/2023/5?driver_number=1&driver_number=44")
+    response = client_with_auth.get("/laps/2023/5?driver_number=1&driver_number=44")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()[0] == {
         "Time": 3868310,
@@ -124,7 +123,7 @@ def test_get_laps_with_driver_numbers_only():
 
 
 def test_get_laps_with_session_and_driver_numbers():
-    response = client.get("/laps/2023/5?session=4&driver_number=1&driver_number=44")
+    response = client_with_auth.get("/laps/2023/5?session=4&driver_number=1&driver_number=44")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()[0] == {
         "Time": 1087970,
@@ -167,7 +166,7 @@ def test_get_laps_with_session_and_driver_numbers():
 
 
 def test_get_laps_mixed_driver_numbers():
-    response = client.get(
+    response = client_with_auth.get(
         "/laps/2023/5?driver_number=0&driver_number=1&driver_number=13&driver_number=44&driver_number=83"
     )
     assert response.status_code == status.HTTP_200_OK
@@ -207,11 +206,17 @@ def test_get_laps_mixed_driver_numbers():
 
 
 def test_get_laps_bad_driver_numbers():
-    response = client.get(
+    response = client_with_auth.get(
         "/laps/2023/5?driver_number=0&driver_number=99&driver_number=13&driver_number=45&driver_number=83"
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == []
+
+
+def test_get_laps_bad_round():
+    response = client_with_auth.get("/laps/2023/24")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == {"detail": "Bad Request. Invalid round: 24"}
 
 
 # endregion bad inputs

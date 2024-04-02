@@ -1,16 +1,15 @@
 # External
 from fastapi import status
-from fastapi.testclient import TestClient
 
 # App
-from . import client
+from . import client_with_auth
 
 
 # region good inputs
 
 
 def test_get_standings():
-    response = client.get("/standings")
+    response = client_with_auth.get("/standings")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["season"] == 2024
     assert response.json()["round"] == 3
@@ -53,7 +52,7 @@ def test_get_standings():
 
 
 def test_get_standings_good_year_only():
-    response = client.get("/standings?year=2023")
+    response = client_with_auth.get("/standings?year=2023")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["season"] == 2023
     assert response.json()["round"] == 22
@@ -96,7 +95,7 @@ def test_get_standings_good_year_only():
 
 
 def test_get_standings_good_year_and_round():
-    response = client.get("/standings?year=2023&round=5")
+    response = client_with_auth.get("/standings?year=2023&round=5")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["season"] == 2023
     assert response.json()["round"] == 5
@@ -143,8 +142,8 @@ def test_get_standings_good_year_and_round():
 # region no inputs
 
 
-def test_get_standings_good_round_bad_year_no_input():
-    response = client.get("/standings?round=3")
+def test_get_standings_bad_year_no_input():
+    response = client_with_auth.get("/standings?round=3")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert response.json() == {"detail": 'Bad request. Must provide the "year" parameter.'}
 
