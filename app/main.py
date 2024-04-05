@@ -49,6 +49,7 @@ from .utils import get_default_year
 config = dotenv_values(".env")
 # FastF1 configuration
 fastf1.set_log_level("WARNING")
+fastf1.Cache.set_disabled()
 # Ergast configuration
 ergast = Ergast(result_type="raw", auto_cast=True)
 # Cors Middleware
