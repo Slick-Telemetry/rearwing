@@ -4,7 +4,7 @@ import newrelic.agent  # isort:skip
 import os
 
 
-if os.getenv("ENVIRONMENT") != "test":
+if os.getenv("ENVIRONMENT") != "TEST":
     newrelic.agent.initialize("newrelic.ini")
 
 # Built-in

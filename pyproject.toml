@@ -55,7 +55,7 @@ git-hooks-setup = "pre-commit install --hook-type commit-msg --hook-type pre-pus
 git-hooks-update = "pre-commit autoupdate"
 linters = ["pylint"]
 pylint = "pylint run.py app"
-tests = "pytest -rpPfE tests"
+tests = "python run_tests.py"
 typings = "mypy run.py app"
 
 #-->> Configuration <<-------------------------------------
