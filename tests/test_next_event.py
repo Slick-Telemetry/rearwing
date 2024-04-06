@@ -1,13 +1,12 @@
 # External
 from fastapi import status
-from fastapi.testclient import TestClient
 
 # App
-from . import client
+from . import client_with_auth
 
 
 def test_get_next_event():
-    response = client.get("/next-event")
+    response = client_with_auth.get("/next-event")
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == {
         "RoundNumber": 4,

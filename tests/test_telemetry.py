@@ -1,16 +1,15 @@
 # External
 from fastapi import status
-from fastapi.testclient import TestClient
 
 # App
-from . import client
+from . import client_with_auth
 
 
 # region good inputs
 
 
 def test_get_telemetry():
-    response = client.get("/telemetry/2023/4/1/1?session=5&weather=false")
+    response = client_with_auth.get("/telemetry/2023/4/1/1?session=5&weather=false")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["Telemetry"][0] == {
         "Time": 0,
@@ -28,7 +27,7 @@ def test_get_telemetry():
 
 
 def test_get_telemetry_with_weather():
-    response = client.get("/telemetry/2023/4/1/1?session=5&weather=true")
+    response = client_with_auth.get("/telemetry/2023/4/1/1?session=5&weather=true")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["Telemetry"][0] == {
         "Time": 0,
@@ -59,20 +58,20 @@ def test_get_telemetry_with_weather():
 # region bad inputs
 
 
-def test_get_telemetry_bad_round():
-    response = client.get("/telemetry/2023/25/1/1?session=5&weather=false")
+def test_get_telemetry_bad_round_invalid():
+    response = client_with_auth.get("/telemetry/2023/25/1/1?session=5&weather=false")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert response.json() == {"detail": "Bad Request. Invalid round: 25"}
 
 
 def test_get_telemetry_bad_driver_number():
-    response = client.get("/telemetry/2023/4/3/1?session=5&weather=false")
+    response = client_with_auth.get("/telemetry/2023/4/3/1?session=5&weather=false")
     assert response.status_code == status.HTTP_404_NOT_FOUND
     assert response.json() == {"detail": "Laps for driver 3 not found."}
 
 
-def test_get_telemetry_bad_lap():
-    response = client.get("/telemetry/2023/4/1/80?session=5&weather=false")
+def test_get_telemetry_bad_lap_not_found():
+    response = client_with_auth.get("/telemetry/2023/4/1/80?session=5&weather=false")
     assert response.status_code == status.HTTP_404_NOT_FOUND
     assert response.json() == {"detail": "Requested lap for driver 1 not found."}
 

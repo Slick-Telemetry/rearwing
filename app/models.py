@@ -166,6 +166,14 @@ class Laps(BaseModel):
     IsAccurate: bool | None
 
 
+class SplitQualifyingLaps(BaseModel):
+    """Response model for split qualifying laps"""
+
+    Q1: List[Laps] | None
+    Q2: List[Laps] | None
+    Q3: List[Laps] | None
+
+
 class Telemetry(BaseModel):
     """Response model for session telemetry for a given year, round, session, driver and laps"""
 

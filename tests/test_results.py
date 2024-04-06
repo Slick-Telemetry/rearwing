@@ -1,16 +1,15 @@
 # External
 from fastapi import status
-from fastapi.testclient import TestClient
 
 # App
-from . import client
+from . import client_with_auth
 
 
 # region good inputs
 
 
 def test_get_results():
-    response = client.get("/results/2023/5")
+    response = client_with_auth.get("/results/2023/5")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()[0] == {
         "DriverNumber": "1",
@@ -38,7 +37,7 @@ def test_get_results():
 
 
 def test_get_results_with_session():
-    response = client.get("/results/2023/5?session=4")
+    response = client_with_auth.get("/results/2023/5?session=4")
     assert response.status_code == status.HTTP_200_OK
     assert response.json()[0] == {
         "DriverNumber": "11",
@@ -71,7 +70,7 @@ def test_get_results_with_session():
 
 
 def test_get_results_bad_round_invalid():
-    response = client.get("/results/2023/25?session=2")
+    response = client_with_auth.get("/results/2023/25?session=2")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert response.json() == {"detail": "Bad Request. Invalid round: 25"}
 

@@ -43,6 +43,7 @@ from .models import (
     Results,
     Root,
     Schedule,
+    SplitQualifyingLaps,
     Standings,
     Telemetry,
     Weather,
@@ -54,6 +55,7 @@ from .utils import get_default_year
 config = dotenv_values(".env")
 # FastF1 configuration
 fastf1.set_log_level("WARNING")
+fastf1.Cache.set_disabled()
 # Ergast configuration
 ergast = Ergast(result_type="raw", auto_cast=True)
 # Cors Middleware
@@ -76,6 +78,7 @@ app = FastAPI(
         "name": "GNU General Public License v3.0",
         "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
     },
+    redoc_url=None,
 )
 app.add_middleware(
     CORSMiddleware,
@@ -463,10 +466,10 @@ def get_laps(
 
     **NOTE**:
     - If `session` is not provided; we use the default session. Default = 5; ie race.
-    - If no `driver_numbers` are provided; you get laps for all drivers.
+    - If no `driver_number` are provided; you get laps for all drivers.
 
     **Returns**:
-        List[Laps]: Returns a JSON response with the list of session results
+        List[Laps]: Returns a JSON response with the list of laps
     """
 
     try:
@@ -499,6 +502,113 @@ def get_laps(
 
 
 @newrelic.agent.web_transaction()
+@app.get(
+    "/split-qualifying-laps/{year}/{round}",
+    tags=["laps"],
+    summary="Get split qualifying laps of one or more drivers for a given year and round",
+    response_description="Return split qualifying laps of one or more drivers for a given year and round.",
+    status_code=status.HTTP_200_OK,
+    response_model=SplitQualifyingLaps,
+    dependencies=[Depends(validate_token)],
+)
+def get_split_qualifying_laps(
+    year: Annotated[
+        int,
+        Path(
+            title="The year for which to get the qualifying laps",
+            description="The year for which to get the qualifying laps",
+            ge=MIN_YEAR_SUPPORTED,
+            le=MAX_YEAR_SUPPORTED,
+        ),
+    ],
+    round: Annotated[
+        int,
+        Path(
+            title="The round in a year for which to get the qualifying laps",
+            description="The round in a year for which to get the qualifying laps",
+            ge=MIN_ROUND_SUPPORTED,
+            le=MAX_ROUND_SUPPORTED,
+        ),
+    ],
+    driver_number: Annotated[
+        List[int],
+        Query(
+            title="List of drivers for whom to get the qualifying laps",
+            description="List of drivers for whom to get the qualifying laps",
+        ),
+    ] = [],
+    # qualifying_session: Annotated[
+    #     List[int],
+    #     Query(
+    #         title="List of qualifying sessions for which to get the qualifying laps",
+    #         description="List of qualifying sessions for which to get the qualifying laps",
+    #     ),
+    # ] = [],
+) -> SplitQualifyingLaps:
+    """
+    ## Get split qualifying laps of one or more drivers for a given year and round
+    Endpoint to get split qualifying laps of one or more drivers for a given year and round.
+
+    **NOTE**:
+    - If no `driver_number` are provided; you get laps for all drivers.
+    - If no `qualifying_session` are provided; you get laps for all qualifying sessions.
+
+    **Returns**:
+        SplitQualifyingLaps: Returns a JSON response with the list of split qualifying laps
+    """
+
+    # valid_qualifying_sessions = {1, 2, 3}
+    # if not set(qualifying_session).issubset(valid_qualifying_sessions):
+    #     raise HTTPException(
+    #         status_code=status.HTTP_400_BAD_REQUEST,
+    #         detail="Bad Request. Only values 1, 2, and 3 are allowed for qualifying_session.",
+    #     )
+
+    try:
+        session_obj = fastf1.get_session(year=year, gp=round, identifier="Qualifying")
+        session_obj.load(
+            laps=True,
+            telemetry=False,
+            weather=False,
+            messages=True,  # required for `Deleted` and `DeletedReason`
+        )
+        session_laps = session_obj.laps
+
+        if len(driver_number) > 0:
+            session_laps = session_laps.pick_drivers(driver_number)
+
+        split_qualifying_laps = session_laps.split_qualifying_sessions()
+
+        return SplitQualifyingLaps.model_validate_json(
+            json.dumps(
+                {
+                    "Q1": (
+                        None
+                        if split_qualifying_laps[0] is None
+                        else json.loads(split_qualifying_laps[0].to_json(orient="records"))
+                    ),
+                    "Q2": (
+                        None
+                        if split_qualifying_laps[1] is None
+                        else json.loads(split_qualifying_laps[1].to_json(orient="records"))
+                    ),
+                    "Q3": (
+                        None
+                        if split_qualifying_laps[2] is None
+                        else json.loads(split_qualifying_laps[2].to_json(orient="records"))
+                    ),
+                }
+            )
+        )
+    except ValueError as ve:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}")
+    except KeyError as ke:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Likely an error when fetching laps data for a session that has yet to happen. {str(ke)}",
+        )
+
+
 @app.get(
     "/telemetry/{year}/{round}/{driver_number}/{lap}",
     tags=["telemetry"],
