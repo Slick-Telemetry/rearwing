@@ -1,3 +1,22 @@
+## 0.6.0 (2024-04-07)
+
+### Feat
+
+- BACK-8 new relic integration
+- BACK-53 added /split-qualifying-laps path
+
+### Fix
+
+- save resources when getting default year
+- **cache**: BACK-54 disable cache
+- fixed typos in project config
+
+### Refactor
+
+- **test**: use client_with_auth
+- use version from app/__init__.py
+- extract FRONTEND_URL to .env
+
 ## 0.5.1 (2024-03-17)
 
 ### Fix
