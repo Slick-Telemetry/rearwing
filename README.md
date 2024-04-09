@@ -132,7 +132,7 @@ In `/docker`, create a copy of `.env.example` as `.env`.
   - Username: `supabase`
   - Password: `this_password_is_insecure_and_should_be_updated`
 
-For other docker commands, see [useful_commands.md](./useful_commands.md)
+For other docker commands, see [useful_commands.md](./useful_commands.md).
 
 ### Interactive API docs
 
@@ -174,4 +174,8 @@ For other docker commands, see [useful_commands.md](./useful_commands.md)
 
 ## Deployment
 
-// TODO
+We currently have a test deployment in linode. The deployment is done manually.
+
+We're using pm2, a process manager for Node.js applications, to run the application. The configuration for pm2 can be found in the `process.config.js` file.
+
+For pm2 commands, see [useful_commands.md](./useful_commands.md).

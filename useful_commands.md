@@ -19,6 +19,10 @@
     - [Build the services](#build-the-services)
     - [Bring up the services](#bring-up-the-services)
     - [Build and bring up the services](#build-and-bring-up-the-services)
+- [PM2](#pm2)
+  - [Start process](#start-process)
+  - [Stop process](#stop-process)
+  - [Check process status](#check-process-status)
 
 ## Poetry
 
@@ -120,4 +124,24 @@ docker compose --file compose.dev.yaml up --detach
 
 ```sh
 docker compose --file compose.dev.yaml up --build --detach
+```
+
+## PM2
+
+### Start process
+
+```sh
+pm2 start process.config.js
+```
+
+### Stop process
+
+```sh
+pm2 stop process.config.js
+```
+
+### Check process status
+
+```sh
+pm2 status
 ```
