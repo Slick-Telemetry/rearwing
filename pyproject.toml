@@ -44,6 +44,7 @@ optional = true
 [tool.poetry.group.test.dependencies]
 httpx = "*"
 pytest = "*"
+syrupy = "*"
 
 #-->> Scripts <<-------------------------------------------
 [tool.poe.tasks]
