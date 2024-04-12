@@ -1,6 +1,3 @@
-# External
-from fastapi import status
-
 # App
 from . import client_with_auth
 
@@ -8,133 +5,19 @@ from . import client_with_auth
 # region good inputs
 
 
-def test_get_standings():
+def test_get_standings(snapshot):
     response = client_with_auth.get("/standings")
-    assert response.status_code == status.HTTP_200_OK
-    assert response.json()["season"] == 2024
-    assert response.json()["round"] == 4
-    assert response.json()["DriverStandings"][0] == {
-        "position": "1",
-        "positionText": "1",
-        "points": "77",
-        "wins": "3",
-        "Driver": {
-            "driverId": "max_verstappen",
-            "permanentNumber": "33",
-            "code": "VER",
-            "url": "http://en.wikipedia.org/wiki/Max_Verstappen",
-            "givenName": "Max",
-            "familyName": "Verstappen",
-            "dateOfBirth": "1997-09-30",
-            "nationality": "Dutch",
-        },
-        "Constructors": [
-            {
-                "constructorId": "red_bull",
-                "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                "name": "Red Bull",
-                "nationality": "Austrian",
-            }
-        ],
-    }
-    assert response.json()["ConstructorStandings"][0] == {
-        "position": "1",
-        "positionText": "1",
-        "points": "141",
-        "wins": "3",
-        "Constructor": {
-            "constructorId": "red_bull",
-            "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-            "name": "Red Bull",
-            "nationality": "Austrian",
-        },
-    }
+    snapshot.assert_match(response.json())
 
 
-def test_get_standings_good_year_only():
+def test_get_standings_good_year_only(snapshot):
     response = client_with_auth.get("/standings?year=2023")
-    assert response.status_code == status.HTTP_200_OK
-    assert response.json()["season"] == 2023
-    assert response.json()["round"] == 22
-    assert response.json()["DriverStandings"][0] == {
-        "position": "1",
-        "positionText": "1",
-        "points": "575",
-        "wins": "19",
-        "Driver": {
-            "driverId": "max_verstappen",
-            "permanentNumber": "33",
-            "code": "VER",
-            "url": "http://en.wikipedia.org/wiki/Max_Verstappen",
-            "givenName": "Max",
-            "familyName": "Verstappen",
-            "dateOfBirth": "1997-09-30",
-            "nationality": "Dutch",
-        },
-        "Constructors": [
-            {
-                "constructorId": "red_bull",
-                "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                "name": "Red Bull",
-                "nationality": "Austrian",
-            }
-        ],
-    }
-    assert response.json()["ConstructorStandings"][0] == {
-        "position": "1",
-        "positionText": "1",
-        "points": "860",
-        "wins": "21",
-        "Constructor": {
-            "constructorId": "red_bull",
-            "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-            "name": "Red Bull",
-            "nationality": "Austrian",
-        },
-    }
+    snapshot.assert_match(response.json())
 
 
-def test_get_standings_good_year_and_round():
+def test_get_standings_good_year_and_round(snapshot):
     response = client_with_auth.get("/standings?year=2023&round=5")
-    assert response.status_code == status.HTTP_200_OK
-    assert response.json()["season"] == 2023
-    assert response.json()["round"] == 5
-    assert response.json()["DriverStandings"][0] == {
-        "position": "1",
-        "positionText": "1",
-        "points": "119",
-        "wins": "3",
-        "Driver": {
-            "driverId": "max_verstappen",
-            "permanentNumber": "33",
-            "code": "VER",
-            "url": "http://en.wikipedia.org/wiki/Max_Verstappen",
-            "givenName": "Max",
-            "familyName": "Verstappen",
-            "dateOfBirth": "1997-09-30",
-            "nationality": "Dutch",
-        },
-        "Constructors": [
-            {
-                "constructorId": "red_bull",
-                "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-                "name": "Red Bull",
-                "nationality": "Austrian",
-            }
-        ],
-    }
-    assert response.json()["ConstructorStandings"][0] == {
-        "position": "1",
-        "positionText": "1",
-        "points": "224",
-        "wins": "5",
-        "Constructor": {
-            "constructorId": "red_bull",
-            "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
-            "name": "Red Bull",
-            "nationality": "Austrian",
-        },
-    }
+    snapshot.assert_match(response.json())
 
 
 # endregion good inputs
@@ -142,10 +25,9 @@ def test_get_standings_good_year_and_round():
 # region no inputs
 
 
-def test_get_standings_bad_year_no_input():
+def test_get_standings_bad_year_no_input(snapshot):
     response = client_with_auth.get("/standings?round=3")
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert response.json() == {"detail": 'Bad request. Must provide the "year" parameter.'}
+    snapshot.assert_match(response.json())
 
 
 # endregion no inputs

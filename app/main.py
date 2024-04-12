@@ -93,6 +93,7 @@ app.add_middleware(
 )
 
 
+@newrelic.agent.background_task()
 def validate_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
     """
     Validates the token provided in the HTTP Authorization header.

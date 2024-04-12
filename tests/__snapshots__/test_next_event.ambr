@@ -1,0 +1,28 @@
+# serializer version: 1
+# name: test_get_next_event
+  dict({
+    'Country': 'China',
+    'EventDate': '2024-04-21 00:00:00',
+    'EventFormat': 'sprint_shootout',
+    'EventName': 'Chinese Grand Prix',
+    'F1ApiSupport': True,
+    'Location': 'Shanghai',
+    'OfficialEventName': 'FORMULA 1 LENOVO CHINESE GRAND PRIX 2024',
+    'RoundNumber': 5,
+    'Session1': 'Practice 1',
+    'Session1Date': '2024-04-19 11:30:00+08:00',
+    'Session1DateUtc': '2024-04-19 03:30:00',
+    'Session2': 'Sprint Shootout',
+    'Session2Date': '2024-04-19 15:30:00+08:00',
+    'Session2DateUtc': '2024-04-19 07:30:00',
+    'Session3': 'Sprint',
+    'Session3Date': '2024-04-20 11:00:00+08:00',
+    'Session3DateUtc': '2024-04-20 03:00:00',
+    'Session4': 'Qualifying',
+    'Session4Date': '2024-04-20 15:00:00+08:00',
+    'Session4DateUtc': '2024-04-20 07:00:00',
+    'Session5': 'Race',
+    'Session5Date': '2024-04-21 15:00:00+08:00',
+    'Session5DateUtc': '2024-04-21 07:00:00',
+  })
+# ---

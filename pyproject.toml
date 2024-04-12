@@ -58,6 +58,7 @@ linters = ["pylint"]
 pylint = "pylint run.py app"
 tests = "python run_tests.py"
 typings = "mypy run.py app"
+update-tests = "python run_tests.py --update"
 
 #-->> Configuration <<-------------------------------------
 [tool.autoflake]

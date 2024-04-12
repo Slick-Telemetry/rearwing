@@ -1,0 +1,6 @@
+# serializer version: 1
+# name: test_read_root
+  dict({
+    'we_are': 'SlickTelemetry',
+  })
+# ---

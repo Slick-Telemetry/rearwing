@@ -1,5 +1,4 @@
 # External
-from fastapi import status
 from fastapi.testclient import TestClient
 
 # Project
@@ -9,7 +8,6 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_read_root():
+def test_read_root(snapshot):
     response = client.get("/")
-    assert response.status_code == status.HTTP_200_OK
-    assert response.json() == {"we_are": "SlickTelemetry"}
+    snapshot.assert_match(response.json())
