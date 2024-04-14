@@ -500,7 +500,7 @@ def get_laps(
     except KeyError as ke:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Likely an error when fetching laps data for a session that has yet to happen. {str(ke)}",
+            detail=f"Likely an error when fetching laps data for a session that has yet to happen.",
         )
 
 
