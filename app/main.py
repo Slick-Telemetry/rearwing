@@ -62,7 +62,7 @@ fastf1.Cache.set_disabled()
 # Ergast configuration
 ergast = Ergast(result_type="raw", auto_cast=True)
 # Cors Middleware
-origins = [config["FRONTEND_URL"]]
+origins = [config["FRONTEND_URL"], "http://127.0.0.1:3000"]
 # Others
 favicon_path = "favicon.ico"
 # Security
