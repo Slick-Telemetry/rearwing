@@ -41,7 +41,7 @@ app = FastAPI(
     contact={
         "name": "Slick Telemetry",
         "url": "https://github.com/Slick-Telemetry",
-        "email": "",
+        "email": "contact@slicktelemetry.com",
     },
     license_info={
         "name": "GNU General Public License v3.0",

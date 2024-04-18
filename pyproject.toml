@@ -8,7 +8,7 @@ build-backend = "poetry.core.masonry.api"
 name = "backend"
 version = "0.6.0"
 description = "Slick Telemetry backend written in python with fastapi"
-authors = ["Slick Telemetry <contact.@slicktelemetry.com>"]
+authors = ["Slick Telemetry <contact@slicktelemetry.com>"]
 readme = "README.md"
 
 #-->> Dependencies <<--------------------------------------
