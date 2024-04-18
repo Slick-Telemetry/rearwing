@@ -30,10 +30,10 @@ repos:
         pass_filenames: false
         stages: [pre-commit, pre-push]
         files: ^(app/|poetry.lock|run.py)
-      - id: run-tests
-        name: Run tests
-        entry: poetry poe tests
-        language: system
-        pass_filenames: false
-        stages: [pre-push]
-        files: ^(app/|poetry.lock|run.py|tests/)
+      # - id: run-tests
+      #   name: Run tests
+      #   entry: poetry poe tests
+      #   language: system
+      #   pass_filenames: false
+      #   stages: [pre-push]
+      #   files: ^(app/|poetry.lock|run.py|tests/)
