@@ -1,11 +1,5 @@
 import newrelic.agent  # isort:skip
 
-# Built-in
-import os
-
-
-if os.getenv("ENVIRONMENT") != "TEST":
-    newrelic.agent.initialize("newrelic.ini")
 
 # Built-in
 import json
@@ -13,17 +7,13 @@ from datetime import datetime
 from typing import Annotated, List
 
 # External
-import fastf1
-from dotenv import dotenv_values
-from fastapi import Depends, FastAPI, HTTPException, Path, Query, status
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Depends, HTTPException, Path, Query, status
 from fastapi.responses import FileResponse
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from fastf1.ergast import Ergast
+from fastapi.security import HTTPAuthorizationCredentials
 from pandas import Timestamp
 
 # App
-from . import __version__
+from . import app, config, ergast, fastf1, favicon_path, security
 from .constants import (
     DEFAULT_SESSION,
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
@@ -52,45 +42,6 @@ from .models import (
     Weather,
 )
 from .utils import get_default_year
-
-
-# Load environment variables from .env file
-config = dotenv_values(".env")
-# FastF1 configuration
-fastf1.set_log_level("WARNING")
-fastf1.Cache.set_disabled()
-# Ergast configuration
-ergast = Ergast(result_type="raw", auto_cast=True)
-# Cors Middleware
-origins = [config["FRONTEND_URL"], "http://127.0.0.1:3000"]
-# Others
-favicon_path = "favicon.ico"
-# Security
-security = HTTPBearer()
-
-app = FastAPI(
-    title="Slick Telemetry API",
-    description="Slick Telemetry backend written in python with fastf1. 🏎",
-    version=__version__,
-    contact={
-        "name": "Slick Telemetry",
-        "url": "https://github.com/Slick-Telemetry",
-        "email": "",
-    },
-    license_info={
-        "name": "GNU General Public License v3.0",
-        "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
-    },
-    redoc_url=None,
-)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    # HTTPSRedirectMiddleware # TODO use for production and staging
-)
 
 
 def validate_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
