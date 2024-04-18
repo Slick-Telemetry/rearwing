@@ -7,13 +7,14 @@ from datetime import datetime
 from typing import Annotated, List
 
 # External
-from fastapi import Depends, HTTPException, Path, Query, status
+from fastapi import Depends, FastAPI, HTTPException, Path, Query, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from pandas import Timestamp
 
 # App
-from . import app, config, ergast, fastf1, favicon_path, security
+from . import __version__, config, ergast, fastf1, favicon_path, origins, security
 from .constants import (
     DEFAULT_SESSION,
     EVENT_SCHEDULE_DATETIME_DTYPE_LIST,
@@ -42,6 +43,31 @@ from .models import (
     Weather,
 )
 from .utils import get_default_year
+
+
+app = FastAPI(
+    title="Slick Telemetry API",
+    description="Slick Telemetry backend written in python with fastf1. 🏎",
+    version=__version__,
+    contact={
+        "name": "Slick Telemetry",
+        "url": "https://github.com/Slick-Telemetry",
+        "email": "contact@slicktelemetry.com",
+    },
+    license_info={
+        "name": "GNU General Public License v3.0",
+        "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
+    },
+    redoc_url=None,
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    # HTTPSRedirectMiddleware # TODO use for production and staging
+)
 
 
 def validate_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
