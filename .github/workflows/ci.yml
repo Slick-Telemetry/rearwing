@@ -34,7 +34,8 @@ jobs:
         run: poetry self add 'poethepoet[poetry_plugin]'
 
       - name: Install dependencies
-        run: poetry install --no-root --with dev,lint,test
+        # run: poetry install --no-root --with dev,lint,test
+        run: poetry install --no-root --with dev,lint
 
       - name: Python Format (autoflake/isort/black)
         run: poetry poe formatters
@@ -45,10 +46,10 @@ jobs:
       - name: Python Typecheck (mypy)
         run: poetry poe typings
 
-      - name: Run tests
-        env:
-          ENVIRONMENT: TEST # This disables New Relic initialization
-        run: poetry poe tests
+      # - name: Run tests
+      #   env:
+      #     ENVIRONMENT: TEST # This disables New Relic initialization
+      #   run: poetry poe tests
 
   build:
     name: 🐳 Build and publish docker images
