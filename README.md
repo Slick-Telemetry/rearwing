@@ -1,6 +1,6 @@
-[![CodeQL](https://github.com/Slick-Telemetry/backend/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/Slick-Telemetry/backend/actions/workflows/codeql.yml)
+[![CodeQL](https://github.com/Slick-Telemetry/rearwing/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/Slick-Telemetry/rearwing/actions/workflows/codeql.yml)
 
-# backend <!-- omit from toc -->
+# rearwing <!-- omit from toc -->
 
 Slick Telemetry backend written in python with fastf1.
 
@@ -111,11 +111,11 @@ In `/docker`, create a copy of `.env.example` as `.env`.
 
 - Build image
   ```sh
-  docker build --file Dockerfile.dev --tag backend-dev .
+  docker build --file Dockerfile.dev --tag rearwing-dev .
   ```
 - Run container
   ```sh
-  docker run --name backend-dev --publish 8081:8081 backend-dev --detach
+  docker run --name rearwing-dev --publish 8081:8081 rearwing-dev --detach
   ```
 - Open your browser at [`http://localhost:8081`](http://localhost:8081).
 

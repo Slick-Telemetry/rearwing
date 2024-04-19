@@ -74,29 +74,29 @@ docker ps
 #### Build the images
 
 ```sh
-docker build --file Dockerfile.dev --tag backend-dev .
-docker build --file Dockerfile.prod --tag backend-prod .
+docker build --file Dockerfile.dev --tag rearwing-dev .
+docker build --file Dockerfile.prod --tag rearwing-prod .
 ```
 
 #### Start the containers
 
 ```sh
-docker run --name backend-dev --publish 8081:8081 backend-dev --detach
-docker run --name backend-prod --publish 80:80 backend-prod --detach
+docker run --name rearwing-dev --publish 8081:8081 rearwing-dev --detach
+docker run --name rearwing-prod --publish 80:80 rearwing-prod --detach
 ```
 
 #### Stop the containers
 
 ```sh
-docker stop backend-dev
-docker stop backend-prod
+docker stop rearwing-dev
+docker stop rearwing-prod
 ```
 
 #### Restart the containers
 
 ```sh
-docker restart backend-dev
-docker restart backend-prod
+docker restart rearwing-dev
+docker restart rearwing-prod
 ```
 
 ### Compose

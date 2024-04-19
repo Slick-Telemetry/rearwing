@@ -123,7 +123,7 @@ jobs:
             type=semver,pattern={{version}},value=${{ github.ref == 'refs/heads/main' && env.VERSION || format('{0}-{1}', env.VERSION, github.ref_name) }}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
-            org.opencontainers.image.description=Slick Telemetry backend ${{ env.BUILD_NAME }} image
+            org.opencontainers.image.description=Slick Telemetry rearwing ${{ env.BUILD_NAME }} image
             org.opencontainers.image.version=${{ env.VERSION }}
 
       # Build and upload Docker image to GHCR with Buildx

@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 #-->> Metadata <<------------------------------------------
 [tool.poetry]
-name = "backend"
+name = "rearwing"
 version = "0.6.0"
 description = "Slick Telemetry backend written in python with fastapi"
 authors = ["Slick Telemetry <contact@slicktelemetry.com>"]
