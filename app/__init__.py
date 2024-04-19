@@ -5,7 +5,7 @@ from fastapi.security import HTTPBearer
 from fastf1.ergast import Ergast
 
 
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 
 
 # Load environment variables from .env file

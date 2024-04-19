@@ -1,3 +1,16 @@
+## 0.6.1 (2024-04-19)
+
+### Fix
+
+- **cors**: add 127.0.0.1 to CORS origins
+- **laps**: ignore error message
+
+### Refactor
+
+- rename backend to rearwing
+- move fastapi app init to main.py
+- move app config to __init__.py
+
 ## 0.6.0 (2024-04-07)
 
 ### Feat
