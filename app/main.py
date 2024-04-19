@@ -2,6 +2,14 @@ import newrelic.agent  # isort:skip
 
 
 # Built-in
+import os
+
+
+if os.getenv("ENVIRONMENT") != "TEST":
+    newrelic.agent.initialize("newrelic.ini")
+
+
+# Built-in
 import json
 from datetime import datetime
 from typing import Annotated, List

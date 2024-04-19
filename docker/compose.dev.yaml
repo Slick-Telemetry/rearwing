@@ -4,7 +4,7 @@ include:
   - supabase-selfhost.yaml
 services:
   app:
-    container_name: backend-dev
+    container_name: rearwing-dev
     build:
       context: ..
       dockerfile: Dockerfile.dev

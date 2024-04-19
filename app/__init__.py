@@ -1,13 +1,3 @@
-import newrelic.agent  # isort:skip
-
-
-# Built-in
-import os
-
-
-if os.getenv("ENVIRONMENT") != "TEST":
-    newrelic.agent.initialize("newrelic.ini")
-
 # External
 import fastf1
 from dotenv import dotenv_values

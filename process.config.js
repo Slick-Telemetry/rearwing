@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "slick_telemetry_backend",
+      name: "slick_telemetry_rearwing",
       script: "uvicorn",
       interpreter: "./.venv/bin/python",
       args: "app.main:app --host 0.0.0.0 --port 8081",
