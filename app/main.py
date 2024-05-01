@@ -597,6 +597,7 @@ def get_split_qualifying_laps(
         )
 
 
+@newrelic.agent.web_transaction()
 @app.get(
     "/telemetry/{year}/{round}/{driver_number}/{lap}",
     tags=["telemetry"],
