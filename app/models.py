@@ -1,8 +1,8 @@
 # Built-in
-from typing import List
+from typing import Dict, List
 
 # External
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 
 
 class Root(BaseModel):
@@ -207,3 +207,15 @@ class ExtendedTelemetry(BaseModel):
 
     Telemetry: List[Telemetry]
     Weather: Weather | None
+
+
+class DriverSectorTimes(BaseModel):
+    MinSector1Time: float
+    MinSector2Time: float
+    MinSector3Time: float
+
+
+class FastestSectors(RootModel):
+    """Response model for fastest sectors for a given year, round and session"""
+
+    Dict[str, DriverSectorTimes]
