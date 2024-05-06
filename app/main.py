@@ -15,6 +15,7 @@ from datetime import datetime
 from typing import Annotated, List
 
 # External
+import pandas as pd
 from fastapi import Depends, FastAPI, HTTPException, Path, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -40,6 +41,7 @@ from .constants import (
 from .models import (
     EventSchedule,
     ExtendedTelemetry,
+    FastestSectors,
     HealthCheck,
     Laps,
     Results,
@@ -594,6 +596,103 @@ def get_split_qualifying_laps(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Likely an error when fetching laps data for a session that has yet to happen. {str(ke)}",
+        )
+
+
+@newrelic.agent.web_transaction()
+@app.get(
+    "/fastest-sectors/{year}/{round}",
+    tags=["laps"],
+    summary="Get fastest sectors of one or more drivers for a given year and round",
+    response_description="Return fastest sectors of one or more drivers for a given year and round.",
+    status_code=status.HTTP_200_OK,
+    response_model=FastestSectors,
+    dependencies=[Depends(validate_token)],
+)
+def get_fastest_sectors(
+    year: Annotated[
+        int,
+        Path(
+            title="The year for which to get the fastest sectors",
+            description="The year for which to get the fastest sectors",
+            ge=MIN_YEAR_SUPPORTED,
+            le=MAX_YEAR_SUPPORTED,
+        ),
+    ],
+    round: Annotated[
+        int,
+        Path(
+            title="The round in a year for which to get the fastest sectors",
+            description="The round in a year for which to get the fastest sectors",
+            ge=MIN_ROUND_SUPPORTED,
+            le=MAX_ROUND_SUPPORTED,
+        ),
+    ],
+    session: Annotated[
+        int,
+        Query(
+            title="The session in a round for which to get the fastest sectors",
+            description="The session in a round for which to get the fastest sectors. (Default = 5; ie race)",
+            ge=MIN_SESSION_SUPPORTED,
+            le=MAX_SESSION_SUPPORTED,
+        ),
+    ] = DEFAULT_SESSION,
+    driver_number: Annotated[
+        List[int],
+        Query(
+            title="List of drivers for whom to get the fastest sectors",
+            description="List of drivers for whom to get the fastest sectors",
+        ),
+    ] = [],
+) -> FastestSectors:
+    """
+    ## Get fastest sectors of one or more drivers for a given year, round and session
+    Endpoint to get fastest sectors of one or more drivers for a given year, round and session.
+
+    **NOTE**:
+    - If `session` is not provided; we use the default session. Default = 5; ie race.
+    - If no `driver_number` are provided; you get fastest sectors for all drivers.
+
+    **Returns**:
+        FastestSectors: Returns a JSON response with the fastest sectors
+    """
+
+    try:
+        session_obj = fastf1.get_session(year=year, gp=round, identifier=session)
+        session_obj.load(
+            laps=True,
+            telemetry=False,
+            weather=False,
+            messages=False,
+        )
+        session_laps = session_obj.laps
+
+        if len(driver_number) > 0:
+            session_laps = session_laps.pick_drivers(driver_number)
+
+        # Extract sector times per driver
+        sector1_times = session_laps.groupby("Driver")["Sector1Time"].min()
+        sector2_times = session_laps.groupby("Driver")["Sector2Time"].min()
+        sector3_times = session_laps.groupby("Driver")["Sector3Time"].min()
+
+        # Create a dictionary to hold the minimum sector times per driver
+        min_sector_times = {
+            driver: {
+                "MinSector1Time": sector1_times[driver].total_seconds() if pd.notna(sector1_times[driver]) else None,
+                "MinSector2Time": sector2_times[driver].total_seconds() if pd.notna(sector2_times[driver]) else None,
+                "MinSector3Time": sector3_times[driver].total_seconds() if pd.notna(sector3_times[driver]) else None,
+            }
+            for driver in session_laps["Driver"].unique()
+        }
+
+        # Output the results as JSON
+        return FastestSectors.model_validate(min_sector_times)
+    except ValueError as ve:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}")
+    except KeyError as ke:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Likely an error when fetching laps data for a session that has yet to happen.",
         )
 
 
