@@ -25,6 +25,7 @@ uvicorn = { extras = ["standard"], version = "^0.29.0" }
 [tool.poetry.group.dev.dependencies]
 commitizen = "*"
 pre-commit = "*"
+poethepoet = "*"
 
 # Formatting dependencies
 [tool.poetry.group.lint]

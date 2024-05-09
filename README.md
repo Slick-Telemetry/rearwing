@@ -13,7 +13,7 @@ Table of Contents:
   - [Python virtual environment](#python-virtual-environment)
     - [Installing dependencies](#installing-dependencies)
     - [Virtual environment sanity check](#virtual-environment-sanity-check)
-    - [Poe the Poet poetry plugin](#poe-the-poet-poetry-plugin)
+    - [Poe the Poet](#poe-the-poet)
     - [Installing git hooks](#installing-git-hooks)
   - [New Relic integration](#new-relic-integration)
   - [Running the project](#running-the-project)
@@ -61,29 +61,27 @@ poetry install --sync --no-root --with dev,lint,test
   -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory).
 
 
-#### Poe the Poet poetry plugin
+#### Poe the Poet
 
-```sh
-poetry self add 'poethepoet[poetry_plugin]'
-```
+https://github.com/nat-n/poethepoet
 
 1. Check available tasks:
    ```sh
-   poetry poe
+   poetry run poe
    ```
 2. Execute a task:
    ```sh
-   poetry poe <task-name>
+   poetry run poe <task-name>
    ```
     For example, running the project formatters:
     ```sh
-    poetry poe formatters
+    poetry run poe formatters
     ```
 
 #### Installing git hooks
 
 ```sh
-poetry poe git-hooks-setup
+poetry run poe git-hooks-setup
 ```
 
 ### New Relic integration
@@ -100,7 +98,7 @@ poetry poe git-hooks-setup
 ### Running tests
 
 ```sh
-poetry poe tests
+poetry run poe tests
 ```
 
 ### Docker
