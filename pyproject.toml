@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 #-->> Metadata <<------------------------------------------
 [tool.poetry]
 name = "rearwing"
-version = "0.6.1"
+version = "0.7.0"
 description = "Slick Telemetry backend written in python with fastapi"
 authors = ["Slick Telemetry <contact@slicktelemetry.com>"]
 readme = "README.md"
@@ -79,7 +79,7 @@ line-length = 120
 target-version = ["py312"]
 
 [tool.commitizen]
-version = "0.6.1"
+version = "0.7.0"
 version_files = [
     "app/__init__.py:__version__",
     "pyproject.toml:version",
