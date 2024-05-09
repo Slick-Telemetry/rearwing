@@ -14,7 +14,7 @@ readme = "README.md"
 #-->> Dependencies <<--------------------------------------
 # Main dependencies (required by application)
 [tool.poetry.dependencies]
-fastapi = "^0.110.2"
+fastapi = "^0.111.0"
 fastf1 = "3.3.5"
 newrelic = "^9.9.0"
 python = "^3.12"
