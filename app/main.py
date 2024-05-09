@@ -484,7 +484,7 @@ def get_laps(
         return session_laps_as_json_obj
     except ValueError as ve:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}")
-    except KeyError as ke:
+    except KeyError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Likely an error when fetching laps data for a session that has yet to happen.",
@@ -689,7 +689,7 @@ def get_fastest_sectors(
         return FastestSectors.model_validate(min_sector_times)
     except ValueError as ve:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Bad Request. {str(ve)}")
-    except KeyError as ke:
+    except KeyError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Likely an error when fetching laps data for a session that has yet to happen.",
