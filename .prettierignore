@@ -1,2 +1,0 @@
-# required in order for supabase-kong to work
-docker/volumes/api/kong.yml
