@@ -16,6 +16,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 fastapi = "^0.111.0"
 fastf1 = "3.3.6"
+gunicorn = "^22.0.0"
 newrelic = "^9.9.1"
 python = "3.12.3"
 python-dotenv = "^1.0.1"
