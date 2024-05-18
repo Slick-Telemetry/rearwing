@@ -81,8 +81,8 @@ docker build --file Dockerfile.prod --tag rearwing-prod .
 #### Start the containers
 
 ```sh
-docker run --name rearwing-dev --publish 8081:8081 rearwing-dev --detach
-docker run --name rearwing-prod --publish 80:80 rearwing-prod --detach
+docker run --detach --name rearwing-dev --publish 8081:8081 rearwing-dev
+docker run --detach --name rearwing-prod --publish 80:80 rearwing-prod
 ```
 
 #### Stop the containers
