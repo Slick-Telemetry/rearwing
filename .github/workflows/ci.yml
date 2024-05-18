@@ -34,8 +34,7 @@ jobs:
         run: poetry self add 'poethepoet[poetry_plugin]'
 
       - name: Install dependencies
-        # run: poetry install --no-root --with dev,lint,test
-        run: poetry install --no-root --with dev,lint
+        run: poetry install --no-root --with dev,lint,test
 
       - name: Python Format (autoflake/isort/black)
         run: poetry poe formatters

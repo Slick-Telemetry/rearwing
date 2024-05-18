@@ -5,6 +5,13 @@ import newrelic.agent  # isort:skip
 import os
 
 
+# For heroku deployment
+if not os.path.exists("newrelic.ini"):
+    with open("newrelic.ini", "w") as f:
+        new_relic_config = os.getenv("NEW_RELIC_CONFIG_STRING", "")
+        f.write(new_relic_config.replace("\\n", "\n"))
+
+
 if os.getenv("ENVIRONMENT") != "TEST":
     newrelic.agent.initialize("newrelic.ini")
 
