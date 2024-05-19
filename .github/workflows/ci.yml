@@ -2,9 +2,9 @@ name: Test, Build, Publish, Release
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main]
   pull_request:
-    branches: [main, dev]
+    branches: [main]
 
 jobs:
   test:
@@ -55,10 +55,10 @@ jobs:
     env:
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
-      # if branch is main, use prod else dev
-      BUILD_NAME: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
-      # if the event is push and (the branch is dev or the commit message starts with `bump:`), then upload the image
-      UPLOAD_IMAGE: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.event.head_commit.message , 'bump:')) }}
+      # if branch is main, use prod
+      BUILD_NAME: ${{ github.ref == 'refs/heads/main' && 'prod' }}
+      # if the event is push and the commit message starts with `bump:`, upload the image
+      UPLOAD_IMAGE: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message , 'bump:') }}
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -99,7 +99,7 @@ jobs:
           echo $GITHUB_ENV
 
       # Log into a Docker registry
-      # The login is performed only if the event is push and (the branch is dev or the commit message starts with `bump:`)
+      # The login is performed only if the event is push and the commit message starts with `bump:`
       - name: Login into registry ${{ env.REGISTRY }}
         if: ${{ env.UPLOAD_IMAGE != 'false' }}
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20
@@ -109,7 +109,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
-      # Metadata is extracted only if the event is push and (the branch is dev or the commit message starts with `bump:`)
+      # Metadata is extracted only if the event is push and the commit message starts with `bump:`
       - name: Extract Docker metadata
         if: ${{ env.UPLOAD_IMAGE != 'false' }}
         id: meta
@@ -126,7 +126,7 @@ jobs:
             org.opencontainers.image.version=${{ env.VERSION }}
 
       # Build and upload Docker image to GHCR with Buildx
-      # The image is uploaded only if the event is push and (the branch is dev or the commit message starts with `bump:`)
+      # The image is uploaded only if the event is push and the commit message starts with `bump:`
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0
