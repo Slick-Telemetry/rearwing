@@ -2,7 +2,7 @@
 repos:
   # Execute external scripts
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.25.0
+    rev: v3.27.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
