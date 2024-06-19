@@ -79,11 +79,11 @@ app = FastAPI(
 )
 app.add_middleware(
     CORSMiddleware,
+    # HTTPSRedirectMiddleware, # TODO use for production and staging
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    # HTTPSRedirectMiddleware # TODO use for production and staging
 )
 
 

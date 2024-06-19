@@ -18,20 +18,21 @@ if os.path.isfile(".env"):
 else:
     # Load environment variables from Heroku's environment variable system for production
     config = dict(os.environ)
+
 # FastF1 configuration
 fastf1.set_log_level("WARNING")
 fastf1.Cache.set_disabled()
+
 # Ergast configuration
 ergast = Ergast(result_type="raw", auto_cast=True)
+
 # Cors Middleware
-origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    config["FRONTEND_DEV_URL"],
-    config["FRONTEND_STAGING_URL"],
-    config["FRONTEND_PROD_URL"],
-]
+origins_str = config.get("ORIGINS", "")
+assert origins_str is not None
+origins = origins_str.split(",")
+
 # Others
 favicon_path = "favicon.ico"
+
 # Security
 security = HTTPBearer()
