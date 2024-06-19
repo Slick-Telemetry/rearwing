@@ -11,17 +11,14 @@ Table of Contents:
 - [Development](#development)
   - [Environment variables](#environment-variables)
   - [Python virtual environment](#python-virtual-environment)
-    - [Installing dependencies](#installing-dependencies)
     - [Virtual environment sanity check](#virtual-environment-sanity-check)
+    - [Installing dependencies](#installing-dependencies)
     - [Poe the Poet](#poe-the-poet)
     - [Installing git hooks](#installing-git-hooks)
   - [New Relic integration](#new-relic-integration)
   - [Running the project](#running-the-project)
-  - [Running tests](#running-tests)
-  - [Docker](#docker)
-    - [App only](#app-only)
-    - [With Supabase](#with-supabase)
   - [Interactive API docs](#interactive-api-docs)
+  - [Docker \[OPTIONAL\]](#docker-optional)
   - [Contribution Guidelines](#contribution-guidelines)
 - [Deployment](#deployment)
 
@@ -30,7 +27,7 @@ Table of Contents:
 ### What you'll need
 
 - [VSCode](https://code.visualstudio.com/) / [Pycharm](https://www.jetbrains.com/pycharm/)
-- [Python 3.12](https://www.python.org/) (Please check [`pyproject.toml`](./pyproject.toml) for the latest supported python version)
+- [Python 3.12.3](https://www.python.org/) (Please check [`pyproject.toml`](./pyproject.toml) for the latest supported python version)
 - [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) for dependency management
 - [Docker Desktop](https://docs.docker.com/desktop/) [OPTIONAL]
 
@@ -39,15 +36,10 @@ Table of Contents:
 ### Environment variables
 
 - In project root, create a copy of `.env.example` as `.env`.
+  - run `cp .env.example .env` for UNIX.
+  - run `copy .env.example .env` for Windows.
 
 ### Python virtual environment
-
-#### Installing dependencies
-
-```sh
-poetry config virtualenvs.in-project true # OPTIONAL
-poetry install --sync --no-root --with dev,lint,test
-```
 
 **Note**: Ensure that the python interpreter in your IDE is set to the newly created virtual environment by poetry. If you have not modified poetry configuration, you can find the virtual environment location as stated [here](https://python-poetry.org/docs/configuration/#cache-directory).
 
@@ -60,10 +52,15 @@ poetry install --sync --no-root --with dev,lint,test
   -  Run `poetry shell` <u> ***OR*** </u>
   -  Execute the `/Scripts/Activate` script from the virtual environment located [here](https://python-poetry.org/docs/configuration/#cache-directory).
 
+#### Installing dependencies
+
+```sh
+poetry install --sync --no-root --with dev,lint,test
+```
 
 #### Poe the Poet
 
-https://github.com/nat-n/poethepoet
+A task runner that works well with poetry. https://github.com/nat-n/poethepoet.
 
 1. Check available tasks:
    ```sh
@@ -92,20 +89,15 @@ poetry run poe git-hooks-setup
 ### Running the project
 
 - Open up a terminal in your IDE.
+- If you're not in the python virtual environment, run `poetry shell` to activate it.
 - Run `python run.py` to start the server.
 - Open your browser at [`http://localhost:8081`](http://localhost:8081).
 
-### Running tests
+### Interactive API docs
 
-```sh
-poetry run poe tests
-```
+- Once the server is running, open your browser at [`http://localhost:8081/docs`](http://localhost:8081/docs).
 
-### Docker
-
-In `/docker`, create a copy of `.env.example` as `.env`.
-
-#### App only
+### Docker [OPTIONAL]
 
 - Build image
   ```sh
@@ -117,25 +109,7 @@ In `/docker`, create a copy of `.env.example` as `.env`.
   ```
 - Open your browser at [`http://localhost:8081`](http://localhost:8081).
 
-#### With Supabase
-
-- Bring up the services
-  ```sh
-  cd docker
-  docker compose --file compose.dev.yaml up --detach
-  ```
-- Open your browser at
-  - [`http://localhost:8081`](http://localhost:8081) for app
-  - [`http://localhost:8000`](http://localhost:8000) for supabase dashboard
-  - Username: `supabase`
-  - Password: `this_password_is_insecure_and_should_be_updated`
-
 For other docker commands, see [useful_commands.md](./useful_commands.md).
-
-### Interactive API docs
-
-- Once the server is running, open your browser at [`http://localhost/docs`](http://localhost/docs).
-- Alternate docs can be found at [`http://localhost/redoc`](http://localhost/redoc), provided by [redoc](https://github.com/Redocly/redoc).
 
 ### Contribution Guidelines
 
@@ -169,8 +143,4 @@ For other docker commands, see [useful_commands.md](./useful_commands.md).
 
 ## Deployment
 
-We currently have a test deployment in linode. The deployment is done manually.
-
-We're using pm2, a process manager for Node.js applications, to run the application. The configuration for pm2 can be found in the `process.config.js` file.
-
-For pm2 commands, see [useful_commands.md](./useful_commands.md).
+App is deployed via Heroku.
