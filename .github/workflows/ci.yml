@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
 
       - name: Set up .env
         run: cp .env.example .env
@@ -25,9 +25,9 @@ jobs:
         run: poetry --version
 
       - name: 🐍 Set up Python
-        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d
         with:
-          python-version: 3.12
+          python-version: 3.12.3
           cache: "poetry"
 
       - name: Add Poe the Poet plugin
@@ -66,8 +66,8 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Checkout repo
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
 
       # Get the latest tag
       - name: Get latest tag
@@ -102,7 +102,7 @@ jobs:
       # The login is performed only if the event is push and the commit message starts with `bump:`
       - name: Login into registry ${{ env.REGISTRY }}
         if: ${{ env.UPLOAD_IMAGE != 'false' }}
-        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20
+        uses: docker/login-action@0d4c9c5ea7693da7b068278f7b52bda2a190a446
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
@@ -129,7 +129,7 @@ jobs:
       # The image is uploaded only if the event is push and the commit message starts with `bump:`
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0
+        uses: docker/build-push-action@94f8f8c2eec4bc3f1d78c1755580779804cb87b2
         with:
           context: .
           file: ./Dockerfile.${{ env.BUILD_NAME }}
@@ -148,8 +148,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Checkout repo
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
         with:
           fetch-depth: 0
           token: ${{ secrets.SVC_PAT }}
@@ -161,7 +161,7 @@ jobs:
           changelog_increment_filename: body.md
 
       - name: Release
-        uses: softprops/action-gh-release@d99959edae48b5ffffd7b00da66dcdb0a33a52ee
+        uses: softprops/action-gh-release@69320dbe05506a9a39fc8ae11030b214ec2d1f87
         with:
           body_path: "body.md"
           tag_name: ${{ env.REVISION }} # this is the version set in the previous step
