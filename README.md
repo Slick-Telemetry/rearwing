@@ -27,7 +27,7 @@ Table of Contents:
 ### What you'll need
 
 - [VSCode](https://code.visualstudio.com/) / [Pycharm](https://www.jetbrains.com/pycharm/)
-- [Python 3.12.3](https://www.python.org/) (Please check [`pyproject.toml`](./pyproject.toml) for the latest supported python version)
+- [Python 3.12.4](https://www.python.org/) (Please check [`pyproject.toml`](./pyproject.toml) for the latest supported python version)
 - [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) for dependency management
 - [Docker Desktop](https://docs.docker.com/desktop/) [OPTIONAL]
 
