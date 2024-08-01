@@ -25,7 +25,7 @@ jobs:
         run: poetry --version
 
       - name: 🐍 Set up Python
-        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f
         with:
           python-version: 3.12.4
           cache: "poetry"
@@ -102,7 +102,7 @@ jobs:
       # The login is performed only if the event is push and the commit message starts with `bump:`
       - name: Login into registry ${{ env.REGISTRY }}
         if: ${{ env.UPLOAD_IMAGE != 'false' }}
-        uses: docker/login-action@0d4c9c5ea7693da7b068278f7b52bda2a190a446
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
@@ -129,7 +129,7 @@ jobs:
       # The image is uploaded only if the event is push and the commit message starts with `bump:`
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@94f8f8c2eec4bc3f1d78c1755580779804cb87b2
+        uses: docker/build-push-action@5176d81f87c23d6fc96624dfdbcd9f3830bbe445
         with:
           context: .
           file: ./Dockerfile.${{ env.BUILD_NAME }}
@@ -161,7 +161,7 @@ jobs:
           changelog_increment_filename: body.md
 
       - name: Release
-        uses: softprops/action-gh-release@69320dbe05506a9a39fc8ae11030b214ec2d1f87
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191
         with:
           body_path: "body.md"
           tag_name: ${{ env.REVISION }} # this is the version set in the previous step
