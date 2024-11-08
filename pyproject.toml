@@ -15,10 +15,10 @@ readme = "README.md"
 # Main dependencies (required by application)
 [tool.poetry.dependencies]
 fastapi = "^0.115.3"
-fastf1 = "3.4.1"
+fastf1 = "3.4.3"
 gunicorn = "^23.0.0"
 newrelic = "^10.2.0"
-python = "3.12.6"
+python = "3.12.7"
 python-dotenv = "^1.0.1"
 uvicorn = { extras = ["standard"], version = "^0.32.0" }
 uvicorn-worker = "^0.2.0"
